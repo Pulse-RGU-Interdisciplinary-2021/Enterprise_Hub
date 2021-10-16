@@ -10,7 +10,7 @@
   integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
   crossorigin="anonymous"></script>
   <script src="scripts/browseradapt.js"></script>
-  <script src="scripts/booking_modal.js"></script>
+  
     </head>
 
 
@@ -45,11 +45,12 @@
         <div class="BookingButton">
             <!--Button to direct verified logged in users to the booking page
             Button opens modal to sign in/register if a user isn't signed in-->
-        <button id="BookButton" type="button"><img src="img/BookButton.png" id="BookButtonImg"/></button>
-        
+        <button class="BookButton"><img src="img/BookButton.png" id="BookButtonImg"/></button>
+        <script src="scripts/booking_modal.js"></script>
 
         <!-- Login/Register Modal -->
-        <div id="Log_Reg" class="LoginRegisterModal">
+        <div class="Log_Reg" id="LoginRegisterModal">
+
 
         <!-- Modal content -->
           <div class="LoginRegisterContent">

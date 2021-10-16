@@ -2,11 +2,13 @@ body {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     position: relative;
+    width: 100vw;
 }
 .navBar {
     grid-column: 1 / -1;
     grid-row: 1/2 ;
     z-index: 1;
+    width: 100vw;
 }
 .RGULogo {
     margin-top: 70px;
@@ -26,11 +28,13 @@ body {
     grid-column-start: 1;
     grid-column: 1/-1;
     grid-row: 1/6;
+    width: 100vw;
 }
 .LowerBar {
     grid-column: 1 / -1;
     grid-row: 5/6 ;
     z-index: 1;
+    width: 100vw;
 }
 .BookingButton {
     margin-right:150px;
@@ -44,7 +48,7 @@ body {
 .LoginRegisterModal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 6; /* Sit on top */
+    z-index: 8; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -76,4 +80,23 @@ body {
     color: black;
     text-decoration: none;
     cursor: pointer;
+  }
+
+  .Campus1 {
+      z-index: 9;
+      grid-column: 1/4;
+      grid-row: 3/4;
+      border: 1px solid red;
+  }
+  .City1 {
+      z-index: 9;
+      grid-column: 5/8;
+      grid-row: 3/4;
+      border: 1px solid red;
+  }
+  .City2 {
+      z-index: 9;
+      grid-column: 9/12;
+      grid-row: 3/4;
+      border: 1px solid red;
   }
