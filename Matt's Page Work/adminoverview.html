@@ -14,13 +14,21 @@
 
 
     <body>
-        <header id="PageHeader">
-            <!---Header Bar, containing RGU Logo, and upper navigation links--->
-            <img src="" id="RGULogo"/>
-            <!--Login Button/Profile Pic-->
-            <img src="img/profilePic.png" id="ProfilePic"/>
-        </header>  
+        <div class="navBar">
+            <!---Header Bar, where links are overlaid--->
+            <img src="img/EIG_Banner.png" id="navBanner"/>
+        </div>
 
+        <div class="RGULogo">
+            <!--Official RGU Logo-->
+            <img src="img/RGULogo.png" class="RguPic"/>
+        </div>
+
+        <div class="ProfilePic">
+            <!--Login Button/Profile Pic-->
+            <img src="img/ProfilePic.png" class="ProfileImage"/> 
+        </div>
+        
         <div class="PageContent">
 
             <div class="Sidebar">
@@ -39,6 +47,11 @@
                </div>
 
         </div> 
+        <div class="LowerBar">
+            <!--Lower bar place over lower portion of image, giving the shape
+           required for page layout/area for book button to be placed-->
+           <img src="img/BaseBarHomepage.png" id="BaseBar"/>
+        </div>
 
         <footer id="PageFooter">
             <!--Footer block - sitemap could go here-->
