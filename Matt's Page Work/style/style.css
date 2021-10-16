@@ -1,0 +1,79 @@
+body {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    position: relative;
+}
+.navBar {
+    grid-column: 1 / -1;
+    grid-row: 1/2 ;
+    z-index: 1;
+}
+.RGULogo {
+    margin-top: 70px;
+    margin-left: 40px;
+    grid-column: 1/7;
+    grid-row: 1/2;
+    z-index: 6;
+}
+.ProfilePic {
+    margin-top: 25px;
+    margin-right: 50px;
+    grid-column: 11;
+    grid-row: 1/2;
+    z-index: 5;
+}
+.BackgroundImage {
+    grid-column-start: 1;
+    grid-column: 1/-1;
+    grid-row: 1/6;
+}
+.LowerBar {
+    grid-column: 1 / -1;
+    grid-row: 5/6 ;
+    z-index: 1;
+}
+.BookingButton {
+    margin-right:150px;
+    margin-top: 80px;
+    grid-column: 10/11;
+    grid-row: 5/6;
+    z-index: 5;
+}
+
+/* The Modal (background) */
+.LoginRegisterModal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 6; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content/Box */
+  .LoginRegisterContent {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+  
+  /* The Close Button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }

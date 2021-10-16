@@ -10,32 +10,57 @@
   integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
   crossorigin="anonymous"></script>
   <script src="scripts/browseradapt.js"></script>
+  <script src="scripts/booking_modal.js"></script>
     </head>
 
 
     <body>
-        <header id="PageHeader">
-            <!---Header Bar, containing RGU Logo, and upper navigation links--->
-            <img src="img/EIG_Banner.png" id="navBar"/>
-            <img src="" id="RGULogo"/>
-            <!--Login Button/Profile Pic-->
-            <img src="img/profilePic.png" id="ProfilePic"/>
-        </header>  
-
-        <div class="PageContent">
-
-            <div class="BackgroundImage">
-                <!--Image of enterprise space-->
-                <img src="img/LandingPageContent.png" id="HomeContent"/>
-                <img src="img/BaseBarHomepage.png" id="BaseBar"/>
-    
-               <div class="BookingButton">
-                <!--Button to direct verified logged in users to the booking page
-                Button opens modal to sign in/register if a user isn't signed in-->
-                <p>Book</p>
-               </div>
-
+            
+        <div class="BackgroundImage">
+            <!--Image of enterprise space-->
+            <img src="img/LandingPageContent.png" id="HomeContent"/>
         </div>
+
+        <div class="navBar">
+            <!---Header Bar, where links are overlaid--->
+            <img src="img/EIG_Banner.png" id="navBanner"/>
+        </div>
+
+        <div class="RGULogo">
+            <!--Official RGU Logo-->
+            <img src="img/RGULogo.png" class="RguPic"/>
+        </div>
+
+        <div class="ProfilePic">
+            <!--Login Button/Profile Pic-->
+            <img src="img/ProfilePic.png" class="ProfileImage"/> 
+        </div>
+
+        <div class="LowerBar">
+            <!--Lower bar place over lower portion of image, giving the shape
+           required for page layout/area for book button to be placed-->
+           <img src="img/BaseBarHomepage.png" id="BaseBar"/>
+        </div>
+
+        <div class="BookingButton">
+            <!--Button to direct verified logged in users to the booking page
+            Button opens modal to sign in/register if a user isn't signed in-->
+        <button id="BookButton" type="button"><img src="img/BookButton.png" id="BookButtonImg"/></button>
+        
+
+        <!-- Login/Register Modal -->
+        <div id="Log_Reg" class="LoginRegisterModal">
+
+        <!-- Modal content -->
+          <div class="LoginRegisterContent">
+            <span class="close">&times;</span>
+            <p>Some text in the Modal..</p>
+          </div>
+  
+        </div>
+        </div>
+            
+            
 
         <footer id="PageFooter">
             <!--Footer block - sitemap could go here-->
