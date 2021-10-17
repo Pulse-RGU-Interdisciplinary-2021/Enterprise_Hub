@@ -28,8 +28,8 @@ app.get('/bookingRequests', function (req, res) {
 });
 
 app.get('/myBookings', function (req, res) {
-    res.redirect('/queries/getMyBookings')
-    //res.render('pages/myBookings');
+    //res.redirect('/queries/getMyBookings')
+    res.render('pages/myBookings');
 });
 
 app.get('/calendar', function (req, res) {

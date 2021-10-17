@@ -23,6 +23,20 @@ class room {
             console.log(error);
         }
     }
+
+    async getRoomByName(req, res) {
+        const room_name = req.params.room_name;
+        try {
+            if (!room_name) {
+                console.log('no id passed');
+            }
+            const output = await roomMssql.getRoomById(room_name);
+            res.send(output);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
 }
 
 module.exports = new room();
