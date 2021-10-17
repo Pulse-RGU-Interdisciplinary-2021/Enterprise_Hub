@@ -36,67 +36,83 @@ body {
     z-index: 1;
     width: 100vw;
 }
-.BookingButton {
+.BookButton {
     margin-right:150px;
     margin-top: 80px;
-    grid-column: 10/11;
+    grid-column: 8/11;
     grid-row: 5/6;
     z-index: 5;
 }
+.Campus1 {
+    z-index: 9;
+    grid-column: 1/4;
+    grid-row: 3/4;
+    border: 1px solid red;
+  }
+.City1 {
+    z-index: 9;
+    grid-column: 5/8;
+    grid-row: 3/4;
+    border: 1px solid red;
+  }
+.City2 {
+    z-index: 9;
+    grid-column: 9/12;
+    grid-row: 3/4;
+    border: 1px solid red;
+  }
 
-/* The Modal (background) */
-.LoginRegisterModal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 8; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-  
-  /* Modal Content/Box */
-  .LoginRegisterContent {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-  }
-  
-  /* The Close Button */
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
+
+  /*Modal Stuff*/
+.btn{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #009FEE;
+    font-size: 20px;
+    color: white;
+    padding: 10px 30px;
     cursor: pointer;
-  }
-
-  .Campus1 {
-      z-index: 9;
-      grid-column: 1/4;
-      grid-row: 3/4;
-      border: 1px solid red;
-  }
-  .City1 {
-      z-index: 9;
-      grid-column: 5/8;
-      grid-row: 3/4;
-      border: 1px solid red;
-  }
-  .City2 {
-      z-index: 9;
-      grid-column: 9/12;
-      grid-row: 3/4;
-      border: 1px solid red;
-  }
+    grid-column: 8/11;
+    grid-row: 5/6;
+    z-index:9;
+}
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  z-index:15;
+}
+.modal-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #BAE0F5;
+  padding: 1rem 1.5rem;
+  width: 400px ;
+  border-radius: 0.5rem;
+  z-index: 15;
+}
+.close-button {
+  float: right;
+  width: 1.5rem;
+  line-height: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  background-color: lightgray;
+  z-index: 15;
+}
+.show-modal {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1.0);
+  z-index:15;
+} 
