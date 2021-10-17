@@ -1,5 +1,11 @@
 const express = require('express');
 const app = express();
+async function init() {
+    const approuting = require('./modules');
+    const appmodules = new approuting(app);
+    appmodules.init();
+}
+init();
 
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
@@ -37,6 +43,10 @@ app.get('/insights', function (req, res) {
 app.get('/test', function (req, res) {
     res.redirect('/queries/getMyBookings')
     //res.render('pages/testingBookingPages');
+});
+
+app.get('/apiTest', function (req, res) {
+    res.render('pages/apiTest')
 });
 
 /** 
