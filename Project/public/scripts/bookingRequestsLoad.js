@@ -61,7 +61,7 @@ async function addBookings(allPendingdBookings) {
 async function getBookings(boolean) {
     var output
     await $.get("/api/v1/bookings/Pending/" + boolean, await function (data) {
-        output = JSON.parse(JSON.stringify(data))
+        output = data
     });
     return output
 }
@@ -70,7 +70,7 @@ async function getuserName(i){
     var output = ""
     var userId = allPendingdBookings[i].user_id
     await $.get("/api/v1/users/id/" + userId, await function (data) {
-        output += JSON.parse(JSON.stringify(data))[0].full_name
+        output += data[i].full_name
     })
     return output
 }
@@ -88,7 +88,7 @@ async function getRoomName(i) {
     var output = ""
     var roomId = allPendingdBookings[i].room_id
     await $.get("/api/v1/rooms/id/" + roomId, await function (data) {
-        output += JSON.parse(JSON.stringify(data))[0].room_name
+        output += data[0].room_name
     })
     return output
 }

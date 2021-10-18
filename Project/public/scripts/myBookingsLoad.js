@@ -40,7 +40,7 @@ async function addBookings(allBookingsByUser) {
 async function getBooking(userId) {
     var output
     await $.get("/api/v1/bookings/UserId/" + userId, await function (data) {
-        output = JSON.parse(JSON.stringify(data))
+        output = data
     });
     return output
 }
@@ -58,7 +58,7 @@ async function getRoomName(i) {
     var output = ""
     var roomId = allBookingsByUser[i].room_id
     await $.get("/api/v1/rooms/id/" + roomId, await function (data) {
-        output += JSON.parse(JSON.stringify(data))[0].room_name
+        output += data[0].room_name
     })
     return output
 }
