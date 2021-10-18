@@ -23,8 +23,8 @@ app.get('/allBookings', function (req, res) {
 
 app.get('/bookingRequests', function (req, res) {
     //test if admin
-    res.redirect('/queries/getBookingRequests')
-    //res.render('pages/bookingRequests');
+    //res.redirect('/queries/getBookingRequests')
+    res.render('pages/bookingRequests');
 });
 
 app.get('/myBookings', function (req, res) {

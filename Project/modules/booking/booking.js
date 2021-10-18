@@ -51,6 +51,20 @@ class booking {
             console.log(error);
         }
     }
+
+    async getBookingsByPending(req,res) {
+        const boolean = req.params.boolean;
+        try {
+            if (!boolean) {
+                console.log('no boolean passed');
+            }
+            const output = await bookingMssql.getBookingsByPending(boolean);
+            res.send(output);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
 }
 
 module.exports = new booking();
