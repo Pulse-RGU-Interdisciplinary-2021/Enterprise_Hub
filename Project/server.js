@@ -22,6 +22,9 @@ var queries = require("./public/scripts/dbQueries");
 
 app.get("/", function (req, res) {
   res.render("pages/index");
+
+  title = document.getElementById("title");
+  console.log(title);
 });
 
 app.get("/allBookings", function (req, res) {
@@ -132,13 +135,21 @@ app.post("/register", (request, response) => {
 
   var sql = require("mssql");
   var sqlRequest = new sql.Request();
-  var query = "insert into users values (1,null,'" + name + "', '" + email + "', '" + phoneNumber + "', '" + password + "', 0)";
+  var query =
+    "insert into users values (1,null,'" +
+    name +
+    "', '" +
+    email +
+    "', '" +
+    phoneNumber +
+    "', '" +
+    password +
+    "', 0)";
   sqlRequest.query(query, (err, results) => {
     if (err) throw err;
     console.log("Number of records inserted: " + results.affectedRows);
     response.redirect("login");
   });
-
 });
 
 app.use("/queries", queries);
