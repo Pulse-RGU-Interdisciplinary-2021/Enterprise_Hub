@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<html>
+    API booking test <br>
+    <button id="btnGetAll">Get All</button><br>
+    <button id="getByBookingId">Get by booking Id </button>
+    <input id="booking_id"><br>
+    <button id="getByRoomId">Get by room Id </button>
+    <input id="room_id"><br>
+    <button id="getByUserId">Get by user Id </button>
+    <input id="user_id"><br>
+    <code id="output"></code><br><br>
+
+    API room test <br>
+    <button id="btnGetAllRooms">Get All</button><br>
+    <button id="getRoomByRoomId">Get by room Id </button>
+    <input id="r_id"><br>
+    <code id="room_output"></code><br><br>
+
+</html>
+
+<script>
+    $("#btnGetAll").click(function(){
+        $.get("/api/v1/bookings/all", function(data){
+            $("#output").text((JSON.stringify(data)));
+        });
+    });
+    $("#getByBookingId").click(function(){
+        $.get("/api/v1/bookings/id/" + $("#booking_id").val(), function(data){
+            $("#output").text((JSON.stringify(data)));
+        });
+    });
+    $("#getByRoomId").click(function(){
+        $.get("/api/v1/bookings/roomid/" + $("#room_id").val(), function(data){
+            $("#output").text((JSON.stringify(data)));
+        });
+    });
+    $("#getByUserId").click(function(){
+        $.get("/api/v1/bookings/userid/" + $("#user_id").val(), function(data){
+            $("#output").text((JSON.stringify(data)));  
+        });
+    });
+    $("#btnGetAllRooms").click(function(){
+        $.get("/api/v1/rooms/all", function(data){
+            $("#room_output").text((JSON.stringify(data)));
+        });
+    });
+    $("#getRoomByRoomId").click(function(){
+        $.get("/api/v1/rooms/id/" + $("#r_id").val(), function(data){
+            $("#room_output").text((JSON.stringify(data)));
+        });
+    });
+</script>
