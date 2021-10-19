@@ -7,7 +7,10 @@ class BookingController {
         router.get('/Id/:id', booking.getBookingById);
         router.get('/UserId/:id', booking.getBookingsByUser);
         router.get('/RoomId/:id', booking.getBookingsByRoom);
-        router.get('/Pending/:boolean', booking.getBookingsByPending)
+        router.get('/Pending/:boolean', booking.getBookingsByPending);
+        router.get('/Date/:dateTime', booking.getBookingByDate);
+        router.get('/UserFullName/:name', booking.getBookingByUserFullName);
+        router.get('/RoomName/:name', booking.getBookingByRoomName);
         app.use('/api/v1/bookings',router);
     }
 }

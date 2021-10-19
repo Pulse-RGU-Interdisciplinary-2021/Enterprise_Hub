@@ -65,6 +65,48 @@ class booking {
             console.log(error);
         }
     }
+
+    async getBookingByDate(req,res) {
+        const dateTime = req.params.dateTime;
+        try {
+            if (!dateTime) {
+                console.log('no datetime passed');
+            }
+            const output = await bookingMssql.getBookingByDate(dateTime);
+            res.send(output);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getBookingByUserFullName(req,res) {
+        const name = req.params.name;
+        try {
+            if (!name) {
+                console.log('no name passed');
+            }
+            const output = await bookingMssql.getBookingByUserFullName(name);
+            res.send(output);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getBookingByRoomName(req,res) {
+        const name = req.params.name;
+        try {
+            if (!name) {
+                console.log('no room name passed');
+            }
+            const output = await bookingMssql.getBookingByRoomName(name);
+            res.send(output);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
 }
 
 module.exports = new booking();
