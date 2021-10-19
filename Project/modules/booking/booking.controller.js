@@ -11,6 +11,7 @@ class BookingController {
         router.get('/Date/:dateTime', booking.getBookingByDate);
         router.get('/UserFullName/:name', booking.getBookingByUserFullName);
         router.get('/RoomName/:name', booking.getBookingByRoomName);
+        router.get('/CountUnavailableDesks/:roomId/:startDateTime/:endDateTime', booking.getCountUnavailableDesksOfRoomAtTimeRange)
         app.use('/api/v1/bookings',router);
     }
 }

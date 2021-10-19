@@ -107,6 +107,22 @@ class booking {
             console.log(error);
         }
     }
+
+    async getCountUnavailableDesksOfRoomAtTimeRange(req,res) {
+        const roomId = req.params.roomId;
+        const startDateTime = req.params.startDateTime;
+        const endDateTime = req.params.endDateTime;
+        try {
+            if (!roomId || !startDateTime || !endDateTime) {
+                console.log('no parameters missing');
+            }
+            const output = await bookingMssql.getCountUnavailableDesksOfRoomAtTimeRange(roomId, startDateTime, endDateTime);
+            res.send(output);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
 }
 
 module.exports = new booking();
