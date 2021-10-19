@@ -42,11 +42,23 @@
 
 <body>
     <div class="login-form">
-        <h1>Login Form</h1>
-        <form action="login" method="POST">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <input type="submit">
+        <h1><%= roomName %></h1>
+        <form action="<%= roomId %>" method="POST">
+            <!-- <input type="text" name="username" placeholder="Username" required> -->
+            <select name="bookingType" id="bookingType_select">
+                <option>Full booking</option>
+                <option>Book by number</option>
+            </select>
+            <ul>
+                <%for(var i = 0; i < data.length; i++){ %>
+                    <li> <%= data[i].feature_desc %> </li>
+                <% } %>
+            </ul>
+            <label> Desk available: <%= desks%> </label>
+            <label for="numbDesks">Enter desk amount to book:</label>
+            <input type="number" name="numbDesks" placeholder="5" max="<%= desks%>"">
+            <!-- <input type="password" name="password" placeholder="Password" required> -->
+            <input type="submit" value="Book">
         </form>
         <% if (message != "") { %>
             <h1> Message: <%= message%></h1>

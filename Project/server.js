@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 var session = require("express-session");
 var flash = require("connect-flash");
-const https = require('http');
+const https = require("http");
 
 app.use(
   session({
@@ -22,37 +22,36 @@ var db = require("./public/scripts/database");
 var queries = require("./public/scripts/dbQueries");
 
 async function init() {
-    const approuting = require('./modules');
-    const appmodules = new approuting(app);
-    appmodules.init();
+  const approuting = require("./modules");
+  const appmodules = new approuting(app);
+  appmodules.init();
 }
 
 init();
 
-app.use(express.static('public'));
-app.set('view engine', 'ejs');
+app.use(express.static("public"));
+app.set("view engine", "ejs");
 
-var db = require('./public/scripts/database')
-var queries = require('./public/scripts/dbQueries')
+var db = require("./public/scripts/database");
+var queries = require("./public/scripts/dbQueries");
 
-app.get('/', function (req, res) {
-    
-    res.render('pages/index', {message: ""});
+app.get("/", function (req, res) {
+  res.render("pages/index", { message: "" });
 });
 
 app.get("/allBookings", function (req, res) {
   res.render("pages/allBookings");
 });
 
-app.get('/bookingRequests', function (req, res) {
-    //test if admin
-    //res.redirect('/queries/getBookingRequests')
-    res.render('pages/bookingRequests');
+app.get("/bookingRequests", function (req, res) {
+  //test if admin
+  //res.redirect('/queries/getBookingRequests')
+  res.render("pages/bookingRequests");
 });
 
-app.get('/myBookings', function (req, res) {
-    //res.redirect('/queries/getMyBookings')
-    res.render('pages/myBookings');
+app.get("/myBookings", function (req, res) {
+  //res.redirect('/queries/getMyBookings')
+  res.render("pages/myBookings");
 });
 
 app.get("/calendar", function (req, res) {
@@ -146,6 +145,46 @@ app.post("/register", (request, response) => {
   });
 });
 
+app.get("/book/:roomId", (request, response) => {
+  let capacity = 0;
+  let desks = 0;
+  let data= "";
+  let roomName = "";
+  let sql = require("mssql");
+  let sqlRequest = new sql.Request();
+  let query = `
+  select rf.room_id, f.feature_desc
+  from room_features_xref as rf  join features as f on rf.feature_id = f.id
+  where rf.room_id = '` + request.params.roomId + `'        
+  `
+  https.get("http://localhost:4000/api/v1/rooms/Id/ " + request.params.roomId, (resp) => {
+      //let data = "";
+      // A chunk of data has been received.
+      resp.on("data", (chunk) => {
+        data += chunk;
+      });
+
+      // The whole response has been received. Print out the result.
+      resp.on("end", () => {
+        data = JSON.parse(data);
+        desks = data[0].max_desks;
+        capacity = data[0].max_capacity;
+        roomName = data[0].room_name;        
+        sqlRequest.query(query, (err, results) => {
+          if (err) throw err;
+          data = results.recordset;
+          console.log(desks);
+          response.render("pages/login", { message: "",  data: data, roomName: roomName, desks: desks, roomId: request.params.roomId });
+        });
+      });
+    }).on("error", (err) => {
+    console.log("Error: " + err.message);
+  });
+});
+
+app.post("/book/:roomId", (request, response) => {
+  console.log('in');
+});
 app.use("/queries", queries);
 
 app.use(function (req, res) {
