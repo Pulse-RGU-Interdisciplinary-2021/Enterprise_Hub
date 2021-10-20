@@ -1,12 +1,12 @@
 console.log("hi")
 
-$(document).ready(async function() {
+$(document).ready(async function () {
     console.log("ready")
     await setDefaultDateTimes()
     dateChanged()
 });
 
-async function setDefaultDateTimes(){
+async function setDefaultDateTimes() {
     var defaultStartDT = await getDefaultStartDateTime()
     var defaultEndDT = await getDefaultEndDateTime()
     console.log(defaultEndDT + defaultStartDT)
@@ -14,7 +14,7 @@ async function setDefaultDateTimes(){
     document.getElementById("endDatetimeInput").defaultValue = defaultEndDT
 }
 
-async function getDefaultStartDateTime(){
+async function getDefaultStartDateTime() {
     var dateTimeObject = new Date()
     var output = dateTimeObject.getFullYear() + "-"
 
@@ -24,28 +24,28 @@ async function getDefaultStartDateTime(){
     }
 
     var date = dateTimeObject.getDate()
-    if (date.toString().length < 2){
+    if (date.toString().length < 2) {
         date = "0" + dateTimeObject.getDate()
     }
 
     var hour = dateTimeObject.getHours()
-    if (hour.toString().length < 2){
+    if (hour.toString().length < 2) {
         hour = "0" + dateTimeObject.getHours()
     }
 
     var minute = dateTimeObject.getMinutes()
-    if (minute.toString().length < 2){
+    if (minute.toString().length < 2) {
         minute = "0" + dateTimeObject.getMinutes()
     }
 
     output += month + "-"
     output += date + "T"
-    output += hour +":"
+    output += hour + ":"
     output += minute
     return output
 }
 
-async function getDefaultEndDateTime(){
+async function getDefaultEndDateTime() {
     var dateTimeObject = new Date()
     var output = dateTimeObject.getFullYear() + "-"
 
@@ -55,28 +55,28 @@ async function getDefaultEndDateTime(){
     }
 
     var date = dateTimeObject.getDate()
-    if (date.toString().length < 2){
+    if (date.toString().length < 2) {
         date = "0" + dateTimeObject.getDate()
     }
 
     var hour = dateTimeObject.getHours()
-    if (hour.toString().length < 2){
+    if (hour.toString().length < 2) {
         hour = "0" + dateTimeObject.getHours()
     }
 
     var minute = dateTimeObject.getMinutes()
-    if (minute.toString().length < 2){
+    if (minute.toString().length < 2) {
         minute = "0" + dateTimeObject.getMinutes()
     }
 
     output += month + "-"
     output += date + "T"
-    output += (hour + 1) +":"
+    output += (hour + 1) + ":"
     output += minute
     return output
 }
 
-async function dateChanged(){
+async function dateChanged() {
     var startDateTime = $('#startDatetimeInput').val()
     var endDateTime = $('#endDatetimeInput').val()
 
@@ -88,7 +88,7 @@ async function dateChanged(){
 async function showRoomAvailability(startDateTime, endDateTime) {
     $('#roomAvailabilityDiv').empty()
     console.log(1)
-    var allRooms 
+    var allRooms
     allRooms = await getAllRooms()
     console.log(2 + allRooms)
     displayRooms(allRooms, startDateTime, endDateTime)
@@ -103,7 +103,7 @@ async function getAllRooms() {
 }
 
 async function displayRooms(allRooms, startDateTime, endDateTime) {
-    if (allRooms.length === 0){
+    if (allRooms.length === 0) {
         console.log("no results found")
         var results = document.createElement("p");
         results.innerHTML = "No rooms found"
@@ -121,11 +121,11 @@ async function displayRooms(allRooms, startDateTime, endDateTime) {
             roomDiv.setAttribute("class", "roomDiv")
             roomDiv.setAttribute("id", "room" + i)
             $('#roomAvailabilityDiv').append(roomDiv)
-    
+
             var roomDiagram = await getRoomDiagram(unavailableDesks[0].deskn, totalDesks, i, allRooms)
             $('#room' + i).append(roomDiagram)
         }
-    }   
+    }
 }
 
 async function formatDateForSQL(dateTime) {
@@ -138,7 +138,7 @@ async function formatDateForSQL(dateTime) {
     return output
 }
 
-async function getUnavailableDesksNumber(room_id, startDateTime, endDateTime){
+async function getUnavailableDesksNumber(room_id, startDateTime, endDateTime) {
     var output
     await $.get("/api/v1/bookings/CountUnavailableDesks/" + room_id + "/" + startDateTime + "/" + endDateTime, await function (data) {
         output = data
@@ -147,16 +147,16 @@ async function getUnavailableDesksNumber(room_id, startDateTime, endDateTime){
     return output
 }
 
-async function getRoomDiagram(unavailableDesks, totalDesks, i, allRooms){
+async function getRoomDiagram(unavailableDesks, totalDesks, i, allRooms) {
     var output = '<div id=\'room' + i + 'Diagram\' class = \'diagram\' onclick=\'diagramClicked(' + allRooms[i].id + ')\'>'
-    
+
     console.log("a " + unavailableDesks + " t " + totalDesks)
     var columns = 5 //can be changed later
     var emptyDiagramSpaces = totalDesks % columns
     var totalDiagramSpaces = totalDesks + emptyDiagramSpaces
     if (totalDiagramSpaces % columns !== 0) {
         console.log("error with diagram desk spaces")
-        console.log ("t " + totalDiagramSpaces + " c " + columns)
+        console.log("t " + totalDiagramSpaces + " c " + columns)
     }
     var rows = totalDiagramSpaces / columns
 
@@ -171,19 +171,19 @@ async function getRoomDiagram(unavailableDesks, totalDesks, i, allRooms){
     }
     output += '<table>'
     for (var i = 0; i < rows; i++) {
-        output += '<tr id="roow'+ i +'">'
-        for (var j = 0; j < columns; j++){
+        output += '<tr id="roow' + i + '">'
+        for (var j = 0; j < columns; j++) {
             output += '<th>'
             //img height is in pixel, should be changed to % or vh in css
-            if (unavailableDesksCountDown > 0){
+            if (unavailableDesksCountDown > 0) {
                 output += '<img class="row' + i + ', column' + j + '" src="./images/unavailableChair.png" alt="unavailable chair icon" height="30"></img>'
-                unavailableDesksCountDown--  
+                unavailableDesksCountDown--
             }
-            else if (availableDesksCountDown > 0){
+            else if (availableDesksCountDown > 0) {
                 output += '<img class="row' + i + ', column' + j + '" src="./images/availableChair.png" alt="available chair icon" height="30" ></img>'
                 availableDesksCountDown--
             }
-            else if (emptyDiagramSpacesCountDown > 0){
+            else if (emptyDiagramSpacesCountDown > 0) {
                 output += '<img class="row' + i + ', column' + j + '" src="./images/emptyChairSpace.png" alt="empty icon" height="30"></img>'
                 emptyDiagramSpacesCountDown--
             }
@@ -198,6 +198,24 @@ async function getRoomDiagram(unavailableDesks, totalDesks, i, allRooms){
     return output
 }
 
-async function diagramClicked(room_id){
+async function diagramClicked(room_id) {
+    var startTD = $("startDatetimeInput").val()
+    var endTD = $("endDatetimeInput").val()
+    var valueArray = [room_id, startTD, endTD]
 
+    // $.ajax({
+    //     url: '/testPost',
+    //     type: 'POST',
+    //     data: JSON.stringify( valueArray ),
+    //     dataType: 'json',
+    //     success: function(response){ console.log("success");}
+    //     });
+
+    $.post("http://localhost:4000/testPost",
+        {
+            array: valueArray
+        },
+        function (data, status) {
+            alert("Data: " + data + "\nStatus: " + status);
+        });
 }

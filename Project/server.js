@@ -23,12 +23,10 @@ app.get('/allBookings', function (req, res) {
 
 app.get('/bookingRequests', function (req, res) {
     //test if admin
-    //res.redirect('/queries/getBookingRequests')
     res.render('pages/bookingRequests');
 });
 
 app.get('/myBookings', function (req, res) {
-    //res.redirect('/queries/getMyBookings')
     res.render('pages/myBookings');
 });
 
@@ -40,13 +38,21 @@ app.get('/insights', function (req, res) {
     res.render('pages/insights');
 });
 
-app.get('/test', function (req, res) {
-    res.redirect('/queries/getMyBookings')
-    //res.render('pages/testingBookingPages');
-});
 
 app.get('/apiTest', function (req, res) {
     res.render('pages/apiTest')
+});
+
+app.get('/test', function (req, res) {
+    console.log(res.array + "hhh")
+    res.render('pages/test',{
+        array : []
+    })
+});
+
+app.post('/testPost', function (req, res) {
+    console.log(res)
+    res.redirect('/test')
 });
 
 /** 
