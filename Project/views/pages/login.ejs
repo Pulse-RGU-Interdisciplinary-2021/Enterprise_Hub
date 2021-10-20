@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../scripts/test.js"></script>
 <head>
     <meta charset="utf-8">
     <title>Login Form Tutorial</title>
@@ -46,17 +47,19 @@
         <form action="<%= roomId %>" method="POST">
             <!-- <input type="text" name="username" placeholder="Username" required> -->
             <select name="bookingType" id="bookingType_select">
-                <option>Full booking</option>
-                <option>Book by number</option>
+                <option value="0">Full booking</option>
+                <option value="1">Book by number</option>
             </select>
             <ul>
                 <%for(var i = 0; i < data.length; i++){ %>
                     <li> <%= data[i].feature_desc %> </li>
                 <% } %>
             </ul>
-            <label> Desk available: <%= desks%> </label>
-            <label for="numbDesks">Enter desk amount to book:</label>
-            <input type="number" name="numbDesks" placeholder="5" max="<%= desks%>"">
+            <div id="deskSelectWrapper" hidden>
+                <label> Desk available: <%= desks%> </label>
+                <label for="numbDesks">Enter desk amount to book:</label>
+                <input type="number" name="numbDesks" id="numbDesks" placeholder="0" max="<%= desks%>">
+            </div>
             <!-- <input type="password" name="password" placeholder="Password" required> -->
             <input type="submit" value="Book">
         </form>

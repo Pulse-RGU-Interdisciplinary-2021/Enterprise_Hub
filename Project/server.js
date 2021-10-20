@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 var session = require("express-session");
 var flash = require("connect-flash");
+var functions = require("./functions");
 const https = require("http");
 
 app.use(
@@ -146,35 +147,29 @@ app.post("/register", (request, response) => {
 });
 
 app.get("/book/:roomId", (request, response) => {
+  let roomId = request.params.roomId;
   let capacity = 0;
   let desks = 0;
   let data= "";
   let roomName = "";
-  let sql = require("mssql");
-  let sqlRequest = new sql.Request();
-  let query = `
-  select rf.room_id, f.feature_desc
-  from room_features_xref as rf  join features as f on rf.feature_id = f.id
-  where rf.room_id = '` + request.params.roomId + `'        
-  `
-  https.get("http://localhost:4000/api/v1/rooms/Id/ " + request.params.roomId, (resp) => {
-      //let data = "";
+  https.get("http://localhost:4000/api/v1/rooms/Id/ " + roomId, (resp) => {
       // A chunk of data has been received.
       resp.on("data", (chunk) => {
         data += chunk;
       });
-
       // The whole response has been received. Print out the result.
       resp.on("end", () => {
         data = JSON.parse(data);
-        desks = data[0].max_desks;
         capacity = data[0].max_capacity;
         roomName = data[0].room_name;        
-        sqlRequest.query(query, (err, results) => {
-          if (err) throw err;
-          data = results.recordset;
-          console.log(desks);
-          response.render("pages/login", { message: "",  data: data, roomName: roomName, desks: desks, roomId: request.params.roomId });
+        functions.getRoomFeatures(roomId, (result) =>{
+          data = result;
+          let startingHour = "2021-10-30 10:00:00.000"
+          let endingHour = "2021-10-30 12:00:00.000"
+          functions.getRemainingDesks(startingHour, endingHour, roomId, (result) => {
+            desks = result;
+            response.render("pages/login", { message: "",  data: data, roomName: roomName, desks: desks, roomId: request.params.roomId });
+          });
         });
       });
     }).on("error", (err) => {
@@ -183,7 +178,18 @@ app.get("/book/:roomId", (request, response) => {
 });
 
 app.post("/book/:roomId", (request, response) => {
-  console.log('in');
+  let userId = request.session.username;
+  let roomId = request.params.roomId;
+  var desks = request.body.numbDesks;
+  let sql = require("mssql");
+  let sqlRequest = new sql.Request();
+  let query = `
+    insert into bookings(`+ roomId +`,`+ userId +`,2021-10-30 10:00:00.000, 2021-10-30 12:00:00.000,`+ desks +`, null, 0,0,1 );
+  `
+  sqlRequest.query(query, (err, res) => {
+    if (err) throw err;
+    console.log(res);
+  });
 });
 app.use("/queries", queries);
 
