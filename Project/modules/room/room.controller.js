@@ -5,6 +5,7 @@ class RoomController {
     constructor(app) {
         router.get('/All', room.getAllRooms);
         router.get('/Id/:id', room.getRoomById);
+        router.get('/Name/:room_name', room.getRoomByName);
         app.use('/api/v1/rooms',router);
     }
 }

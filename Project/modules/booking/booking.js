@@ -60,12 +60,52 @@ class booking {
             console.log(error);
         }
     }
+    async getBookingsByPending(req,res) {
+        const boolean = req.params.boolean;
+        try {
+            if (!boolean) {
+                console.log('no boolean passed');
+            }
+            const output = await bookingMssql.getBookingsByPending(boolean);
+            res.send(output);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
 
     async updateBooking(req,res) {
         try {
             const output = await bookingMssql.updateBooking(req.body);
             res.send(output);
         } catch (error) {
+            console.log(error);
+        }
+    }
+    async getBookingByDate(req,res) {
+        const dateTime = req.params.dateTime;
+        try {
+            if (!dateTime) {
+                console.log('no datetime passed');
+            }
+            const output = await bookingMssql.getBookingByDate(dateTime);
+            res.send(output);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getBookingByUserFullName(req,res) {
+        const name = req.params.name;
+        try {
+            if (!name) {
+                console.log('no name passed');
+            }
+            const output = await bookingMssql.getBookingByUserFullName(name);
+            res.send(output);
+        }
+        catch (error) {
             console.log(error);
         }
     }
@@ -79,6 +119,36 @@ class booking {
             const output = await bookingMssql.deleteBooking(id);
             res.send(output);
         } catch (error) {
+            console.log(error);
+        }
+    }
+            
+    async getBookingByRoomName(req,res) {
+        const name = req.params.name;
+        try {
+            if (!name) {
+                console.log('no room name passed');
+            }
+            const output = await bookingMssql.getBookingByRoomName(name);
+            res.send(output);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getCountUnavailableDesksOfRoomAtTimeRange(req,res) {
+        const roomId = req.params.roomId;
+        const startDateTime = req.params.startDateTime;
+        const endDateTime = req.params.endDateTime;
+        try {
+            if (!roomId || !startDateTime || !endDateTime) {
+                console.log('no parameters missing');
+            }
+            const output = await bookingMssql.getCountUnavailableDesksOfRoomAtTimeRange(roomId, startDateTime, endDateTime);
+            res.send(output);
+        }
+        catch (error) {
             console.log(error);
         }
     }
