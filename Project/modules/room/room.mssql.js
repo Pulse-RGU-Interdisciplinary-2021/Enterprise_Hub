@@ -19,5 +19,12 @@ class RoomMSSql {
         return res.recordset;
     }
 
+    async getRoomByDateTimeRange(startDateTime, endDateTime) {
+        const conn = await mssqlcon.getConnection();
+        var query = "select * from rooms where "
+    }
+
+    async 
+
 }
 module.exports = new RoomMSSql;

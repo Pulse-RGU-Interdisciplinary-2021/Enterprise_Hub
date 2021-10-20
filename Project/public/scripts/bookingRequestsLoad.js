@@ -1,12 +1,12 @@
-var allPendingdBookings
+var allPendingBookings
 showBookings()
 async function showBookings() {
-    allPendingdBookings = await getBookings("true")
-    addBookings(allPendingdBookings)
+    allPendingBookings = await getBookings("true")
+    addBookings(allPendingBookings)
 }
 
-async function addBookings(allPendingdBookings) {
-    for (var i = 0; i < allPendingdBookings.length; i++) {
+async function addBookings(allPendingBookings) {
+    for (var i = 0; i < allPendingBookings.length; i++) {
 
         var userName = document.createElement("p");
         userName.innerHTML = await getuserName(i)
@@ -25,7 +25,7 @@ async function addBookings(allPendingdBookings) {
         bookingType.setAttribute("class", "bookingType")
 
         var reason = document.createElement("p")
-        reason.innerHTML = "Reason of booking: " + allPendingdBookings[i].reason
+        reason.innerHTML = "Reason of booking: " + allPendingBookings[i].reason
         reason.setAttribute("class", "reason")
 
         var currentBookingInfo = document.createElement("div")
@@ -59,33 +59,32 @@ async function addBookings(allPendingdBookings) {
 async function getBookings(boolean) {
     var output
     await $.get("/api/v1/bookings/Pending/" + boolean, await function (data) {
-        output = data;
+        output = data
     });
     return output
 }
 
 async function getuserName(i){
     var output = ""
-    var userId = allPendingdBookings[i].user_id
+    var userId = allPendingBookings[i].user_id
     await $.get("/api/v1/users/id/" + userId, await function (data) {
-        // data is an array thats why [0] is needed even if it seems redundant
-        output += data[0].full_name
+        output += data[i].full_name
     })
     return output
 }
 
 function formattedStartAndEndTime(i) {
     var output = "From "
-    console.log(typeof allPendingdBookings[i].start_datetime)
-    output += allPendingdBookings[i].start_datetime
+    console.log(typeof allPendingBookings[i].start_datetime)
+    output += allPendingBookings[i].start_datetime
     output += " to "
-    output += allPendingdBookings[i].end_datetime
+    output += allPendingBookings[i].end_datetime
     return output
 }
 
 async function getRoomName(i) {
     var output = ""
-    var roomId = allPendingdBookings[i].room_id
+    var roomId = allPendingBookings[i].room_id
     await $.get("/api/v1/rooms/id/" + roomId, await function (data) {
         output += data[0].room_name
     })
@@ -94,16 +93,16 @@ async function getRoomName(i) {
 
 function formattedBookingType(i) {
     var output = ""
-    if (allPendingdBookings[i].full_room_booking) {
+    if (allPendingBookings[i].full_room_booking) {
         output += "Full room booking"
     }
     else {
-        var nOfDesks = allPendingdBookings[i].desks
+        var nOfDesks = allPendingBookings[i].desks
         if (nOfDesks > 1) {
-            output += allPendingdBookings[i].desks + " desks"
+            output += allPendingBookings[i].desks + " desks"
         }
         else {
-            output += allPendingdBookings[i].desks + " desk"
+            output += allPendingBookings[i].desks + " desk"
         }  
     }
     return output

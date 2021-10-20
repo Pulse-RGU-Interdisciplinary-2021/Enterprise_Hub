@@ -23,6 +23,20 @@ class user {
             console.log(error);
         }
     }
+
+    async getUserByName(req,res) {
+        const name = req.params.name;
+        try {
+            if (!name) {
+                console.log('no name passed');
+            }
+            const output = await userMssql.getUserByName(name);
+            res.send(output);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
 }
 
 module.exports = new user();

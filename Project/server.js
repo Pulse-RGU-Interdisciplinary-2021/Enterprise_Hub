@@ -21,6 +21,7 @@ app.set("view engine", "ejs");
 
 var db = require("./public/scripts/database");
 var queries = require("./public/scripts/dbQueries");
+app.use(express.json());
 
 async function init() {
   const approuting = require("./modules");
@@ -50,9 +51,8 @@ app.get("/bookingRequests", function (req, res) {
   res.render("pages/bookingRequests");
 });
 
-app.get("/myBookings", function (req, res) {
-  //res.redirect('/queries/getMyBookings')
-  res.render("pages/myBookings");
+app.get('/myBookings', function (req, res) {
+    res.render('pages/myBookings');
 });
 
 app.get("/calendar", function (req, res) {

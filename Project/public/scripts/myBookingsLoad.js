@@ -40,7 +40,7 @@ async function addBookings(allBookingsByUser) {
 async function getBooking(userId) {
     var output
     await $.get("/api/v1/bookings/UserId/" + userId, await function (data) {
-        output = data;
+        output = data
     });
     return output
 }
