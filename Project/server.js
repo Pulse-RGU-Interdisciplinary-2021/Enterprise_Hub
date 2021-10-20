@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+app.use(express.json());
+
 async function init() {
     const approuting = require('./modules');
     const appmodules = new approuting(app);
@@ -73,6 +75,6 @@ app.use(function (req, res) {
     res.status(404);
     res.render('pages/404');
 });
-
+  
 
 app.listen(4000, () => console.log('My website is listening on port 4000!'));
