@@ -24,5 +24,7 @@ class RoomMSSql {
         var query = "select * from rooms where "
     }
 
+    async 
+
 }
 module.exports = new RoomMSSql;

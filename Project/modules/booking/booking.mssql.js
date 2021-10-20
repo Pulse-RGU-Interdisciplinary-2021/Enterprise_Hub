@@ -65,8 +65,9 @@ class BookingMSSql {
 
     async getCountUnavailableDesksOfRoomAtTimeRange(roomId, startDateTime, endDateTime) {
         const conn = await mssqlcon.getConnection();
-        var query = "select count(desks) from bookings where room_id = " + roomId + "and ((start_datetime <= " + startDateTime + " and " + startDateTime + " < end_datetime) or (end_datetime >= " + endDateTime + " and " + endDateTime + " > start_datetime))"
+        var query = 'select count(desks) as \'deskn\' from bookings where ((room_id = ' + roomId + ') and (((start_datetime <= \'' + startDateTime + '\') and (\'' + startDateTime + '\' < end_datetime)) or ((end_datetime >= \'' + endDateTime + '\') and (\'' + endDateTime + '\' > start_datetime))))'
         const res = await conn.request().query(query);
+        console.log(res.recordset[0])
         return res.recordset;
     }
 }
