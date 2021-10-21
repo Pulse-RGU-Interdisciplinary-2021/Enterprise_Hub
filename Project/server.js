@@ -64,13 +64,13 @@ app.get("/insights", function (req, res) {
 });
 
 app.get("/login", (req, res) => {
-  res.render("pages/login", { message: req.flash("error_msg") });
+  res.render("pages/landing", { message: req.flash("error_msg") || "" });
 });
 
 app.post("/login", function (request, response) {
   // Get post parameters
-  var username = request.body.username;
-  var password = request.body.password;
+  var username = request.body.email;
+  var password = request.body.psw;
 
   if (username && password) {
     /**
@@ -92,12 +92,12 @@ app.post("/login", function (request, response) {
         response.redirect("/");
       } else {
         request.flash("error_msg", "Invalid user and/or password");
-        response.redirect("login");
+        response.redirect("allBookings");
       }
       response.end();
     });
   } else {
-    request.flash("error_msg", "Invalid user and/or password");
+    request.flash("error_msg", "Fields  cant be empty");
     response.redirect("login");
     response.end();
   }
