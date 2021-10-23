@@ -1,0 +1,122 @@
+body {
+    font-family: ZonaPro-Bold,helvetica,arial,sans-serif;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  height: 100px;
+}
+
+.footer-inner {
+    background-color: #006b99;
+    height: 43%;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.footer-image {
+    position: absolute;
+    right: 0;
+    /* Height is not actually necessary, 
+    but can be used to change blue highlight width */
+    height: 100%;
+    z-index: 1;
+}
+
+.header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    height: 100px;
+  }
+  
+  .header-inner {
+      background-color: #006b99;
+      height: 59%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+  }
+  
+  .header-image {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      z-index: 1;
+  }
+
+  .header-logo {
+    position: absolute;
+    left: 0;
+    padding-top: 16px;;
+    height: 50%;
+    z-index: 2;
+  }
+
+  .header-profile {
+    position: absolute;
+    right: 30;
+    height: 43%;
+    z-index: 2;
+  }
+
+  .landing {
+      margin: 0px;
+      width: 100%;
+      height: 100%;
+    background-image: url("../images/LandingPageContent.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: 60px
+  }
+
+  .booknow-button {
+    position: absolute;
+    right: 40;
+    bottom: 20;
+    z-index: 3;
+    background: #009FEE;
+    border: 0px;
+  }
+
+  .booking-table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+  }
+
+  .booking-top-tr {
+    text-align: left;
+    width: 80%;
+    margin: auto;
+  }
+
+  .booking-input-text {
+      padding: 19px;
+      border-collapse: collapse;
+      border: 0px;
+      width: 100%;
+      font-size: 1rem;
+      color:black;
+  }
+
+  .booking-input-button {
+    padding: 18px;
+    width: 100%;
+    background-color: white;
+    border-color: #712177;
+    border-width: 2px;
+    font-size: 1rem;
+}
