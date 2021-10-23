@@ -86,47 +86,35 @@ app.post("/login", function (request, response) {
       password +
       "'";
     sqlRequest.query(query, (err, results) => {
-      if (results > 0 && !err) {
+      if (results.recordset.length > 0 && !err) {
         request.session.loggedin = true;
         request.session.username = username;
-        response.redirect("/");
+        response.send("success");
       } else {
         request.flash("error_msg", "Invalid user and/or password");
-        response.redirect("allBookings");
+        response.send("Invalid user/password");
       }
       response.end();
     });
   } else {
     request.flash("error_msg", "Fields  cant be empty");
-    response.redirect("login");
+    response.send("No empty fields");
     response.end();
   }
 });
 
 app.post("/register", (request, response) => {
-  var name = request.name || "Pepe";
-  var email = request.email || "email@gmail.com";
-  var role = request.role || "";
-  var password = request.password || "password";
-  var repeatPassword = request.repeatPassword || "password";
-  var phoneNumber = request.phoneNumber || "1234567890";
-
-  if (!name) {
-    response.redirect("login");
-  }
-  if (!email) {
-    response.redirect("login");
-  }
-  if (!phoneNumber) {
-    response.redirect("login");
-  }
-  if (!password) {
-    response.redirect("login");
-  }
-  if (!repeatPassword) {
-    response.redirect("login");
-  }
-
+  var name = request.body.name;
+  var email = request.body.email;
+  var role = request.body.role || "";
+  var password = request.body.password;
+  var repeatPassword = request.body.repeatPassword;
+  var phoneNumber = request.body.phoneNumber;
+  console.log(name);
+  console.log(email);
+  console.log(phoneNumber);
+  console.log(password);
+  console.log(repeatPassword);
   var sql = require("mssql");
   var sqlRequest = new sql.Request();
   var query =
@@ -139,11 +127,12 @@ app.post("/register", (request, response) => {
     "', '" +
     password +
     "', 0)";
-  sqlRequest.query(query, (err, results) => {
+  console.log(query);
+  /**sqlRequest.query(query, (err, results) => {
     if (err) throw err;
     console.log("Number of records inserted: " + results.affectedRows);
     response.redirect("login");
-  });
+  });**/
 });
 
 app.get("/book/:roomId", (request, response) => {

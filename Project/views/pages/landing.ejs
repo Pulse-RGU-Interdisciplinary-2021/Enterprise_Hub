@@ -12,6 +12,7 @@
     <!--Script repository, with jQuery and links to javascript files-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="./scripts/browseradapt.js"></script>
+    <script src="./scripts/loginRegisterCalls.js"></script>
 </head>
 
 
@@ -62,16 +63,16 @@
                     <div class="form-heading">
                         <label for="email">Email : </label>
                     </div>
-                    <input type="text" placeholder="Enter Email" name="email" required>
+                    <input id="emailLogin" type="text" placeholder="Enter Email" name="email" required>
                     </p>
                     <p>
                     <div class="form-heading">
                         <label for="psw">Password : </label>
                     </div>
-                    <input type="password" placeholder="Enter Password" name="psw" required>
+                 <input id="pswLogin" type="password" placeholder="Enter Password" name="psw" required>
                     </p>
-                    <p style="font-size: small; text-align: center;color: red;">
-                        <%= message %>
+                    <p  id="errMessage" style="font-size: small; text-align: center;color: red;">
+                        
                     </p>
                     <label>
                         <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
@@ -80,7 +81,7 @@
                     <div class="clearfix">
                         <button type="button" onclick="document.getElementById('id01').style.display='none'"
                             class="cancelbtn">Cancel</button>
-                        <button type="submit" class="login">Login</button>
+                        <button type="button" class="login" id="login">Login</button>
                     </div>
                 </form>
                 <hr>
@@ -91,34 +92,34 @@
                     <div class="form-heading">
                         <label for="firstName">First Name :</label>
                     </div>
-                    <input type="text" placeholder="Enter First Name" name="firstname" required></p>
+                    <input id="firstName" type="text" placeholder="Enter First Name" name="firstname" required></p>
 
                     <p>
                     <div class="form-heading"><label for="surname">
                             Surname : </label></div>
-                    <input type="text" placeholder="Enter Surname" name="surname" required></p>
+                    <input id="surname" type="text" placeholder="Enter Surname" name="surname" required></p>
 
 
                     <p>
                     <div class="form-heading">
                         <label for="email">Email : </label>
                     </div>
-                    <input type="text" placeholder="Enter Email" name="email" required>
+                    <input id="emailRegister" type="text" placeholder="Enter Email" name="email" required>
 
                     <p>
                     <div class="form-heading"><label for="telno">
                             Phone Number : </label></div>
-                    <input type="text" placeholder="Enter Phone Number" name="telno" required></p>
+                    <input id="phoneNumber" type="text" placeholder="Enter Phone Number" name="telno" required></p>
 
                     <p>
                     <div class="form-heading"><label for="psw">
                             Password : </label></div>
-                    <input type="password" placeholder="Enter Password" name="psw" required></p>
+                    <input id="pswRegister" type="password" placeholder="Enter Password" name="psw" required></p>
 
                     <div class="form-heading">
                         <label for="psw-repeat">Confirm Password : </label>
                     </div>
-                    <input type="password" placeholder="Confirm Password" name="psw-conform" required></p>
+                    <input id="confirmPsw" type="password" placeholder="Confirm Password" name="psw-conform" required></p>
 
 
                     <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.
@@ -127,7 +128,7 @@
                     <div class="clearfix">
                         <button type="button" onclick="document.getElementById('id01').style.display='none'"
                             class="cancelbtn">Cancel</button>
-                        <button type="submit" class="signup">Sign Up</button>
+                        <button type="button" class="signup" id="register">Sign Up</button>
                     </div>
                 </form>
             </div>
