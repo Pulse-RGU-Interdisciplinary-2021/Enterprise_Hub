@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="./style/styles.css">
+    <link rel="stylesheet" type="text/css" href="./style/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
@@ -23,37 +24,8 @@
         <%- include ("../partials/header") %>
     </header>
     <img class="landing-text-image" src="./images/EIG Background Text.png">
-    
-    <div class="BackgroundImage">
-        <!--Image of enterprise space-->
-        <img src="./images/LandingPageContent.png" id="HomeContent" />
-    </div>
 
-    <div class="navBar">
-        <!---Header Bar, where links are overlaid--->
-        <img src="./images/EIG_Banner.png" id="navBanner" />
-    </div>
-
-    <div class="RGULogo">
-        <!--Official RGU Logo-->
-        <img src="./images/RGULogo.png" class="RguPic" />
-    </div>
-
-    <div class="ProfilePic">
-        <!--Login Button/Profile Pic-->
-        <img src="./images/ProfilePic.png" class="ProfileImage" />
-    </div>
-
-    <div class="LowerBar">
-        <!--Lower bar place over lower portion of image, giving the shape
-           required for page layout/area for book button to be placed-->
-        <img src="./images/BaseBarHomepage.png" id="BaseBar" />
-    </div>
-
-    <!--Button to direct verified logged in users to the booking page
-        Button opens modal to sign in/register if a user isn't signed in-->
-
-    <button class="show btn"><img src="./images/BookButton.png" id="BookButtonImg" /></button>
+   <!-- <button class="show btn"><img src="./images/BookButton.png" id="BookButtonImg" /></button>-->
 
 
     <!-- Login/Register Modal -->
@@ -141,17 +113,15 @@
         </div>
 
     </div>
-    <!--</div>-->
-
-    <script src="./scripts/modal.js"></script>
 
     <footer>
         <%- include ("../partials/footer") %>
-        <button class="booknow-button">
+        <button class="show booknow-button">
             <img src="./images/BookButton.png" id="BookButtonImg"/>
         </button>
     </footer>
-
+    
+    <script src="./scripts/modal.js"></script>
 </body>
 
 </html>

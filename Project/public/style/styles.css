@@ -59,15 +59,15 @@ body {
 
   .header-logo {
     position: absolute;
-    left: 20;
-    padding-top: 16px;;
+    left: 1.25rem;
+    padding-top: 1rem;
     height: 50%;
     z-index: 2;
   }
 
   .header-profile {
     position: absolute;
-    right: 30;
+    right: 1.875rem;
     height: 43%;
     z-index: 2;
   }
@@ -93,8 +93,8 @@ body {
 
   .booknow-button {
     position: absolute;
-    right: 40;
-    bottom: 20;
+    right: 2.5rem;
+    bottom: 1.25rem;
     z-index: 3;
     background: #009FEE;
     border: 0px;

@@ -4,6 +4,8 @@ var session = require("express-session");
 var flash = require("connect-flash");
 var functions = require("./functions");
 const https = require("http");
+let startingHour = "2021-10-30 10:00:00.000"
+let endingHour = "2021-10-30 12:00:00.000"
 
 app.use(
   session({
@@ -43,6 +45,10 @@ app.get("/", function (req, res) {
 
 app.get('/landing', function (req, res) {
     res.render('pages/landing');
+});
+
+app.get('/calendar', function (req, res) {
+    res.render('pages/calendar');
 });
 
 app.get('/booking', function (req, res) {
@@ -156,8 +162,6 @@ app.get("/book/:roomId", (request, response) => {
         roomName = data[0].room_name;        
         functions.getRoomFeatures(roomId, (result) =>{
           data = result;
-          let startingHour = "2021-10-30 10:00:00.000"
-          let endingHour = "2021-10-30 12:00:00.000"
           functions.getRemainingDesks(startingHour, endingHour, roomId, (result) => {
             desks = result;
             response.render("pages/login", { message: "",  data: data, roomName: roomName, desks: desks, roomId: request.params.roomId });
