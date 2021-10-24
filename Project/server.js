@@ -110,11 +110,6 @@ app.post("/register", (request, response) => {
   var password = request.body.password;
   var repeatPassword = request.body.repeatPassword;
   var phoneNumber = request.body.phoneNumber;
-  console.log(name);
-  console.log(email);
-  console.log(phoneNumber);
-  console.log(password);
-  console.log(repeatPassword);
   var sql = require("mssql");
   var sqlRequest = new sql.Request();
   var query =
@@ -127,7 +122,6 @@ app.post("/register", (request, response) => {
     "', '" +
     password +
     "', 0)";
-  console.log(query);
   /**sqlRequest.query(query, (err, results) => {
     if (err) throw err;
     console.log("Number of records inserted: " + results.affectedRows);

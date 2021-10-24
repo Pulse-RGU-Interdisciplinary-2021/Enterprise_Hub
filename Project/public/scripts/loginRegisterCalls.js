@@ -46,6 +46,6 @@ function register() {
         repeatPassword: confirmPassword,
         phoneNumber: phoneNumber
     }, (res) => {
-        console.log('res');
+        console.log(res);
     });
 }
