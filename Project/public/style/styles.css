@@ -1,5 +1,10 @@
+@font-face {
+    font-family: Gordon;
+    src:url("../font/Gordon.ttf");
+}
+
 body {
-    font-family: ZonaPro-Bold,helvetica,arial,sans-serif;
+  font-family: Gordon;
 }
 
 .footer {
@@ -133,4 +138,5 @@ body {
 .booking-room {
     width: 100%;
     height: 300px;
+    background-color:darkcyan;
 }

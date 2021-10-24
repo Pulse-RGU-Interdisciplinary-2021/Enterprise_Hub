@@ -1,6 +1,7 @@
 <link href="./style/styles.css" rel="stylesheet" type="text/css">
 <script src="./scripts/booking.js"></script>
-
+<script src="https://use.fontawesome.com/43bcdf0edc.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/solid.min.css">
 <div id="dp"></div>
 
 <body style="padding:0px; margin:0px;">
@@ -88,16 +89,49 @@
                 </div>
             </th>
         </tr>
-        <tr>
-            <th>
-                <table style="width: 100%;">
+        <tr style="vertical-align: top;">
+            <td>
+                <table style="width: 80%; table-layout: fixed; margin: auto;">
                     <tr>
-                        <th>
-                            <%- include ("../partials/fullcalendar") %>
-                        </th>
+                        <td style="width: 33%; padding: 7px;">
+                            <div style="background-color: #0072bc; padding: 4px;">
+                                <img src="./images/Innovation-Station.jpg" style="width: 100%;">
+                                <div style="height: 30%; background-color: green; color: white; font-size: large; text-align:left; padding: 10px;">
+                                    20 free desk(s) available
+                                </div>
+                                <div style="height: 30%; color: white; font-size: x-large; padding: 10px; display: flex; justify-content: space-between;">
+                                    Innovation Station
+                                    <span class="fas fa-arrow-right"></span>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="width: 33%; padding: 7px;">
+                            <div style="background-color: #0072bc; padding: 4px;">
+                                <img src="./images/Innovation-Schoolhill-Interior.jpg" style="width: 100%;">
+                                <div style="height: 30%; background-color:peru ; color: white; font-size: large; text-align:left; padding: 10px;">
+                                    6 free desk(s) available
+                                </div>
+                                <div style="height: 30%; color: white; font-size: x-large; padding: 10px; display: flex; justify-content: space-between;">
+                                    ONE Tech Hub
+                                    <span class="fas fa-arrow-right"></span>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="width: 33%; padding: 7px;">
+                            <div style="background-color:slategrey; padding: 4px;">
+                                <img src="./images/Innovation-Station.jpg" style="width: 100%;">
+                                <div style="height: 30%; background-color: red; color: white; font-size: large; text-align:left; padding: 10px;">
+                                    Unavailable
+                                </div>
+                                <div style="height: 30%; color: white; font-size: x-large; padding: 10px; display: flex; justify-content: space-between;">
+                                    Room 3
+                                    <span class="fas fa-ban"></span>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                 </table>
-            </th>
+            </td>
         </tr>
     </table>
 
