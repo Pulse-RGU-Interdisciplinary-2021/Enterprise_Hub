@@ -41,8 +41,17 @@ app.get("/", function (req, res) {
   res.render("pages/index", { message: "" });
 });
 
-app.get("/allBookings", function (req, res) {
-  res.render("pages/allBookings");
+app.get('/landing', function (req, res) {
+    res.render('pages/landing');
+});
+
+app.get('/booking', function (req, res) {
+    res.render('pages/booking');
+});
+
+
+app.get('/allBookings', function (req, res) {
+    res.render('pages/allBookings');
 });
 
 app.get("/bookingRequests", function (req, res) {

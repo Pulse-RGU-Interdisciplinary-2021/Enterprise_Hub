@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="./style/style.css">
+    <link rel="stylesheet" type="text/css" href="./style/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
@@ -16,8 +16,14 @@
 </head>
 
 
-<body>
+<body class="landing">
 
+    
+    <header>
+        <%- include ("../partials/header") %>
+    </header>
+    <img class="landing-text-image" src="./images/EIG Background Text.png">
+    
     <div class="BackgroundImage">
         <!--Image of enterprise space-->
         <img src="./images/LandingPageContent.png" id="HomeContent" />
@@ -139,10 +145,11 @@
 
     <script src="./scripts/modal.js"></script>
 
-
-    <footer id="PageFooter">
-        <!--Footer block - sitemap could go here-->
-        <a href="#"></a>
+    <footer>
+        <%- include ("../partials/footer") %>
+        <button class="booknow-button">
+            <img src="./images/BookButton.png" id="BookButtonImg"/>
+        </button>
     </footer>
 
 </body>
