@@ -1,4 +1,7 @@
 <link href="./style/styles.css" rel="stylesheet" type="text/css">
+<script src="./scripts/booking.js"></script>
+
+<div id="dp"></div>
 
 <body style="padding:0px; margin:0px;">
     <header>
@@ -87,7 +90,13 @@
         </tr>
         <tr>
             <th>
-                Place booking thingy here
+                <table style="width: 100%;">
+                    <tr>
+                        <th>
+                            <%- include ("../partials/fullcalendar") %>
+                        </th>
+                    </tr>
+                </table>
             </th>
         </tr>
     </table>
