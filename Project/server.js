@@ -55,6 +55,10 @@ app.get('/booking', function (req, res) {
     res.render('pages/booking');
 });
 
+app.get('/room', function (req, res) {
+  res.render('pages/room');
+});
+
 
 app.get('/allBookings', function (req, res) {
     res.render('pages/allBookings');
