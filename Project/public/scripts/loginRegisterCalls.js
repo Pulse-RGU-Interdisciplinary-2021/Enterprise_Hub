@@ -10,6 +10,7 @@ function addEventListeners() {
         login();
     });
     registerButton.on('click', () => {
+        console.log('in');
         register();
     });
 }
