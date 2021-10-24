@@ -1,22 +1,3 @@
-<<<<<<< HEAD
-{
-  "name": "project",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
-  "author": "Pulse",
-  "license": "ISC",
-  "dependencies": {
-    "ejs": "^3.1.6",
-    "express": "^4.17.1",
-    "node": "^16.10.0"
-  }
-}
-=======
 {
   "name": "project",
   "version": "1.0.0",
@@ -36,4 +17,3 @@
     "node": "^16.10.0"
   }
 }
->>>>>>> JonNukeArea

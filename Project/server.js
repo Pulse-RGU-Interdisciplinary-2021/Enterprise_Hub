@@ -137,11 +137,11 @@ app.post("/register", (request, response) => {
     "', '" +
     password +
     "', 0)";
-  /**sqlRequest.query(query, (err, results) => {
+  sqlRequest.query(query, (err, results) => {
     if (err) throw err;
     console.log("Number of records inserted: " + results.affectedRows);
     response.redirect("login");
-  });**/
+  });
 });
 
 app.get("/book/:roomId", (request, response) => {
