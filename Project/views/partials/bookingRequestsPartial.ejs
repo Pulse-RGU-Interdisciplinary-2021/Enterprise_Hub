@@ -1,0 +1,12 @@
+<%
+    if(userData.recordset.length!=0){
+        for(var i = 0;i < userData.recordset.length; i++) {
+%>
+<!--Temporary layout-->
+<h1>Booking <%=i; %></h1>
+<p>From <%=userData.recordset[i].start_datetime%> to <%=userData.recordset[i].end_datetime%></p>
+<p><%=userData.recordset[i].pending%></p>
+<%  } %>
+<% } else{ %>
+    <p>NO data</p>
+<% } %>

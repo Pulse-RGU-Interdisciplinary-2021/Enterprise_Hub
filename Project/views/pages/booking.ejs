@@ -1,0 +1,107 @@
+<link href="./style/styles.css" rel="stylesheet" type="text/css">
+<script src="./scripts/booking.js"></script>
+
+<div id="dp"></div>
+
+<body style="padding:0px; margin:0px;">
+    <header>
+        <%- include ("../partials/header") %>
+    </header>
+
+
+    <table class="booking-table">
+        <tr style="height: 250px;">
+            <th>
+                <div class="booking-top-tr" style="padding-top: 100px;;">
+                    <h1>Create a booking</h1>
+                    <p>Select a time slot and a room below to begin</p>
+                </div>
+            </th>
+        </tr>
+        <tr style="height: 100px;">
+            <th style="background-color: #d0eaf8;">
+                <div class="booking-top-tr">
+                    <table style="width: 100%;">
+                        <tr>
+                            <th>
+                                <input class="booking-input-text" type="text" placeholder="Please select date">
+                            </th>
+                            <th>
+                                <select class="booking-input-text" required>
+                                    <option value="coffee">01:00</option>
+                                    <option value="coffee">02:00</option>
+                                    <option value="coffee">03:00</option>
+                                    <option value="coffee">04:00</option>
+                                    <option value="coffee">05:00</option>
+                                    <option value="coffee">06:00</option>
+                                    <option value="coffee">07:00</option>
+                                    <option value="coffee">08:00</option>
+                                    <option value="coffee">09:00</option>
+                                    <option value="coffee">10:00</option>
+                                    <option value="coffee">11:00</option>
+                                    <option value="coffee">12:00</option>
+                                    <option value="coffee">13:00</option>
+                                    <option value="coffee">14:00</option>
+                                    <option value="coffee">15:00</option>
+                                    <option value="coffee">16:00</option>
+                                    <option value="coffee">17:00</option>
+                                    <option value="coffee">18:00</option>
+                                    <option value="coffee">19:00</option>
+                                    <option value="coffee">20:00</option>
+                                    <option value="coffee">21:00</option>
+                                    <option value="coffee">22:00</option>
+                                    <option value="coffee">23:00</option>
+                                </select>
+                            </th>
+                            <th>
+                                <select class="booking-input-text" required>
+                                    <option value="coffee">01:00</option>
+                                    <option value="coffee">02:00</option>
+                                    <option value="coffee">03:00</option>
+                                    <option value="coffee">04:00</option>
+                                    <option value="coffee">05:00</option>
+                                    <option value="coffee">06:00</option>
+                                    <option value="coffee">07:00</option>
+                                    <option value="coffee">08:00</option>
+                                    <option value="coffee">09:00</option>
+                                    <option value="coffee">10:00</option>
+                                    <option value="coffee">11:00</option>
+                                    <option value="coffee">12:00</option>
+                                    <option value="coffee">13:00</option>
+                                    <option value="coffee">14:00</option>
+                                    <option value="coffee">15:00</option>
+                                    <option value="coffee">16:00</option>
+                                    <option value="coffee">17:00</option>
+                                    <option value="coffee">18:00</option>
+                                    <option value="coffee">19:00</option>
+                                    <option value="coffee">20:00</option>
+                                    <option value="coffee">21:00</option>
+                                    <option value="coffee">22:00</option>
+                                    <option value="coffee">23:00</option>
+                                </select>
+                            </th>
+                            <th>
+                                <button class="booking-input-button">SEARCH</button>
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <table style="width: 100%;">
+                    <tr>
+                        <th>
+                            <%- include ("../partials/fullcalendar") %>
+                        </th>
+                    </tr>
+                </table>
+            </th>
+        </tr>
+    </table>
+
+    <footer>
+        <%- include ("../partials/footer") %>
+    </footer>
+</body>
