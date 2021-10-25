@@ -40,7 +40,7 @@ var db = require("./public/scripts/database");
 var queries = require("./public/scripts/dbQueries");
 
 app.get("/", function (req, res) {
-  res.render("pages/loadingChairs", { message: "" });
+  res.redirect("/login");
 });
 
 app.get('/landing', function (req, res) {
@@ -53,6 +53,10 @@ app.get('/calendar', function (req, res) {
 
 app.get('/booking', function (req, res) {
     res.render('pages/booking');
+});
+
+app.get('/room', function (req, res) {
+  res.render('pages/room');
 });
 
 

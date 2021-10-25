@@ -1,5 +1,15 @@
+@font-face {
+  font-family: Gordon;
+  src:url("../fonts/Gordon.ttf");
+}
+
 body {
-    font-family: ZonaPro-Bold,helvetica,arial,sans-serif;
+  font-family: Gordon;
+  padding-top: 120px;;
+  margin-bottom: 100px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
 }
 
 .footer {
@@ -31,46 +41,69 @@ body {
 }
 
 .header {
-    position: fixed;
+    position: absolute;
     left: 0;
     top: 0;
     width: 100%;
-    text-align: center;
-    padding: 10px;
-    height: 100px;
+    height: 120px;
   }
   
   .header-inner {
       background-color: #006b99;
-      height: 59%;
+      top: 0px;
+      left: 0px;
+      height: 70px;
       width: 100%;
       position: absolute;
-      top: 0;
-      left: 0;
+      overflow: hidden;
   }
   
   .header-image {
       position: absolute;
-      left: 0;
       top: 0;
-      height: 100%;
+      height: 120px;
       z-index: 1;
+      overflow: hidden;
+      pointer-events: none;
   }
 
   .header-logo {
     position: absolute;
     left: 1.25rem;
-    padding-top: 1rem;
-    height: 50%;
+    padding-top: 1.5rem;
+    height: 60%;
     z-index: 2;
   }
 
   .header-profile {
     position: absolute;
-    right: 1.875rem;
-    height: 43%;
+    right: 0.4rem;
+    padding-top: 0.4rem;
+    height: 50%;
     z-index: 2;
   }
+
+  /* Add a black background color to the top navigation */
+.topnav {
+  margin-top: 70px;
+  background-color: #004968;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: right;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 16px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  text-decoration: underline;
+}
 
   .landing {
       margin: 0px;
