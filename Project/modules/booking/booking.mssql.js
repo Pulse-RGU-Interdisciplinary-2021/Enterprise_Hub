@@ -1,3 +1,4 @@
+const { start } = require('repl');
 const mssqlcon = require('../../dbconnection.js');
 const booking = require('./booking.js');
 
@@ -69,6 +70,18 @@ class BookingMSSql {
         var query = 'select count(desks) as \'deskn\' from bookings where ((room_id = ' + roomId + ') and (((start_datetime <= \'' + startDateTime + '\') and (\'' + startDateTime + '\' < end_datetime)) or ((end_datetime >= \'' + endDateTime + '\') and (\'' + endDateTime + '\' > start_datetime))))'
         const res = await conn.request().query(query);
         console.log(res.recordset[0])
+        return res.recordset;
+    }
+
+    async getBookingByDateTimeRange(startDateTime, endDateTime){
+        const conn = await mssqlcon.getConnection();
+        const res = await conn.request().query('select * from bookings where start_datetime > \'' + startDateTime + '\' and end_datetime < \'' + endDateTime + '\'');
+        return res.recordset;
+    }
+
+    async getBookingByRoomIdAndDateTimeRange(id, startDateTime, endDateTime){
+        const conn = await mssqlcon.getConnection();
+        const res = await conn.request().query('select * from bookings where room_id = ' + id + ' and start_datetime > \'' + startDateTime + '\' and end_datetime < \'' + endDateTime + '\'');
         return res.recordset;
     }
 
