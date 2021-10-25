@@ -31,9 +31,7 @@ body {
 
 .footer-image {
     position: absolute;
-    right: -870;
-    /* Height is not actually necessary, 
-    but can be used to change blue highlight width */
+    right: -770px;
     height: 100%;
     z-index: 1;
 }
@@ -128,7 +126,7 @@ body {
     right: 2.5rem;
     bottom: 1.25rem;
     z-index: 3;
-    background: #009FEE;
+    background: #006b99;
     border: 0px;
   }
 
