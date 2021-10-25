@@ -40,7 +40,7 @@ var db = require("./public/scripts/database");
 var queries = require("./public/scripts/dbQueries");
 
 app.get("/", function (req, res) {
-  res.render("pages/index", { message: "" });
+  res.render("pages/loadingChairs", { message: "" });
 });
 
 app.get('/landing', function (req, res) {
