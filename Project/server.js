@@ -40,7 +40,7 @@ var db = require("./public/scripts/database");
 var queries = require("./public/scripts/dbQueries");
 
 app.get("/", function (req, res) {
-  res.render("pages/index", { message: "" });
+  res.redirect("/login");
 });
 
 app.get('/landing', function (req, res) {
@@ -53,6 +53,10 @@ app.get('/calendar', function (req, res) {
 
 app.get('/booking', function (req, res) {
     res.render('pages/booking');
+});
+
+app.get('/room', function (req, res) {
+  res.render('pages/room');
 });
 
 
@@ -137,11 +141,11 @@ app.post("/register", (request, response) => {
     "', '" +
     password +
     "', 0)";
-  /**sqlRequest.query(query, (err, results) => {
+  sqlRequest.query(query, (err, results) => {
     if (err) throw err;
     console.log("Number of records inserted: " + results.affectedRows);
     response.redirect("login");
-  });**/
+  });
 });
 
 app.get("/book/:roomId", (request, response) => {
