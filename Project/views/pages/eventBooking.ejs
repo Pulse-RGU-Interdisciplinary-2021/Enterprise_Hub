@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<head>
+    <meta charset="utf-8">
+    <title>Login Form Tutorial</title>
+    <style>
+        .login-form {
+            width: 300px;
+            margin: 0 auto;
+            font-family: Tahoma, Geneva, sans-serif;
+        }
+
+        .login-form h1 {
+            text-align: center;
+            color: #4d4d4d;
+            font-size: 24px;
+            padding: 20px 0 20px 0;
+        }
+
+        .login-form input[type="password"],
+        .login-form input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #dddddd;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        .login-form input[type="submit"] {
+            width: 100%;
+            padding: 15px;
+            background-color: #535b63;
+            border: 0;
+            box-sizing: border-box;
+            cursor: pointer;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        textarea {
+            resize: none;
+            transform: translate(-25%, 0);
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-form">
+        <h1><%= roomName %></h1>
+        <form action="<%= roomId %>" method="POST">
+            <p>Aminities:</p>
+            <ul>
+                <%for(var i = 0; i < data.length; i++){ %>
+                    <li> <%= data[i].feature_desc %> </li>
+                <% } %>
+            </ul>
+            <label for="organization">Which organization?</label>
+            <input type="text" name="organization" placeholder="RGU" required>
+            <label for="ta_reason">Reason for event booking</label>
+            <textarea name="reason" id="ta_reason" cols="70" rows="10" required></textarea>
+            <input type="submit" value="Book">
+        </form>
+    </div>
+</body>
+
+</html>

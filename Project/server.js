@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 var session = require("express-session");
 var flash = require("connect-flash");
+var nodemailer = require('nodemailer');
 var functions = require("./functions");
 const https = require("http");
 let startingHour = "2021-10-30 10:00:00.000"
@@ -191,6 +192,56 @@ app.post("/book/:roomId", (request, response) => {
     console.log(res);
   });
 });
+
+app.get("/eventBooking/:roomId", (request, response) => {
+  let roomId = request.params.roomId;
+  let capacity = 0;
+  let desks = 0;
+  let data= "";
+  let roomName = "";
+  https.get("http://localhost:4000/api/v1/rooms/Id/ " + roomId, (resp) => {
+      // A chunk of data has been received.
+      resp.on("data", (chunk) => {
+        data += chunk;
+      });
+      // The whole response has been received. Print out the result.
+      resp.on("end", () => {
+        data = JSON.parse(data);
+        capacity = data[0].max_capacity;
+        roomName = data[0].room_name;        
+        functions.getRoomFeatures(roomId, (result) =>{
+          data = result;
+          response.render("pages/eventBooking", {data: data, roomName: roomName, roomId: roomId });
+        });
+      });
+    }).on("error", (err) => {
+    console.log("Error: " + err.message);
+  });
+});
+
+app.post("/eventBooking/:roomId", (request, response) => {
+  let roomId = request.params.roomId;
+  let organization = request.body.organization; 
+  let reason = request.body.reason;
+  let userId = request.session.username;
+  console.log(organization + "event booking why? " + reason);
+  let sql = require("mssql");
+  let sqlRequest = new sql.Request();
+  let getDesks = "select max_desks from rooms where id = '"+ roomId+ "'";
+  sqlRequest.query(getDesks, (err, res) => {
+    if(err) throw err;
+    let desks = res.recordset[0].max_desks;
+    let query = `
+    insert into bookings(`+ roomId +`,`+ userId +`,2021-10-30 10:00:00.000, 2021-10-30 12:00:00.000,`+ desks +`, `+ reason +` , 1,0,1, null, null);
+  `
+   sqlRequest.query(query, (err, res) => {
+      if(err) throw err;
+      console.log(success);
+      response.render("pages/insights", {rooId: roomId});
+   });
+  });
+});
+
 app.use("/queries", queries);
 
 app.use(function (req, res) {
