@@ -215,7 +215,7 @@ function formatCurrentBooking(date, roomName, bookingType, reason, status, butto
 
 }
 
-function cancelBooking(bookingId){//not tested
+async function cancelBooking(bookingId){//not tested
     var output
     await $.post("/api/v1/bookings/delete/" + userId, await function (data) {
         output = data

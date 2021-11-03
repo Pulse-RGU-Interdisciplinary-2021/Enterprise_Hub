@@ -5,7 +5,7 @@ var sql = require("mssql");
 var config = {
     user: 'sa',
     password: 'P@55w0rd',
-    server: '84.71.208.86',
+    server: '84.71.233.120',
     database: 'EIGBooking',
     options: {
         trustServerCertificate: true

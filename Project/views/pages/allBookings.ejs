@@ -1,22 +1,51 @@
 <!DOCTYPE html>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="./scripts/allBookings.js"></script>
-
 <html>
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./style/styles.css">
+    <link rel="stylesheet" type="text/css" href="./style/allBookings.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./scripts/allBookings.js"></script>
+</head>
+
+
 <body>
-    <h1>All Bookings page</h1>
-    
-    <p>Filter by:</p>
-    <select onchange="filterOptionSelected(this)">
-        <option selected disabled hidden>Choose here</option>
-        <option>Date and time</option>
-        <option>User's name</option>
-        <option>Room name</option>
-    </select>
-    <div id = "filterResult"></div>
-    <div id = "results"></div>
+    <header>
+        <%- include ("../partials/header") %>
+    </header>
+
+    <div id="allBookingsTitle">
+    <h1>All bookings</h1>
+    <p>All the bookings made my users</p></div>
+
+    <div id="filterTypeSelect">
+        <p>Filter by:</p>
+        <select onchange="filterOptionSelected(this)">
+            <option selected disabled hidden>Choose here</option>
+            <option>Date and time</option>
+            <option>User's name</option>
+            <option>Room name</option>
+        </select>
+        <div id="filterResult"></div>
+    </div>
+    <div id="mainContent">
+        
+    </div>
+    <!--
+    <div id="results">
+        <div id="upcomingBookings" class="bookingsContainer">
+            <p class="typeOfBookingTitle">Upcoming Bookings</p>
+        </div>
+        <div id="pastBookings" class="bookingsContainer">
+            <p class="typeOfBookingTitle">Past Bookings</p>
+        </div>
+    </div>-->
+
+    <footer>
+        <%- include ("../partials/footer") %>
+    </footer>
 </body>
 
 </html>

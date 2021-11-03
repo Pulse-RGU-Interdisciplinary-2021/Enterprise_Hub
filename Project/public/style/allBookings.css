@@ -1,24 +1,42 @@
-html {
-    scroll-behavior: smooth;
+#allBookingsTitle {
+    text-align: left;
+    width: 80%;
+    margin: auto;
 }
 
-/*#mainContent {
-    display: grid;
-    grid-template-columns: 10% 90%;
+#filterTypeSelect {
+    background-color: #d0eaf8;
+    font-size: 2.5vh;
+}
+#filterTypeSelect select, #filterTypeSelect input{
+    padding: 1vh 3vw;
+    box-sizing: border-box;
+    display: inline-block;
+    font-size: 2vh;
 }
 
-#bookingsSectionContentDiv {
-    grid-column: 2;
-    grid-row: 1;
-    border-left: 1px solid rgb(177, 177, 177);
-}*/
+#filterTypeSelect p, #filterTypeSelect label{
+    display: inline-block;
+    padding-left: 2vw;
+    padding-right: 1vw;
+}
+
+#filterResult{
+    display: inline-block;
+}
+
+.typeOfBookingTitle {
+    background-color: #d0eaf8;
+    width: 100%;
+    font-size: 3vh;
+    text-align: center;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 #navSectionDiv {
-    /*grid-column: 1;
-    grid-row: 1;
-    position: sticky;
-    top: 2rem;
-    align-self: start;*/
     position: sticky;
     width: 100%;
     top: 0;
@@ -35,12 +53,6 @@ html {
     list-style: none;
 }
 
-/**
-#navSectionDiv li.active > a {
-    color: #009fee;
-    font-weight: 500;
-}*/
-
 #navSectionDiv a {
     text-decoration: none;
     display: block;
@@ -49,7 +61,7 @@ html {
     /* 💡 This small transition makes setting of the active state smooth */
 }
 
-.bookingDiv {
+.infoPendingBookingsDiv {
     background: #f7f7f7;
     padding: 2vw;
     box-shadow: 10px 5px 5px grey;
@@ -61,25 +73,8 @@ html {
     margin-right: auto;
 }
 
-#myBookingsTitle {
-    text-align: left;
-    width: 80%;
-    margin: auto;
-}
-
-.dateText {
+.userName, .dateText {
     font-size: 2.3vh;
-}
-
-.typeOfBookingTitle {
-    background-color: #d0eaf8;
-    width: 100%;
-    font-size: 3vh;
-    text-align: center;
-    height: 10vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .cancelButton {
@@ -107,7 +102,7 @@ html {
         display: grid;
         grid-template-columns: 10% 90%;
     }
-    #myBookingsTitle, #bookingsSectionContentDiv {
+    #results {
         grid-column: 2;
         grid-row: 1;
     }
