@@ -1,12 +1,47 @@
-
 <!DOCTYPE html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="./scripts/myBookingsLoad.js"></script>
-<link rel="stylesheet" type="text/css" id="styleCSS" href="./style/myBookings.css">
 <html>
-<h1>My Bookings page</h1>
-    <body>
-        <div id="myBookingsDiv"></div>
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./style/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./scripts/myBookingsLoad.js"></script>
+    <link rel="stylesheet" type="text/css" id="styleCSS" href="./style/myBookings.css">
+</head>
+
+<body id="myBookingsBody">
+    <header>
+        <%- include ("../partials/header") %>
+    </header>
+
+    <div id="myBookingsTitle">
+        <h1>My Bookings</h1>
+        <p>All the bookings made from your account</p>
+    </div>
+    <div id="mainContent">
+        <nav id="navSectionDiv">
+            <ul>
+                <li class = "navLi" id="upcomingBookingsNav"><a href="#upcomingBookings">Upcoming Bookings</a></li>
+                <li class = "navLi" id="pastBookingsNav"><a href="#pastBookings">Past Bookings</a></li>
+            </ul>
+        </nav>
+
+        <div id="bookingsSectionContentDiv">
+            <div id="myBookingsDiv">
+                <div id="upcomingBookings" class="bookingsContainer">
+                    <p class="typeOfBookingTitle">Upcoming Bookings</p>
+                </div>
+                <div id="pastBookings" class="bookingsContainer">
+                    <p class="typeOfBookingTitle">Past Bookings</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <%- include ("../partials/footer") %>
+    </footer>
+
+</body>
 
 </html>
