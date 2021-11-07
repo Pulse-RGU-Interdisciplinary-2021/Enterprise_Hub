@@ -52,6 +52,10 @@ app.get('/calendar', function (req, res) {
     res.render('pages/calendar');
 });
 
+app.get('/Type', function (req, res) {
+  res.render('pages/type');
+});
+
 app.get('/booking', function (req, res) {
     res.render('pages/booking');
 });

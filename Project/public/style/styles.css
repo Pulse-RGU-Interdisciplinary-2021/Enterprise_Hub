@@ -164,3 +164,31 @@ body {
     width: 100%;
     height: 300px;
 }
+
+.tab-style {
+  background-color: #c4a1c9;
+  transform: skewX(-45deg);
+  min-width: 30%;
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  padding: 1.25rem;
+  margin: .75rem;
+}
+
+.tab-style:hover {
+  background-color:#712177;
+}
+
+.tab-style span{
+  display: inline-block;
+  transform: skewX(45deg);
+  font-size:x-large;
+  pointer-events: none;
+  user-select: none;
+  color: black;
+}
+
+.tab-style:hover span{
+  color: white;
+}
