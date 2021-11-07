@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="./style/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./scripts/loadBookingRequests.js"></script>
+    <script src="./scripts/loadUsersRequests.js"></script>
+    <script src="./scripts/pendingRequests.js"></script>
+    <link rel="stylesheet" type="text/css" id="styleCSS" href="./style/pendingRequests.css">
+</head>
+
+
+<body>
+    <header>
+        <%- include ("../partials/header") %>
+    </header>
+
+    <div id="pendingRequestsTitle">
+        <h1>Pending Requests</h1>
+        <p>Booking or account approval requests that have not been approved or denied yet</p>
+    </div>
+
+    <div class="tab">
+        <button class="tablinks" id="accountsTabButton" onclick="tabChanged(event, 'Accounts')">Accounts</button>
+        <button class="tablinks" id="bookingsTabButton" onclick="tabChanged(event, 'Bookings')">Bookings</button>
+        <button class="tablinks" id="eventsTabButton" onclick="tabChanged(event, 'Events')">Events</button>
+    </div>
+
+    <div id="Accounts" class="tabcontent">
+        <h1>Pending Accounts</h1>
+    </div>
+
+    <div id="Bookings" class="tabcontent">
+        <h1>Pending Bookings</h1>
+    </div>
+
+    <div id="Events" class="tabcontent">
+        <h1>Pending Events</h1>
+    </div>
+
+    <!--<div id="pendingBookingsDiv">
+    </div>-->
+
+    <footer>
+        <%- include ("../partials/footer") %>
+    </footer>
+</body>
+
+</html>
