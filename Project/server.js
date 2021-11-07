@@ -227,8 +227,7 @@ app.post("/eventBooking/:roomId", (request, response) => {
   let roomId = request.params.roomId;
   let organization = request.body.organization; 
   let reason = request.body.reason;
-  let userId = request.session.username;
-  console.log(organization + "event booking why? " + reason);
+  let userId = request.session.username || 5;
   let sql = require("mssql");
   let sqlRequest = new sql.Request();
   let getDesks = "select max_desks from rooms where id = '"+ roomId+ "'";
@@ -236,11 +235,11 @@ app.post("/eventBooking/:roomId", (request, response) => {
     if(err) throw err;
     let desks = res.recordset[0].max_desks;
     let query = `
-    insert into bookings(`+ roomId +`,`+ userId +`,2021-10-30 10:00:00.000, 2021-10-30 12:00:00.000,`+ desks +`, `+ reason +` , 1,0,1, null, null);
+    insert into bookings values(`+ roomId +`,`+ userId +`,'2021-10-30 10:00:00.000', '2021-10-30 12:00:00.000',`+ desks +`, '`+ organization+ ": "+ reason +`' , 0,0,1, null, 1);
   `
    sqlRequest.query(query, (err, res) => {
       if(err) throw err;
-      console.log(success);
+      console.log('success');
       response.render("pages/insights", {rooId: roomId});
    });
   });
