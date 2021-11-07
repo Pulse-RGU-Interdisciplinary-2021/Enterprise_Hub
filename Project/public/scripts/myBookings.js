@@ -74,6 +74,7 @@ async function addBookings(allBookingsByUser, isUpcoming) {
         var currentBooking = document.createElement("div")
         var currentBooking = formatCurrentBooking(date, roomName, bookingType, reason, status, button, isUpcoming)
         currentBooking.setAttribute("class", "bookingDiv")
+        currentBooking.setAttribute("id", allBookingsByUser[i].id)
 
         if (isUpcoming) {
             $("#upcomingBookings").append(currentBooking)
@@ -215,12 +216,38 @@ function formatCurrentBooking(date, roomName, bookingType, reason, status, butto
 
 }
 
-async function cancelBooking(bookingId){//not tested
-    var output
-    await $.post("/api/v1/bookings/delete/" + bookingId, await function (data) {
-        output = data
+async function cancelBooking(id){
+    await $.ajax({
+        type: 'DELETE',
+        url: '/api/v1/bookings/delete/' + id,
+        data: { booking_id: id,
+        },
+        success: function(response){
+            console.log(response)
+            alertOutcomeBookingCancelled(id)
+        }
     });
-    console.log(output)
+}
+
+async function alertOutcomeBookingCancelled(id){
+    var booking = await getBookingById(id)
+    if (!booking[0]){
+        alert ("Booking cancelled correctly")
+        var bookingDiv = document.getElementById(id) 
+        bookingDiv.style.opacity = '0'
+        setTimeout(function(){
+            bookingDiv.style.height = $("#" + id).height()+ 'px';
+            bookingDiv.classList.add('hide-me');
+            (function(el) {
+                setTimeout(function() {
+                el.remove();
+                }, 1500);
+            })(bookingDiv);
+        }, 1000);
+    }
+    else {
+        alert ("Error in booking rejection")
+    }
 }
 
 function checkVisibleScrollSection(entries, observer) {
