@@ -61,7 +61,7 @@
     /* 💡 This small transition makes setting of the active state smooth */
 }
 
-.infoPendingBookingsDiv {
+.infoAllBookingsDiv {
     background: #f7f7f7;
     padding: 2vw;
     box-shadow: 10px 5px 5px grey;
@@ -71,7 +71,21 @@
     margin-bottom: 20px;
     margin-left: auto;
     margin-right: auto;
+    -webkit-transition: opacity 1000ms linear;
+    transition: opacity 1000ms linear
 }
+
+.infoAllBookingsDiv.hide-me { /**From https://stackoverflow.com/questions/44591803/css3-animate-or-transition-elements-into-position-after-removal-of-an-element-ab*/
+    animation: hideme 1s forwards linear;
+    opacity: 0;
+}
+@keyframes hideme {
+    100% {
+      height: 0;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
 
 .userName, .dateText {
     font-size: 2.3vh;
@@ -95,6 +109,61 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#popUpContainer{
+    height:100%;
+    width: 100%;
+    position:fixed;
+    text-align:center;
+    background-color: rgba(0, 0, 0, 0.384);
+    z-index:10000;
+    top: 0;
+}
+
+#popUpDiv{
+    background-color: white;
+    display: inline-block;
+    vertical-align: middle;
+    width: 60%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#cancelBookingPopUpButtonsDiv {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    height: 100px;
+}
+
+#cancelBookingPopUpButtonsDiv button {
+    font-family: Gordon;
+    src: url("../fonts/Gordon.ttf");
+    border: none;
+    padding: 1vh;
+    margin: 1vh;
+    font-size: 2.3vh;
+    color: white;
+}
+
+#confirmDeleteButton {
+    grid-column: 1;
+    background-color: #9FBF00;
+}
+
+#cancelDeleteButton{
+    grid-column: 2;
+    background-color: #E4002B;
+}
+
+#confirmDeleteButton:hover {
+    font-size: 2.6vh;
+}
+
+#cancelDeleteButton:hover{
+    font-size: 2.6vh;
 }
 
 @media screen and (min-width: 900px) {

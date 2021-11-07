@@ -22,11 +22,13 @@ async function addUsers(allPendingUsers) {
         //to change
         var confirm = document.createElement("button")
         confirm.innerHTML = "confirm"
+        confirm.setAttribute("onclick", "confirmAccountRequest(" + i + ")")
         confirm.setAttribute("class", "confirm")
 
         //to change
         var reject = document.createElement("button")
         reject.innerHTML = "reject"
+        reject.setAttribute("onclick", "rejectAccountRequest(" + allPendingUsers[i].id+ ")")
         reject.setAttribute("class", "reject")
 
         var currentUserInfo = document.createElement("div")
@@ -42,6 +44,7 @@ async function addUsers(allPendingUsers) {
         currentUser.appendChild(currentUserInfo)
         currentUser.appendChild(currentUserResponse)
         currentUser.setAttribute("class", "userDiv")
+        currentUser.setAttribute("id", "user-" + allPendingUsers[i].id)
 
         $("#Accounts").append(currentUser)
 
@@ -50,7 +53,7 @@ async function addUsers(allPendingUsers) {
 
 async function getUsers(boolean) {
     var output
-    await $.get("/api/v1/users/All/", await function (data) { //temporary till pending user requests are added
+    await $.get("/api/v1/users/Enabled/" + false, await function (data) { //temporary till pending user requests are added
         output = data
     });
     return output
@@ -92,4 +95,87 @@ function formatCurrentUser(userImage, fullName, email) {
 
     return currentUser
 
+}
+
+async function confirmAccountRequest(i) {
+    await $.ajax({
+        type: 'PUT',
+        url: '/api/v1/users/',
+        data: { user_id: allPendingUsers[i].id,
+                enabled: 1,
+                user_image: allPendingUsers[i].user_image,
+                full_name: allPendingUsers[i].full_name,
+                email: allPendingUsers[i].email,
+                password: allPendingUsers[i].password,
+                admin: allPendingUsers[i].admin,
+        },
+        success: function(response){
+            console.log(response)
+            alertOutcomeApproveAccount(i)
+        }
+    });
+}
+
+async function alertOutcomeApproveAccount(i){
+    var user = await getUserById(allPendingUsers[i].id)
+    if (user[0].enabled == 1){
+        alert ("User approved correctly")
+        var bookingDiv = document.getElementById(allPendingUsers[i].id) 
+        bookingDiv.style.opacity = '0'
+        setTimeout(function(){
+            bookingDiv.style.height = $("#" + allPendingUsers[i].id).height()+ 'px';
+            bookingDiv.classList.add('hide-me');
+            (function(el) {
+                setTimeout(function() {
+                el.remove();
+                }, 1500);
+            })(bookingDiv);
+        }, 1000);
+    }
+    else {
+        alert ("Error in booking approval")
+    }
+}
+
+async function rejectAccountRequest(id) {
+    await $.ajax({
+        type: 'DELETE',
+        url: '/api/v1/users/delete/' + id,
+        data: { user_id: id,
+        },
+        success: function(response){
+            console.log(response)
+            alertOutcomeRejectAccount(id)
+        }
+    });
+}
+
+async function alertOutcomeRejectAccount(id){
+    var user = await getUserById(id)
+    if (!user[0]){
+        alert ("User rejected correctly")
+        var userDiv = document.getElementById("user-" + id) 
+        userDiv.style.opacity = '0'
+        setTimeout(function(){
+            userDiv.style.height = $("#" + id).height()+ 'px';
+            userDiv.classList.add('hide-me');
+            (function(el) {
+                setTimeout(function() {
+                el.remove();
+                }, 1500);
+            })(userDiv);
+        }, 1000);
+    }
+    else {
+        alert ("Error in user rejection")
+    }
+}
+
+async function getUserById(id){
+    var output
+    await $.get("/api/v1/users/Id/" + id, await function (data) {
+        output = data
+    });
+    console.log(output[0])
+    return output
 }

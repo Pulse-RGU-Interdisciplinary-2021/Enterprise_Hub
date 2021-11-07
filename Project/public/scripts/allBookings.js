@@ -264,18 +264,15 @@ async function addBookings(filteredBookings, isUpcoming) {
 
         var currentBookingInfo = document.createElement("div")
         var currentBookingInfo = await formatCurrentBooking(userName, date, roomName, bookingType, reason, status, button, isUpcoming)
-        currentBookingInfo.setAttribute("class", "infoPendingBookingsDiv")
-
-        var currentBooking = document.createElement("div")
-        currentBooking.appendChild(currentBookingInfo)
-        currentBooking.setAttribute("class", "bookingDiv")
+        currentBookingInfo.setAttribute("class", "infoAllBookingsDiv")
+        currentBookingInfo.setAttribute("id", filteredBookings[i].id)
 
 
        if (isUpcoming) {
-            $("#upcomingBookings").append(currentBooking)
+            $("#upcomingBookings").append(currentBookingInfo)
         }
         else {
-            $("#pastBookings").append(currentBooking)
+            $("#pastBookings").append(currentBookingInfo)
         }
 
 
@@ -284,27 +281,66 @@ async function addBookings(filteredBookings, isUpcoming) {
 }
 
 async function openPopUpCancelBooking(bookingId){
+    console.log("opened")
     var popUp = "<div id = \"popUpContainer\">"
-    popUp += "<div id = \"popUpDiv\>"
+    popUp += "<div id = \"popUpDiv\">"
     popUp += "<h1>Are you sure you want to delete this booking?</h1>"
     popUp += "<div id = \"cancelBookingPopUpButtonsDiv\">"
-    popUp += "<button onclick = \"cancelBooking(" + bookingId + ")>Yes</button>"
-    popUp += "<button onclick = \"closePopUpCancelBooking()\">No</button>"
+    popUp += "<button id =\"confirmDeleteButton\" onclick = \"cancelBooking(" + bookingId + ")\">Yes</button>"
+    popUp += "<button id =\"cancelDeleteButton\" onclick = \"closePopUpCancelBooking()\">No</button>"
     popUp += "</div>"
     popUp += "</div>"
     popUp += "</div>"
+
+    $('html').append(popUp)
 }
 
 async function closePopUpCancelBooking() {
     $("#popUpContainer").remove()
 }
 
-async function cancelBooking(bookingId){
+async function cancelBooking(id){
+    await $.ajax({
+        type: 'DELETE',
+        url: '/api/v1/bookings/delete/' + id,
+        data: { booking_id: id,
+        },
+        success: function(response){
+            console.log(response)
+            alertOutcomeBookingDeleted(id)
+        }
+    });
+    closePopUpCancelBooking()
+}
+
+async function alertOutcomeBookingDeleted(id) {
+    var booking = await getBookingById(id)
+    if (!booking[0]){
+        alert ("Booking deleted correctly")
+        var bookingDiv = document.getElementById(id) 
+        bookingDiv.style.opacity = '0'
+        setTimeout(function(){
+            bookingDiv.style.height = $("#" + id).height()+ 'px';
+            bookingDiv.classList.add('hide-me');
+            (function(el) {
+                setTimeout(function() {
+                el.remove();
+                }, 1500);
+            })(bookingDiv);
+        }, 1000);
+    }
+    else {
+        alert ("Error in booking deletion")
+    }
+}
+
+async function getBookingById(id){
     var output
-    await $.post("/api/v1/bookings/delete/" + bookingId, await function (data) {
+    await $.get("/api/v1/bookings/Id/" + id, await function (data) {
         output = data
     });
-    console.log(output)
+    console.log(output[0])
+    return output
 }
 
 async function getuserName(i, filteredBookings) {
