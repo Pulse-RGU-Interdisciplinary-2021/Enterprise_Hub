@@ -60,6 +60,11 @@ app.get('/booking', function (req, res) {
     res.render('pages/booking');
 });
 
+app.get('/eventRoom', function (req, res) {
+  res.render('pages/eventRoom');
+});
+
+
 app.get('/room', function (req, res) {
   res.render('pages/room');
 });

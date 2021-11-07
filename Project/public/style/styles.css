@@ -192,3 +192,35 @@ body {
 .tab-style:hover span{
   color: white;
 }
+
+.booking-table td {
+  background-color: white;
+  margin: auto;
+  padding: 0px;
+}
+
+.booking-sub-container {
+  padding: 15px;
+}
+
+.booking-img {
+  width: 100%; 
+  height: 200px; 
+  background-image: url(/images/Innovation-Schoolhill-Interior.jpg); 
+  background-size: cover; 
+  background-position: center;
+  border-bottom: solid #006b99 5px;
+}
+
+.booking-img-text {
+  background: linear-gradient(135deg,white 80%,transparent 20%);
+  width: 30%;
+  font-size: xx-large; 
+  display: inline-block; 
+  padding: 10px
+}
+
+.booking-textarea {
+  resize: none;
+  width: 99%;
+}
