@@ -223,7 +223,6 @@ async function cancelBooking(id){
         data: { booking_id: id,
         },
         success: function(response){
-            console.log(response)
             alertOutcomeBookingCancelled(id)
         }
     });
@@ -265,7 +264,6 @@ function checkVisibleScrollSection(entries, observer) {
     entries.forEach(entry => {
         const id = entry.target.getAttribute('id');
         if (entry.intersectionRatio > 0) {
-            console.log("hiii")
             document.querySelector(`nav li a[href="#${id}"]`).style.color = "#009fee";
         }
         else {

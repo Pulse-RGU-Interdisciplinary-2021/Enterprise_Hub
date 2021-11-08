@@ -120,7 +120,6 @@ async function confirmAccountRequest(i) {
                 admin: allPendingUsers[i].admin,
         },
         success: function(response){
-            console.log(response)
             alertOutcomeApproveAccount(i)
         }
     });
@@ -154,7 +153,6 @@ async function rejectAccountRequest(id) {
         data: { user_id: id,
         },
         success: function(response){
-            console.log(response)
             alertOutcomeRejectAccount(id)
         }
     });
@@ -186,6 +184,5 @@ async function getUserById(id){
     await $.get("/api/v1/users/Id/" + id, await function (data) {
         output = data
     });
-    console.log(output[0])
     return output
 }

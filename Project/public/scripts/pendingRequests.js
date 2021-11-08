@@ -30,7 +30,6 @@ function tabChanged(evt, tabName) { //from https://www.w3schools.com/howto/howto
       showUsers()
     }
     else if (tabName == "Events"){
-      console.log("11111111111111111")
       showBookings(true)
     }
   }

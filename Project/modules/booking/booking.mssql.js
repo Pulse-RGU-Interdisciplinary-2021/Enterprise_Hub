@@ -60,10 +60,8 @@ class BookingMSSql {
     }
 
     async getUpcomingEventsbyPending(boolean){
-        console.log("aaaaaaaaaaaaaaaa" + boolean)
         var bit
         if (boolean.toLowerCase() == "true") {
-            console.log("uuuuuuuuu")
             bit = 1
         }
         else if (boolean.toLowerCase() == "false"){
@@ -78,10 +76,8 @@ class BookingMSSql {
     }
 
     async getUpcomingBookingsbyPendingNoEvents(boolean){
-        console.log("bbbbbbbbbbbbbb" + boolean)
         var bit
         if (boolean.toLowerCase() == "true") {
-            console.log("uuuuuuuuu")
             bit = 1
         }
         else if (boolean.toLowerCase() == "false"){
@@ -101,7 +97,6 @@ class BookingMSSql {
         const conn = await mssqlcon.getConnection();
         var query = 'select * from bookings where ((start_datetime <= \'' + dateTime + '\') and (end_datetime > (\'' + dateTime + '\')) and (pending = ' + bit + ')) order by start_datetime'
         const res = await conn.request().query(query);
-        console.log(res.recordset[0])
         return res.recordset;
     }
 
@@ -124,7 +119,6 @@ class BookingMSSql {
         const conn = await mssqlcon.getConnection();
         var query = 'select count(desks) as \'deskn\' from bookings where ((room_id = ' + roomId + ') and (((start_datetime <= \'' + startDateTime + '\') and (\'' + startDateTime + '\' < end_datetime)) or ((end_datetime >= \'' + endDateTime + '\') and (\'' + endDateTime + '\' > start_datetime))))'
         const res = await conn.request().query(query);
-        console.log(res.recordset[0])
         return res.recordset;
     }
 
@@ -151,7 +145,6 @@ class BookingMSSql {
         .input("reason",prod.reason)
         .input("full_room_booking",prod.full_room_booking)
         .execute("addBooking");
-        console.log(prod);
         return res;
     }
 
@@ -173,12 +166,10 @@ class BookingMSSql {
     }
 
     async deleteBooking(id) {
-        console.log("hello")
         const conn = await mssqlcon.getConnection();
         const res = await conn.request()
         .input("booking_id",id)
         .execute("deleteBooking");
-        console.log(id)
         return res;
     }
 }

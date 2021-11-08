@@ -81,7 +81,6 @@ async function getBookingsByDate(dateTime) {
     await $.get("/api/v1/bookings/Date/" + formattedDateTime, await function (data) {
         output = data
     });
-    console.log(output[0] + "aaaa")
     return output
 }
 
@@ -197,7 +196,6 @@ async function splitBookings(filteredBookings, upcomingBookings, pastBookings) {
 }
 
 async function addNoBookingText(sectionDiv) {
-    console.log("uuuuuu" + sectionDiv)
     if (sectionDiv == "#upcomingBookings"){
         $('#results').append('<div id="upcomingBookings" class="bookingsContainer"><p class="typeOfBookingTitle">Upcoming Bookings</p></div>')
     }
@@ -306,7 +304,6 @@ async function cancelBooking(id){
         data: { booking_id: id,
         },
         success: function(response){
-            console.log(response)
             alertOutcomeBookingDeleted(id)
         }
     });
@@ -339,7 +336,6 @@ async function getBookingById(id){
     await $.get("/api/v1/bookings/Id/" + id, await function (data) {
         output = data
     });
-    console.log(output[0])
     return output
 }
 
@@ -443,7 +439,6 @@ async function getBookingStatus(i, filteredBookings) {
 
 async function formatCurrentBooking(userName, date, roomName, bookingType, reason, status, button, isUpcoming) {
     var currentBooking = document.createElement("div")
-    console.log(date + "aaa")
     currentBooking.appendChild(userName)
     currentBooking.appendChild(date)
     currentBooking.appendChild(roomName)
@@ -466,7 +461,6 @@ function checkVisibleScrollSection(entries, observer) {
     entries.forEach(entry => {
         const id = entry.target.getAttribute('id');
         if (entry.intersectionRatio > 0) {
-            console.log("hiii")
             document.querySelector(`nav li a[href="#${id}"]`).style.color = "#009fee";
         }
         else {
@@ -477,11 +471,8 @@ function checkVisibleScrollSection(entries, observer) {
 
 async function createObserver() { //this is used to check what parts of the ui are visible
 
-    console.log("eeeeeeee")
-
     let observer = new IntersectionObserver(checkVisibleScrollSection);
     document.querySelectorAll('.bookingsContainer').forEach((section) => {
-        console.log("ooooooooooooooooo")
         observer.observe(section);
     });
 }

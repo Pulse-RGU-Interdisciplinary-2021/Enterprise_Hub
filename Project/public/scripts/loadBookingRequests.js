@@ -7,7 +7,6 @@ async function showBookings(isEvents) {
     else{
         allPendingBookings = await getBookingsNoEvents(true)
     }
-    console.log(allPendingBookings + "hi")
     addBookings(allPendingBookings, isEvents)
 }
 
@@ -72,17 +71,14 @@ async function addBookings(allPendingBookings, isEvents) {
 
 async function getEvents(boolean) {
     var output
-    console.log("events")
     await $.get("/api/v1/bookings/UpcomingPendingEvents/" + boolean, await function (data) {
         output = data
     });
-    console.log(output[0])
     return output
 }
 
 async function getBookingsNoEvents(boolean) {
     var output
-    console.log("no events")
     await $.get("/api/v1/bookings/UpcomingPendingNoEvents/" + boolean, await function (data) {
         output = data
     });
@@ -187,7 +183,6 @@ async function confirmBookingRequest(i){
                 pending: 0,
         },
         success: function(response){
-            console.log(response)
             alertOutcomeBookingApproved(i)
         }
     });
@@ -215,18 +210,12 @@ async function alertOutcomeBookingApproved(i){
 }
 
 async function rejectBookingRequest(id){
-    /**var output
-    await $.delete("/api/v1/bookings/delete/" + id, await function (data) {
-        output = data
-    });
-    console.log(output)*/
     await $.ajax({
         type: 'DELETE',
         url: '/api/v1/bookings/delete/' + id,
         data: { booking_id: id,
         },
         success: function(response){
-            console.log(response)
             alertOutcomeBookingRejected(id)
         }
     });

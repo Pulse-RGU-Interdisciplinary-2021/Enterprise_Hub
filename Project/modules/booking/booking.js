@@ -89,7 +89,6 @@ class booking {
     }
 
     async getUpcomingEventsbyPending(req,res) {
-        console.log("getUpcomingEventsbyPending")
         const boolean = req.params.boolean;
         try {
             if (!boolean) {
@@ -104,7 +103,6 @@ class booking {
     }
 
     async getUpcomingBookingsbyPendingNoEvents(req,res) {
-        console.log("getUpcomingBookingsbyPendingNoEvents")
         const boolean = req.params.boolean;
         try {
             if (!boolean) {
@@ -155,7 +153,6 @@ class booking {
     }
 
     async deleteBooking(req,res) {
-        console.log("hi")
         const id = req.params.id;
         try {
             if (!id) {
@@ -188,7 +185,7 @@ class booking {
         const endDateTime = req.params.endDateTime;
         try {
             if (!roomId || !startDateTime || !endDateTime) {
-                console.log('no parameters missing');
+                console.log('parameters missing');
             }
             const output = await bookingMssql.getCountUnavailableDesksOfRoomAtTimeRange(roomId, startDateTime, endDateTime);
             res.send(output);
@@ -203,7 +200,7 @@ class booking {
         const endDateTime = req.params.endDateTime;
         try {
             if (!startDateTime || !endDateTime) {
-                console.log('no parameters missing');
+                console.log('parameters missing');
             }
             const output = await bookingMssql.getBookingByDateTimeRange(startDateTime, endDateTime);
             res.send(output);
@@ -219,7 +216,7 @@ class booking {
         const endDateTime = req.params.endDateTime;
         try {
             if (!roomId || !startDateTime || !endDateTime) {
-                console.log('no parameters missing');
+                console.log('parameters missing');
             }
             const output = await bookingMssql.getBookingByRoomIdAndDateTimeRange(roomId, startDateTime, endDateTime);
             res.send(output);

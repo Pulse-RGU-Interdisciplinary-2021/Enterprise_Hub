@@ -37,7 +37,6 @@ class UserMSSql {
 
     async updateUser(prod) {
         const conn = await mssqlcon.getConnection();
-        console.log(prod.full_name)
         const res = await conn.request()
         .input("user_id",prod.user_id)
         .input("enabled",prod.enabled)
@@ -56,7 +55,6 @@ class UserMSSql {
         const res = await conn.request()
         .input("user_id",id)
         .execute("deleteUser");
-        console.log(id)
         return res;
     }
 }
