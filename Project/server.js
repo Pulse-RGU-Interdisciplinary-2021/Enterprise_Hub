@@ -7,7 +7,7 @@ var functions = require("./functions");
 const https = require("http");
 let startingHour = "2021-10-30 10:00:00.000"
 let endingHour = "2021-10-30 12:00:00.000"
-
+let roomId = 0;
 app.use(
   session({
     secret: "secret",
@@ -202,8 +202,7 @@ app.post("/book/:roomId", (request, response) => {
   });
 });
 
-app.get("/eventBooking/:roomId", (request, response) => {
-  let roomId = request.params.roomId;
+app.get("/eventBooking", (request, response) => {
   let capacity = 0;
   let desks = 0;
   let data= "";
@@ -228,8 +227,7 @@ app.get("/eventBooking/:roomId", (request, response) => {
   });
 });
 
-app.post("/eventBooking/:roomId", (request, response) => {
-  let roomId = request.params.roomId;
+app.post("/eventBooking", (request, response) => {
   let organization = request.body.organization; 
   let reason = request.body.reason;
   let userId = request.session.username || 5;
@@ -249,6 +247,11 @@ app.post("/eventBooking/:roomId", (request, response) => {
    });
   });
 });
+
+app.post("/setRoomId/:roomId", (req, res) => {
+  roomId = req.params.roomId;
+  res.send("success");
+}); 
 
 app.use("/queries", queries);
 

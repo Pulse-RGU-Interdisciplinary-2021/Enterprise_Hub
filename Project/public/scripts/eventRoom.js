@@ -123,3 +123,12 @@ async function getAllRooms() {
     });
     return output
 }
+
+function navigate(item) {
+    console.log($(item).attr('id').charAt(4));
+    $.post("/setRoomId/"+ $(item).attr('id').charAt(4), (res)=> {
+        console.log(res);
+        console.log("in");
+        window.location.href = "/eventBooking";
+    })
+}
