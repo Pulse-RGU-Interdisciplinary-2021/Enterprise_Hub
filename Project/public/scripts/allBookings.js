@@ -4,6 +4,7 @@ async function filterOptionSelected(selectObject) { //shows some input type depe
 
     $("#filterResult").empty()
     $("#results").remove()
+    $("#navSectionDiv").remove()
 
     if (optionSelected == "Date and time") {
         await dateTimeFilterSelected()
@@ -23,6 +24,7 @@ async function dateTimeFilterSelected() {
     var html = '<label for="datetimeInput">Select the desired date and time:</label>';
     html += '<input type="datetime-local" id="datetimeInput" onchange="datePicked(this)">';
     $("#filterResult").append(html)
+    $("#navSectionDiv").remove()
 }
 
 async function userSNameFilterSelected() {
@@ -66,10 +68,11 @@ async function getRoomsArray() {
 
 async function datePicked(dateTimeInput) {
     $("#results").remove()
+    $("#navSectionDiv").remove()
     var dateTime = dateTimeInput.value;
     var filteredBookings;
     filteredBookings = await getBookingsByDate(dateTime)
-    addBookings(filteredBookings)
+    iterateThroughBookings(filteredBookings)
 }
 
 async function getBookingsByDate(dateTime) {
@@ -93,10 +96,11 @@ async function formatDate(dateTime) {
 }
 async function nameEntered() {
     $("#results").remove()
+    $("#navSectionDiv").remove()
     var name = $('#userSNameInput').val()
     var filteredBookings;
     filteredBookings = await getBookingsByName(name)
-    addBookings(filteredBookings)
+    iterateThroughBookings(filteredBookings)
 }
 
 async function getBookingsByName(name) {
@@ -109,6 +113,7 @@ async function getBookingsByName(name) {
 
 async function roomSelected(roomInput) {
     $("#results").remove()
+    $("#navSectionDiv").remove()
     var room = $('#roomNameInput').children("option").filter(":selected").text();
     if (room == "No rooms available") {
         var result = document.createElement("p");
@@ -118,7 +123,7 @@ async function roomSelected(roomInput) {
     else {
         var filteredBookings;
         filteredBookings = await getBookingsByRoomName(room)
-        addBookings(filteredBookings)
+        iterateThroughBookings(filteredBookings)
     }
 }
 
@@ -130,64 +135,212 @@ async function getBookingsByRoomName(roomName) {
     return output
 }
 
-async function addBookings(filteredBookings) {
+async function iterateThroughBookings(filteredBookings) {
+    $('#mainContent').append('<nav id="navSectionDiv"><ul><li class = "navLi" id="upcomingBookingsNav"><a href="#upcomingBookings">Upcoming Bookings</a></li><li class = "navLi" id="pastBookingsNav"><a href="#pastBookings">Past Bookings</a></li></ul></nav>')
+    
     var resultsDiv = document.createElement("div")
     resultsDiv.setAttribute("id", "results");
-    $("body").append(resultsDiv);
+    $("#mainContent").append(resultsDiv);
 
     if (filteredBookings.length === 0) {
-        console.log("no results found")
-        var results = document.createElement("p");
-        results.innerHTML = "No bookings found"
-        $("#results").append(results)
+        if (!(document.body.contains(document.getElementById("upcomingBookings")))) {
+            console.log("break")
+        }
+        addNoBookingText("#upcomingBookings")
+        addNoBookingText("#pastBookings")
     }
     else {
-        for (var i = 0; i < filteredBookings.length; i++) {
+        var upcomingBookings = []
+        var pastBookings = []
+        var pastUpcomingBookingsArray = await splitBookings(filteredBookings, upcomingBookings, pastBookings)
+        upcomingBookings = pastUpcomingBookingsArray[0]
+        pastBookings = pastUpcomingBookingsArray[1]
+        pastBookings.reverse()
 
-            if (!(document.body.contains(document.getElementById("results")))) {
-                console.log("break")
-                break
-            }
-            var userName = document.createElement("p");
-            userName.innerHTML = await getuserName(i, filteredBookings)
-            userName.setAttribute("class", "userName")
-
-            var date = document.createElement("p");
-            date.innerHTML = await formattedStartAndEndTime(i, filteredBookings)
-            date.setAttribute("class", "date");
-
-            var roomName = document.createElement("p");
-            roomName.innerHTML = await getRoomName(i, filteredBookings)
-            roomName.setAttribute("class", "roomName")
-
-            var bookingType = document.createElement("p");
-            bookingType.innerHTML = await formattedBookingType(i, filteredBookings)
-            bookingType.setAttribute("class", "bookingType")
-
-            var reason = document.createElement("p")
-            reason.innerHTML = "Reason of booking: " + filteredBookings[i].reason
-            reason.setAttribute("class", "reason")
-
-            var status = document.createElement("p")
-            status.innerHTML = await getBookingStatus(i, filteredBookings)
-            reason.setAttribute("class", "bookingStatus")
-
-            var currentBookingInfo = document.createElement("div")
-            var currentBookingInfo = await formatCurrentBooking(userName, date, roomName, bookingType, reason, status)
-            currentBookingInfo.setAttribute("class", "infoPendingBookingsDiv")
-
-            var currentBooking = document.createElement("div")
-            currentBooking.appendChild(currentBookingInfo)
-            currentBooking.setAttribute("class", "bookingDiv")
-
-            $("#results").append(currentBooking)
-
-
+        if (upcomingBookings.length === 0) {
+            await addNoBookingText("#upcomingBookings")
         }
+        else {
+            await addBookings(upcomingBookings, true)
+        }
+
+        if (pastBookings.length == 0) {
+            await addNoBookingText("#pastBookings")
+        }
+        else {
+            await addBookings(pastBookings, false)
+        }
+    }
+    await createObserver()
+}
+
+async function splitBookings(filteredBookings, upcomingBookings, pastBookings) {
+    var dateTimeObject = new Date()
+    upcomingBookings = []
+    pastBookings = []
+    for (var i = 0; i < filteredBookings.length; i++) {
+        var currentBookingDateTimeObject = new Date(filteredBookings[i].start_datetime)
+        if (currentBookingDateTimeObject > dateTimeObject) {
+            upcomingBookings.push(filteredBookings[i])
+        }
+        else if (currentBookingDateTimeObject < dateTimeObject) {
+            pastBookings.push(filteredBookings[i])
+        }
+        else {
+            console.log("Problem with comparing dates\nCurrent date: " + dateTimeObject.toDateString() + "\nBooking date:" + filteredBookings[i].start_datetime)
+        }
+
+
+    }
+
+    return [upcomingBookings, pastBookings]
+}
+
+async function addNoBookingText(sectionDiv) {
+    console.log("uuuuuu" + sectionDiv)
+    if (sectionDiv == "#upcomingBookings"){
+        $('#results').append('<div id="upcomingBookings" class="bookingsContainer"><p class="typeOfBookingTitle">Upcoming Bookings</p></div>')
+    }
+    else if(sectionDiv == "#pastBookings"){
+        $('#results').append('<div id="pastBookings" class="bookingsContainer"><p class="typeOfBookingTitle">Past Bookings</p></div>')
+    }
+    else{
+        console.log("problem wit showing no results")
+        $('#results').append("Problem encountered")
+    }
+    var message = document.createElement("p")
+    message.innerHTML = "No bookings to show"
+    message.setAttribute("class", "noBookingsMessage")
+
+    $(sectionDiv).append(message)
+}
+
+async function addBookings(filteredBookings, isUpcoming) {
+    if (isUpcoming) {
+        $('#results').append('<div id="upcomingBookings" class="bookingsContainer"><p class="typeOfBookingTitle">Upcoming Bookings</p></div>')
+    }
+    else {
+        $('#results').append('<div id="pastBookings" class="bookingsContainer"><p class="typeOfBookingTitle">Past Bookings</p></div>')
     }
 
 
+    for (var i = 0; i < filteredBookings.length; i++) {
 
+        if (!(document.body.contains(document.getElementById("results")))) {
+            console.log("break")
+            break
+        }
+        var userName = document.createElement("p");
+        userName.innerHTML = await getuserName(i, filteredBookings)
+        userName.setAttribute("class", "userName")
+
+        var date = document.createElement("p");
+        date.innerHTML = await formattedStartAndEndTimeToString(i, filteredBookings)
+        date.setAttribute("class", "date");
+
+        var roomName = document.createElement("p");
+        roomName.innerHTML = await getRoomName(i, filteredBookings)
+        roomName.setAttribute("class", "roomName")
+
+        var bookingType = document.createElement("p");
+        bookingType.innerHTML = await formattedBookingType(i, filteredBookings)
+        bookingType.setAttribute("class", "bookingType")
+
+        var reason = document.createElement("p")
+        reason.innerHTML = "Reason of booking: " + filteredBookings[i].reason
+        reason.setAttribute("class", "reason")
+
+        var status = document.createElement("p")
+        status.innerHTML = await getBookingStatus(i, filteredBookings)
+        reason.setAttribute("class", "bookingStatus")
+
+        if (isUpcoming) {
+            var button = document.createElement("button")
+            button.innerHTML = "Cancel Booking"
+            button.setAttribute("onclick", "openPopUpCancelBooking(" + filteredBookings[i].id + ")");
+            button.setAttribute("class", "cancelButton")
+            button.setAttribute("type", "button")
+        }
+
+        var currentBookingInfo = document.createElement("div")
+        var currentBookingInfo = await formatCurrentBooking(userName, date, roomName, bookingType, reason, status, button, isUpcoming)
+        currentBookingInfo.setAttribute("class", "infoAllBookingsDiv")
+        currentBookingInfo.setAttribute("id", filteredBookings[i].id)
+
+
+       if (isUpcoming) {
+            $("#upcomingBookings").append(currentBookingInfo)
+        }
+        else {
+            $("#pastBookings").append(currentBookingInfo)
+        }
+
+
+    }
+
+}
+
+async function openPopUpCancelBooking(bookingId){
+    console.log("opened")
+    var popUp = "<div id = \"popUpContainer\">"
+    popUp += "<div id = \"popUpDiv\">"
+    popUp += "<h1>Are you sure you want to delete this booking?</h1>"
+    popUp += "<div id = \"cancelBookingPopUpButtonsDiv\">"
+    popUp += "<button id =\"confirmDeleteButton\" onclick = \"cancelBooking(" + bookingId + ")\">Yes</button>"
+    popUp += "<button id =\"cancelDeleteButton\" onclick = \"closePopUpCancelBooking()\">No</button>"
+    popUp += "</div>"
+    popUp += "</div>"
+    popUp += "</div>"
+
+    $('html').append(popUp)
+}
+
+async function closePopUpCancelBooking() {
+    $("#popUpContainer").remove()
+}
+
+async function cancelBooking(id){
+    await $.ajax({
+        type: 'DELETE',
+        url: '/api/v1/bookings/delete/' + id,
+        data: { booking_id: id,
+        },
+        success: function(response){
+            console.log(response)
+            alertOutcomeBookingDeleted(id)
+        }
+    });
+    closePopUpCancelBooking()
+}
+
+async function alertOutcomeBookingDeleted(id) {
+    var booking = await getBookingById(id)
+    if (!booking[0]){
+        alert ("Booking deleted correctly")
+        var bookingDiv = document.getElementById(id) 
+        bookingDiv.style.opacity = '0'
+        setTimeout(function(){
+            bookingDiv.style.height = $("#" + id).height()+ 'px';
+            bookingDiv.classList.add('hide-me');
+            (function(el) {
+                setTimeout(function() {
+                el.remove();
+                }, 1500);
+            })(bookingDiv);
+        }, 1000);
+    }
+    else {
+        alert ("Error in booking deletion")
+    }
+}
+
+async function getBookingById(id){
+    var output
+    await $.get("/api/v1/bookings/Id/" + id, await function (data) {
+        output = data
+    });
+    console.log(output[0])
+    return output
 }
 
 async function getuserName(i, filteredBookings) {
@@ -200,6 +353,39 @@ async function getuserName(i, filteredBookings) {
     return output
 }
 
+function formattedStartAndEndTimeToString(i, filteredBookings) {
+    var output = "From "
+    output += "<div class=\"dateText\">" + formatDateTime(filteredBookings[i].start_datetime) + "</div>"
+    output += "<br>to "
+    output += "<div class=\"dateText\">" + formatDateTime(filteredBookings[i].end_datetime) + "</div>"
+    return output
+}
+
+function formatDateTime(dateTime) {
+    var dateTimeObject = new Date(dateTime)
+    var output = "";
+
+    output += dateTimeObject.getDate() + " / "
+    output += (dateTimeObject.getMonth() + 1) + " / "
+    output += dateTimeObject.getFullYear() + " at "
+
+    if (dateTimeObject.getHours() < 10) {
+        output += "0" + dateTimeObject.getHours() + ":"
+    }
+    else {
+        output += dateTimeObject.getHours() + ":"
+    }
+
+    if (dateTimeObject.getMinutes() < 10) {
+        output += "0" + dateTimeObject.getMinutes()
+    }
+    else {
+        output += dateTimeObject.getMinutes()
+    }
+
+    return output
+}
+/** 
 async function formattedStartAndEndTime(i, filteredBookings) {
     var output = "From "
 
@@ -211,7 +397,7 @@ async function formattedStartAndEndTime(i, filteredBookings) {
     var formattedEnd = await formatDate(filteredBookings[i].end_datetime)
     output += formattedEnd
     return output
-}
+}*/
 
 async function getRoomName(i, filteredBookings) {
     var output = ""
@@ -255,7 +441,7 @@ async function getBookingStatus(i, filteredBookings) {
     return output
 }
 
-async function formatCurrentBooking(userName, date, roomName, bookingType, reason, status) {
+async function formatCurrentBooking(userName, date, roomName, bookingType, reason, status, button, isUpcoming) {
     var currentBooking = document.createElement("div")
     console.log(date + "aaa")
     currentBooking.appendChild(userName)
@@ -265,6 +451,37 @@ async function formatCurrentBooking(userName, date, roomName, bookingType, reaso
     currentBooking.appendChild(reason)
     currentBooking.appendChild(status)
 
+    if (isUpcoming) {
+        currentBooking.appendChild(button)
+    }
+
     return currentBooking
 
+}
+
+function checkVisibleScrollSection(entries, observer) {
+    var upComingBookingLi = document.getElementById("upcomingBookingsNav")
+    var pastBookingsLi = document.getElementById("pastBookingsNav")
+
+    entries.forEach(entry => {
+        const id = entry.target.getAttribute('id');
+        if (entry.intersectionRatio > 0) {
+            console.log("hiii")
+            document.querySelector(`nav li a[href="#${id}"]`).style.color = "#009fee";
+        }
+        else {
+            document.querySelector(`nav li a[href="#${id}"]`).style.color = "black";
+        }
+    })
+}
+
+async function createObserver() { //this is used to check what parts of the ui are visible
+
+    console.log("eeeeeeee")
+
+    let observer = new IntersectionObserver(checkVisibleScrollSection);
+    document.querySelectorAll('.bookingsContainer').forEach((section) => {
+        console.log("ooooooooooooooooo")
+        observer.observe(section);
+    });
 }
