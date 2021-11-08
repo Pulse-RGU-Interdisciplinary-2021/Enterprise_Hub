@@ -74,6 +74,50 @@ class booking {
         }
     }
 
+    async getUpcomingBookingsbyPending(req,res) {
+        const boolean = req.params.boolean;
+        try {
+            if (!boolean) {
+                console.log('no boolean passed');
+            }
+            const output = await bookingMssql.getUpcomingBookingsbyPending(boolean);
+            res.send(output);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getUpcomingEventsbyPending(req,res) {
+        console.log("getUpcomingEventsbyPending")
+        const boolean = req.params.boolean;
+        try {
+            if (!boolean) {
+                console.log('no boolean passed');
+            }
+            const output = await bookingMssql.getUpcomingEventsbyPending(boolean);
+            res.send(output);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getUpcomingBookingsbyPendingNoEvents(req,res) {
+        console.log("getUpcomingBookingsbyPendingNoEvents")
+        const boolean = req.params.boolean;
+        try {
+            if (!boolean) {
+                console.log('no boolean passed');
+            }
+            const output = await bookingMssql.getUpcomingBookingsbyPendingNoEvents(boolean);
+            res.send(output);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
     async updateBooking(req,res) {
         try {
             const output = await bookingMssql.updateBooking(req.body);
@@ -111,6 +155,7 @@ class booking {
     }
 
     async deleteBooking(req,res) {
+        console.log("hi")
         const id = req.params.id;
         try {
             if (!id) {

@@ -11,6 +11,9 @@ class BookingController {
         router.put('/',booking.updateBooking);
         router.delete('/delete/:id',booking.deleteBooking);
         router.get('/Pending/:boolean', booking.getBookingsByPending);
+        router.get('/UpcomingPending/:boolean', booking.getUpcomingBookingsbyPending)
+        router.get('/UpcomingPendingEvents/:boolean', booking.getUpcomingEventsbyPending);
+        router.get('/UpcomingPendingNoEvents/:boolean', booking.getUpcomingBookingsbyPendingNoEvents);
         router.get('/Date/:dateTime', booking.getBookingByDate);
         router.get('/UserFullName/:name', booking.getBookingByUserFullName);
         router.get('/RoomName/:name', booking.getBookingByRoomName);

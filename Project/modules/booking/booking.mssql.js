@@ -43,10 +43,62 @@ class BookingMSSql {
         return res.recordset;
     }
 
+    async getUpcomingBookingsbyPending(boolean){
+        var bit
+        if (boolean.toLowerCase() == "true") {
+            bit = 1
+        }
+        else if (boolean.toLowerCase() == "false"){
+            bit = 0
+        }
+        else{
+            console.log("Invalid booking pending request")
+        }
+        const conn = await mssqlcon.getConnection();
+        const res = await conn.request().query('select * from bookings where ((pending = ' + bit + ') and (start_datetime > sysdatetime())) order by start_datetime');
+        return res.recordset;
+    }
+
+    async getUpcomingEventsbyPending(boolean){
+        console.log("aaaaaaaaaaaaaaaa" + boolean)
+        var bit
+        if (boolean.toLowerCase() == "true") {
+            console.log("uuuuuuuuu")
+            bit = 1
+        }
+        else if (boolean.toLowerCase() == "false"){
+            bit = 0
+        }
+        else{
+            console.log("Invalid booking pending request")
+        }
+        const conn = await mssqlcon.getConnection();
+        const res = await conn.request().query('select * from bookings where ((pending = ' + bit + ') and (start_datetime > sysdatetime()) and (event_booking_yn = \'1\')) order by start_datetime');
+        return res.recordset;
+    }
+
+    async getUpcomingBookingsbyPendingNoEvents(boolean){
+        console.log("bbbbbbbbbbbbbb" + boolean)
+        var bit
+        if (boolean.toLowerCase() == "true") {
+            console.log("uuuuuuuuu")
+            bit = 1
+        }
+        else if (boolean.toLowerCase() == "false"){
+            bit = 0
+        }
+        else{
+            console.log("Invalid booking pending request")
+        }
+        const conn = await mssqlcon.getConnection();
+        const res = await conn.request().query('select * from bookings where ((pending = ' + bit + ') and (start_datetime > sysdatetime()) and (event_booking_yn IS NULL )) order by start_datetime');
+        return res.recordset;
+    }
+
     //gets bookings where an inputted time is between the booking's end and start time
     async getBookingByDate(dateTime) {
         const conn = await mssqlcon.getConnection();
-        var query = 'select * from bookings where ((start_datetime <= \'' + dateTime + '\') and (end_datetime > (\'' + dateTime + '\'))) order by start_datetime'
+        var query = 'select * from bookings where ((start_datetime <= \'' + dateTime + '\') and (end_datetime > (\'' + dateTime + '\')) and (pending = \'0\')) order by start_datetime'
         const res = await conn.request().query(query);
         console.log(res.recordset[0])
         return res.recordset;
@@ -54,14 +106,14 @@ class BookingMSSql {
 
     async getBookingByUserFullName(name){
         const conn = await mssqlcon.getConnection();
-        var query = 'select * from bookings where user_id in (select id from users where full_name = \'' + name + '\') order by start_datetime'
+        var query = 'select * from bookings where user_id in (select id from users where ((full_name = \'' + name + '\') and (pending = \'0\')) order by start_datetime'
         const res = await conn.request().query(query);
         return res.recordset;
     }
 
     async getBookingByRoomName(name){
         const conn = await mssqlcon.getConnection();
-        const res = await conn.request().query('select * from bookings where room_id in (select id from rooms where room_name like \'%' + name + '%\') order by start_datetime');
+        const res = await conn.request().query('select * from bookings where room_id in (select id from rooms where (room_name like \'%' + name + '%\') and (pending = \'0\')) order by start_datetime');
         return res.recordset;
     }
 
@@ -118,6 +170,7 @@ class BookingMSSql {
     }
 
     async deleteBooking(id) {
+        console.log("hello")
         const conn = await mssqlcon.getConnection();
         const res = await conn.request()
         .input("booking_id",id)
