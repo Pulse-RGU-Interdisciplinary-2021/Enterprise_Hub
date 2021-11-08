@@ -288,3 +288,16 @@ body {
 .chair-selected span {
   background: #006b99;;
 }
+
+.book-button {
+  padding: 15px;
+  background: linear-gradient(-45deg,#712177 70%,transparent 30%);
+  border: 0;
+  cursor: pointer;
+  font-weight: bold;
+  color: #ffffff;
+  font-size: xx-large; 
+  font-family: Gordon;
+  text-align: right;
+  margin: 0;
+}

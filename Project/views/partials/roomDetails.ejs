@@ -1,5 +1,5 @@
 <div class="room-details">
-    <form action="" method="POST">
+    <form action="" method="POST" style="margin: 0;">
         <table class="booking-table" style="width: 100%;">
             <tr>
                 <td colspan="2">
@@ -9,7 +9,7 @@
                 </td>
             </tr>
             <tr>
-                <td style="width: 33%;">
+                <td style="width: 33%;" rowspan="2">
                     <div id="seats" style="height: 100%;">
                     </div>
                 </td>
@@ -22,11 +22,15 @@
                         <label for="email" style="font-weight: bold;">Email</label>
                         <input type="" name="email" placeholder="email@email.com" required>
                         <label for="ta_reason" style="font-weight: bold;">Booking justification</label>
-                        <textarea class="booking-textarea" name="reason" id="ta_reason" rows="10" placeholder="Research / " required style="font-size: 16px"></textarea>
-                        <div style="text-align: right;">
-                            <input type="submit" value="Book">
-                            <span class="fas fa-arrow-right"></span>
-                        </div>
+                        <textarea class="booking-textarea" name="reason" id="ta_reason" rows="10" required style="font-size: 16px"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="text-align: right;" class="book-button">
+                        BOOK
+                        <span class="fas fa-arrow-right"></span>
                     </div>
                 </td>
             </tr>
