@@ -4,7 +4,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 async function showBookings() {
-    var userId = 2 //We would get this from the login later
+    var userId = 1 //We would get this from the login later
     var allBookingsByUser = await getBooking(userId)
     iterateThroughBookings(allBookingsByUser)
 }
@@ -248,6 +248,14 @@ async function alertOutcomeBookingCancelled(id){
     else {
         alert ("Error in booking rejection")
     }
+}
+
+async function getBookingById(id){
+    var output
+    await $.get("/api/v1/bookings/Id/" + id, await function (data) {
+        output = data
+    });
+    return output
 }
 
 function checkVisibleScrollSection(entries, observer) {

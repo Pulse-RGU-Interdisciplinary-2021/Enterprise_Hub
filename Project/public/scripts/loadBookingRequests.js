@@ -258,6 +258,5 @@ async function getBookingById(id){
     await $.get("/api/v1/bookings/Id/" + id, await function (data) {
         output = data
     });
-    console.log(output[0])
     return output
 }
