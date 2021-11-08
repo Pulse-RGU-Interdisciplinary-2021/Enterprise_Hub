@@ -1,7 +1,16 @@
 var allPendingUsers
 async function showUsers() {
     allPendingUsers = await getUsers("true")
-    addUsers(allPendingUsers)
+    if (allPendingUsers.length === 0){
+        var noRequests = document.createElement("p");
+        noRequests.innerHTML = "No pending account requests"  
+        noRequests.setAttribute("id", "noAccountRequests")
+        $("#Accounts").append(noRequests)
+    }
+    else{
+        addUsers(allPendingUsers)
+    }
+    
 }
 
 async function addUsers(allPendingUsers) {
@@ -78,7 +87,7 @@ async function getUserImage(i){
 }
 
 async function getFullName(i){
-    output = allPendingUsers[i].fullName
+    output = allPendingUsers[i].full_name
     return output
 }
 
@@ -106,6 +115,7 @@ async function confirmAccountRequest(i) {
                 user_image: allPendingUsers[i].user_image,
                 full_name: allPendingUsers[i].full_name,
                 email: allPendingUsers[i].email,
+                phone_number: allPendingUsers[i].phone_number,
                 password: allPendingUsers[i].password,
                 admin: allPendingUsers[i].admin,
         },
@@ -120,16 +130,16 @@ async function alertOutcomeApproveAccount(i){
     var user = await getUserById(allPendingUsers[i].id)
     if (user[0].enabled == 1){
         alert ("User approved correctly")
-        var bookingDiv = document.getElementById(allPendingUsers[i].id) 
-        bookingDiv.style.opacity = '0'
+        var userDiv = document.getElementById("user-" + allPendingUsers[i].id) 
+        userDiv.style.opacity = '0'
         setTimeout(function(){
-            bookingDiv.style.height = $("#" + allPendingUsers[i].id).height()+ 'px';
-            bookingDiv.classList.add('hide-me');
+            userDiv.style.height = $("#user-" + allPendingUsers[i].id).height()+ 'px';
+            userDiv.classList.add('hide-me');
             (function(el) {
                 setTimeout(function() {
                 el.remove();
                 }, 1500);
-            })(bookingDiv);
+            })(userDiv);
         }, 1000);
     }
     else {
