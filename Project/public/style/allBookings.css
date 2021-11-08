@@ -36,6 +36,24 @@
     align-items: center;
 }
 
+#userSNameInputButton{
+    font-family: Gordon;
+    src: url("../fonts/Gordon.ttf");
+    background-color: #006B99;
+    font-size: 2.3vh;
+    color: white;
+    border: none;
+    padding: 1.2vh;
+    padding-left: 5vh;
+    padding-right: 5vh;
+    margin-left: 2vw;
+}
+
+#userSNameInputButton:hover{
+    background-color: #007ABF;
+    font-size: 2.5vh;
+}
+
 #navSectionDiv {
     position: sticky;
     width: 100%;
