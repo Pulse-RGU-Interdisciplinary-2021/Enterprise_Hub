@@ -3,6 +3,14 @@ var bookingData
 
 $(document).ready(function(){
     getData()
+
+    $('#seats').on('click','.chair', function() {
+        if(!$(this).hasClass('chair-unavailable') && !$(this).hasClass('chair-selected')) {
+            $(this).addClass('chair-selected')
+        } else if ($(this).hasClass('chair-selected')) {
+            $(this).removeClass('chair-selected')
+        }
+      } );
 });
 
 async function buildSeatsTable(bookingInput, roomInput) {
@@ -18,9 +26,9 @@ async function buildSeatsTable(bookingInput, roomInput) {
             outputTable += "</tr><tr>"
         }
         if (bookedSeats.includes(i+1)) {
-            outputDiv = "<div style='width: 100%; height: 100%; background-color: red;display: flex; justify-content: center; align-items: center;'>Seat " + (i+1) + "</div>"
+            outputDiv = "<div class='chair chair-unavailable'><img src='/images/unavailableChair.png' width='50'><span>Seat " + (i+1) +"</span></div>"
         } else {
-            outputDiv = "<div style='width: 100%; height: 100%; background-color: green;display: flex; justify-content: center; align-items: center;'>Seat " + (i+1) + "</div>"
+            outputDiv = "<div class='chair'><img src='/images/availableChair.png' width='50'><span>Seat " + (i+1) +"</span></div>"
         }
 
         outputTable += "<td>" + outputDiv + "</td>"
@@ -28,7 +36,7 @@ async function buildSeatsTable(bookingInput, roomInput) {
     outputTable += "</tr> </table>"
 
     console.log(outputTable)
-    $('#desks').append(outputTable)
+    $('#seats').append(outputTable)
 }
 
 async function getData() {

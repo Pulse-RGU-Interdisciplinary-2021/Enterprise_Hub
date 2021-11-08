@@ -1,20 +1,35 @@
-<table style="width: 80%; table-layout: fixed; margin: auto; background-color: cornflowerblue; margin-top: 7px;">
-    <tr>
-        <td style="width:100%" colspan="2">
-            <div style="width: 100%; height: 300px; background-image: url(./images/Innovation-Schoolhill-Interior.jpg); background-size: cover; background-position: center;">
-                <div style="background-color: white; font-size: xx-large; display: inline-block; padding: 10px">Tech one hub</div>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <div style="background-color: white; height: 400px;" id="desks">
-            </div> 
-        </td>
-        <td>
-            <div style="background-color: white; height: 400px;">
-                Select a desk
-            </div>
-        </td>
-    </tr>
-</table>
+<div class="room-details">
+    <form action="" method="POST">
+        <table class="booking-table" style="width: 100%;">
+            <tr>
+                <td colspan="2">
+                    <div class="booking-img">
+                        <div class="booking-img-text">RoomName</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 33%;">
+                    <div id="seats" style="height: 100%;">
+                    </div>
+                </td>
+                <td>
+                    <div class="booking-sub-container room-input">
+                        <label for="name" style="font-weight: bold;">Name</label>
+                        <input type="text" name="name" placeholder="John Smith" required>
+                        <label for="number" style="font-weight: bold;">Contact number</label>
+                        <input type="text" name="number" placeholder="123456789" required>
+                        <label for="email" style="font-weight: bold;">Email</label>
+                        <input type="" name="email" placeholder="email@email.com" required>
+                        <label for="ta_reason" style="font-weight: bold;">Booking justification</label>
+                        <textarea class="booking-textarea" name="reason" id="ta_reason" rows="10" placeholder="Research / " required style="font-size: 16px"></textarea>
+                        <div style="text-align: right;">
+                            <input type="submit" value="Book">
+                            <span class="fas fa-arrow-right"></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>

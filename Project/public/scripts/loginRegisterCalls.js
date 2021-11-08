@@ -28,7 +28,7 @@ function login() {
         }else {
             console.log(res);
             $("#errMessage").text("");
-            window.location.href = "/booking";
+            window.location.href = "/type";
         }
     })
 }

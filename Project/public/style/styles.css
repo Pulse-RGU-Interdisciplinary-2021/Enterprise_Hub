@@ -224,3 +224,67 @@ body {
   resize: none;
   width: 99%;
 }
+
+.room-details {
+  width: 80%;
+  background-color: #006b99;
+  padding: 5px;
+  margin: 0 auto;
+  margin-top: 10px;
+  font-family: ZonaPro-Regular, arial, helvetica, sans-serif;
+}
+
+.chair {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 60px;
+  text-align: center;
+  color: black;
+  border: solid #bae0f5 5px ;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.chair img {
+  padding: 5px;
+  background: #77dd77;
+}
+
+.chair span {
+  background: #bae0f5;;
+  padding-top: 4px;
+  width: 100%;
+}
+
+.chair-unavailable {
+  border: solid slategrey 5px ;
+  color: white;
+  cursor: default;
+}
+
+.chair-unavailable img {
+  background: #ff6961;
+}
+
+.chair-unavailable span {
+  background: slategrey;
+}
+
+.room-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.room-input label {
+  padding-top: 10px;
+}
+
+.chair-selected {
+  border: solid #006b99 5px ;
+  color: white;
+}
+
+.chair-selected span {
+  background: #006b99;;
+}
