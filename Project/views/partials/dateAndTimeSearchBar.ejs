@@ -3,7 +3,7 @@
         <td>
             <input id="date" class="booking-input-text" type="text" placeholder="Please select date" onfocus="(this.type='date')">
         </td>
-        <td>
+        <td id="td_startHour">
             <select id='startHour' class="booking-input-text" required>
                 <option value="0" disabled selected hidden>Start time</option>
                 <option value="0">00:00</option>
@@ -33,7 +33,7 @@
                 <option value="24">24:00</option>
             </select>
         </td>
-        <td>
+        <td id="td_endHour">
             <select id='endHour' class="booking-input-text" required>
                 <option value="23" disabled selected hidden>End time</option>
                 <option value="1">01:00</option>

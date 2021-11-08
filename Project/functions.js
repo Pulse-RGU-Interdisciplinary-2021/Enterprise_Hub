@@ -30,3 +30,28 @@ exports.getRoomFeatures = (roomId, callback) => {
     });
 }
 
+exports.sendEmail = () => {
+    var transporter = nodemailer.createTransport({
+        service: 'hotmail',
+        auth: {
+          user: 'asdasdakljd@outlook.es',
+          pass: 'testamento!'
+        }
+      });
+      
+      var mailOptions = {
+        from: '"Fred Foo 👻" <asdasdakljd@outlook.es>', // sender address
+        to: "jonberoz2000@gmail.com", // list of receivers
+        subject: "Hello ✔", // Subject line
+        text: "Hello world?", // plain text body
+        html: "<b>Hello world?</b>", // html body
+      };
+      
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });    
+}

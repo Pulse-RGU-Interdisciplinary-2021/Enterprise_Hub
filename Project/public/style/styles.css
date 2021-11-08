@@ -164,3 +164,140 @@ body {
     width: 100%;
     height: 300px;
 }
+
+.tab-style {
+  background-color: #c4a1c9;
+  transform: skewX(-45deg);
+  min-width: 30%;
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  padding: 1.25rem;
+  margin: .75rem;
+}
+
+.tab-style:hover {
+  background-color:#712177;
+}
+
+.tab-style span{
+  display: inline-block;
+  transform: skewX(45deg);
+  font-size:x-large;
+  pointer-events: none;
+  user-select: none;
+  color: black;
+}
+
+.tab-style:hover span{
+  color: white;
+}
+
+.booking-table td {
+  background-color: white;
+  margin: auto;
+  padding: 0px;
+}
+
+.booking-sub-container {
+  padding: 15px;
+}
+
+.booking-img {
+  width: 100%; 
+  height: 200px; 
+  background-image: url(/images/Innovation-Schoolhill-Interior.jpg); 
+  background-size: cover; 
+  background-position: center;
+  border-bottom: solid #006b99 5px;
+}
+
+.booking-img-text {
+  background: linear-gradient(135deg,white 80%,transparent 20%);
+  width: 30%;
+  font-size: xx-large; 
+  display: inline-block; 
+  padding: 10px
+}
+
+.booking-textarea {
+  resize: none;
+  width: 99%;
+}
+
+.room-details {
+  width: 80%;
+  background-color: #006b99;
+  padding: 5px;
+  margin: 0 auto;
+  margin-top: 10px;
+  font-family: ZonaPro-Regular, arial, helvetica, sans-serif;
+}
+
+.chair {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 60px;
+  text-align: center;
+  color: black;
+  border: solid #bae0f5 5px ;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.chair img {
+  padding: 5px;
+  background: #77dd77;
+}
+
+.chair span {
+  background: #bae0f5;;
+  padding-top: 4px;
+  width: 100%;
+}
+
+.chair-unavailable {
+  border: solid slategrey 5px ;
+  color: white;
+  cursor: default;
+}
+
+.chair-unavailable img {
+  background: #ff6961;
+}
+
+.chair-unavailable span {
+  background: slategrey;
+}
+
+.room-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.room-input label {
+  padding-top: 10px;
+}
+
+.chair-selected {
+  border: solid #006b99 5px ;
+  color: white;
+}
+
+.chair-selected span {
+  background: #006b99;;
+}
+
+.book-button {
+  padding: 15px;
+  background: linear-gradient(-45deg,#712177 70%,transparent 30%);
+  border: 0;
+  cursor: pointer;
+  font-weight: bold;
+  color: #ffffff;
+  font-size: xx-large; 
+  font-family: Gordon;
+  text-align: right;
+  margin: 0;
+}
