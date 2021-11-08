@@ -31,7 +31,7 @@ async function userSNameFilterSelected() {
     var html = '<form action="#">'
     html += '<label for="userSNameInput">Enter the full name of the user:</label>'
     html += '<input type="text" id="userSNameInput">'
-    html += '<button id = "userSNameInputButton" onclick="nameEntered()">Search</button>'
+    html += '<button type = "button" id = "userSNameInputButton" onclick="nameEntered()">Search</button>'
     html += '</form>'
 
     $("#filterResult").append(html)
