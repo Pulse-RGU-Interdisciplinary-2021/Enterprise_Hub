@@ -1,5 +1,3 @@
-console.log("hi")
-
 $(document).ready(async function () {
     console.log("ready")
     await setDefaultDateTimes()
@@ -80,17 +78,14 @@ async function dateChanged() {
     var startDateTime = $('#startDatetimeInput').val()
     var endDateTime = $('#endDatetimeInput').val()
 
-    console.log("aaa" + startDateTime + endDateTime)
     showRoomAvailability(startDateTime, endDateTime)
 
 }
 
 async function showRoomAvailability(startDateTime, endDateTime) {
     $('#roomAvailabilityDiv').empty()
-    console.log(1)
     var allRooms
     allRooms = await getAllRooms()
-    console.log(2 + allRooms)
     displayRooms(allRooms, startDateTime, endDateTime)
 }
 
@@ -111,12 +106,11 @@ async function displayRooms(allRooms, startDateTime, endDateTime) {
     }
     else {
         for (var i = 0; i < allRooms.length; i++) {
-            console.log(3)
             var formattedStartTime = await formatDateForSQL(startDateTime)
             var formattedEndTime = await formatDateForSQL(endDateTime)
             var unavailableDesks = await getUnavailableDesksNumber(allRooms[i].id, formattedStartTime, formattedEndTime)
             var totalDesks = allRooms[i].max_desks
-            console.log("4" + unavailableDesks[0].deskn)
+            console.log(i + " Total desks:" + totalDesks)
             var roomDiv = document.createElement("div")
             roomDiv.setAttribute("class", "roomDiv")
             roomDiv.setAttribute("id", "room" + i)
@@ -142,7 +136,6 @@ async function getUnavailableDesksNumber(room_id, startDateTime, endDateTime) {
     var output
     await $.get("/api/v1/bookings/CountUnavailableDesks/" + room_id + "/" + startDateTime + "/" + endDateTime, await function (data) {
         output = data
-        console.log("ddddddddd" + data[0].deskn)
     });
     return output
 }
@@ -150,13 +143,14 @@ async function getUnavailableDesksNumber(room_id, startDateTime, endDateTime) {
 async function getRoomDiagram(unavailableDesks, totalDesks, i, allRooms) {
     var output = '<div id=\'room' + i + 'Diagram\' class = \'diagram\' onclick=\'diagramClicked(' + allRooms[i].id + ')\'>'
 
-    console.log("a " + unavailableDesks + " t " + totalDesks)
+    console.log("unavailableDesks: " + unavailableDesks + "\ntotalDesks: " + totalDesks)
     var columns = 5 //can be changed later
-    var emptyDiagramSpaces = totalDesks % columns
+    var emptyDiagramSpaces = (columns * Math.ceil(totalDesks/columns)) - totalDesks
+    console.log("Empty diagram spaces = " + emptyDiagramSpaces)
     var totalDiagramSpaces = totalDesks + emptyDiagramSpaces
     if (totalDiagramSpaces % columns !== 0) {
         console.log("error with diagram desk spaces")
-        console.log("t " + totalDiagramSpaces + " c " + columns)
+        console.log("totalDiagramSpaces: " + totalDiagramSpaces + " Columns: " + columns)
     }
     var rows = totalDiagramSpaces / columns
 
@@ -194,7 +188,6 @@ async function getRoomDiagram(unavailableDesks, totalDesks, i, allRooms) {
 
     output += '</div>'
     output += '</table><br><br>'
-    console.log("ooooo" + output)
     return output
 }
 
