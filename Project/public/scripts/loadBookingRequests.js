@@ -13,10 +13,12 @@ async function showBookings(isEvents) {
 async function addBookings(allPendingBookings, isEvents) {
     for (var i = 0; i < allPendingBookings.length; i++) {
 
-        var userName = document.createElement("p");
-        userName.innerHTML = await getuserName(i)
-        userName.setAttribute("class", "userName")
-
+        if (!isEvents){
+            var userName = document.createElement("p");
+            userName.innerHTML = await getuserName(i)
+            userName.setAttribute("class", "userName")
+        }
+        
         var date = document.createElement("p");
         date.innerHTML = formattedStartAndEndTimeToString(i)
         date.setAttribute("class", "date");
@@ -25,16 +27,18 @@ async function addBookings(allPendingBookings, isEvents) {
         roomName.innerHTML = await getRoomName(i)
         roomName.setAttribute("class", "roomName")
 
-        var bookingType = document.createElement("p");
-        bookingType.innerHTML = formattedBookingType(i)
-        bookingType.setAttribute("class", "bookingType")
+        if (!isEvents){
+            var bookingType = document.createElement("p");
+            bookingType.innerHTML = formattedBookingType(i)
+            bookingType.setAttribute("class", "bookingType")
+        }
 
         var reason = document.createElement("p")
         reason.innerHTML = "Reason of booking: " + allPendingBookings[i].reason
         reason.setAttribute("class", "reason")
 
         var currentBookingInfo = document.createElement("div")
-        var currentBookingInfo = formatCurrentBooking(userName, date, roomName, bookingType, reason)
+        var currentBookingInfo = formatCurrentBooking(userName, date, roomName, bookingType, reason, isEvents)
         currentBookingInfo.setAttribute("class", "infoPendingBookingsDiv")
 
         //to change
@@ -153,12 +157,17 @@ function formattedBookingType(i) {
     return output
 }
 
-function formatCurrentBooking(userName, date, roomName, bookingType, reason) {
+function formatCurrentBooking(userName, date, roomName, bookingType, reason, isEvents) {
     var currentBooking = document.createElement("div")
-    currentBooking.appendChild(userName)
+    if (!isEvents){
+        currentBooking.appendChild(userName)
+    }
     currentBooking.appendChild(date)
     currentBooking.appendChild(roomName)
-    currentBooking.appendChild(bookingType)
+    if (!isEvents){
+        currentBooking.appendChild(bookingType)
+    }
+   
     currentBooking.appendChild(reason)
 
     return currentBooking

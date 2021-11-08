@@ -53,7 +53,7 @@ app.get('/calendar', function (req, res) {
 });
 
 app.get('/Type', function (req, res) {
-  res.render('pages/type');
+  res.render('pages/Type');
 });
 
 app.get('/booking', function (req, res) {
