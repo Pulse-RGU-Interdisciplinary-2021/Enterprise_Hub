@@ -43,25 +43,75 @@ class BookingMSSql {
         return res.recordset;
     }
 
+    async getUpcomingBookingsbyPending(boolean){
+        var bit
+        if (boolean.toLowerCase() == "true") {
+            bit = 1
+        }
+        else if (boolean.toLowerCase() == "false"){
+            bit = 0
+        }
+        else{
+            console.log("Invalid booking pending request")
+        }
+        const conn = await mssqlcon.getConnection();
+        const res = await conn.request().query('select * from bookings where ((pending = ' + bit + ') and (start_datetime > sysdatetime())) order by start_datetime');
+        return res.recordset;
+    }
+
+    async getUpcomingEventsbyPending(boolean){
+        var bit
+        if (boolean.toLowerCase() == "true") {
+            bit = 1
+        }
+        else if (boolean.toLowerCase() == "false"){
+            bit = 0
+        }
+        else{
+            console.log("Invalid booking pending request")
+        }
+        const conn = await mssqlcon.getConnection();
+        const res = await conn.request().query('select * from bookings where ((pending = ' + bit + ') and (start_datetime > sysdatetime()) and (event_booking_yn = \'1\')) order by start_datetime');
+        return res.recordset;
+    }
+
+    async getUpcomingBookingsbyPendingNoEvents(boolean){
+        var bit
+        if (boolean.toLowerCase() == "true") {
+            bit = 1
+        }
+        else if (boolean.toLowerCase() == "false"){
+            bit = 0
+        }
+        else{
+            console.log("Invalid booking pending request")
+        }
+        const conn = await mssqlcon.getConnection();
+        const res = await conn.request().query('select * from bookings where ((pending = ' + bit + ') and (start_datetime > sysdatetime()) and (event_booking_yn IS NULL )) order by start_datetime');
+        return res.recordset;
+    }
+
     //gets bookings where an inputted time is between the booking's end and start time
     async getBookingByDate(dateTime) {
+        var bit = 0
         const conn = await mssqlcon.getConnection();
-        var query = 'select * from bookings where ((start_datetime <= \'' + dateTime + '\') and (end_datetime > (\'' + dateTime + '\'))) order by start_datetime'
+        var query = 'select * from bookings where ((start_datetime <= \'' + dateTime + '\') and (end_datetime > (\'' + dateTime + '\')) and (pending = ' + bit + ')) order by start_datetime'
         const res = await conn.request().query(query);
-        console.log(res.recordset[0])
         return res.recordset;
     }
 
     async getBookingByUserFullName(name){
+        var bit = 0
         const conn = await mssqlcon.getConnection();
-        var query = 'select * from bookings where user_id in (select id from users where full_name = \'' + name + '\') order by start_datetime'
+        var query = 'select * from bookings where (user_id in (select id from users where (full_name = \'' + name + '\')) and (pending = ' + bit + ')) order by start_datetime'
         const res = await conn.request().query(query);
         return res.recordset;
     }
 
     async getBookingByRoomName(name){
+        var bit = 0
         const conn = await mssqlcon.getConnection();
-        const res = await conn.request().query('select * from bookings where room_id in (select id from rooms where room_name like \'%' + name + '%\') order by start_datetime');
+        const res = await conn.request().query('select * from bookings where room_id in (select id from rooms where (room_name like \'%' + name + '%\') and (pending = '+ bit + ')) order by start_datetime');
         return res.recordset;
     }
 
@@ -69,7 +119,6 @@ class BookingMSSql {
         const conn = await mssqlcon.getConnection();
         var query = 'select count(desks) as \'deskn\' from bookings where ((room_id = ' + roomId + ') and (((start_datetime <= \'' + startDateTime + '\') and (\'' + startDateTime + '\' < end_datetime)) or ((end_datetime >= \'' + endDateTime + '\') and (\'' + endDateTime + '\' > start_datetime))))'
         const res = await conn.request().query(query);
-        console.log(res.recordset[0])
         return res.recordset;
     }
 
@@ -96,7 +145,6 @@ class BookingMSSql {
         .input("reason",prod.reason)
         .input("full_room_booking",prod.full_room_booking)
         .execute("addBooking");
-        console.log(prod);
         return res;
     }
 
@@ -122,7 +170,6 @@ class BookingMSSql {
         const res = await conn.request()
         .input("booking_id",id)
         .execute("deleteBooking");
-        console.log(id)
         return res;
     }
 }

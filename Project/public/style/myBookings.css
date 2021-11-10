@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .bookingDiv {
     border-radius: 25px;
     background: #f7f7f7;
@@ -7,3 +8,144 @@
     box-shadow: 10px 5px 5px grey;
 }
 
+=======
+html {
+    scroll-behavior: smooth;
+}
+
+#navSectionDiv {
+    position: sticky;
+    width: 100%;
+    top: 0;
+}
+
+#navSectionDiv li {
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+}
+
+#navSectionDiv ul {
+    text-align: center;
+    width: 100%;
+    list-style: none;
+}
+
+#navSectionDiv a {
+    text-decoration: none;
+    display: block;
+    color: black;
+    transition: all 50ms ease-in-out;
+    /* 💡 This small transition makes setting of the active state smooth */
+}
+
+.bookingDiv {
+    background: #f7f7f7;
+    padding: 2vw;
+    font-size: 1.5vh;
+    text-align: left;
+    width: 80%;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    -webkit-transition: opacity 1000ms linear;
+    transition: opacity 1000ms linear;
+}
+
+.bookingDiv.hide-me {
+    /**From https://stackoverflow.com/questions/44591803/css3-animate-or-transition-elements-into-position-after-removal-of-an-element-ab*/
+    animation: hideme 1s forwards linear;
+    opacity: 0;
+}
+
+@keyframes hideme {
+    100% {
+        height: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}
+
+#myBookingsTitle {
+    text-align: left;
+    width: 80%;
+    margin: auto;
+}
+
+.dateText {
+    font-size: 2.3vh;
+}
+
+.typeOfBookingTitle {
+    background-color: #d0eaf8;
+    width: 100%;
+    font-size: 3vh;
+    text-align: center;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cancelButton {
+    font-family: Gordon;
+    src: url("../fonts/Gordon.ttf");
+    background-color: #009fee;
+    font-size: 2.3vh;
+    color: white;
+    border: none;
+    padding: 2vh;
+}
+
+.noBookingsMessage {
+    width: 100%;
+    font-size: 2vh;
+    text-align: center;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (min-width: 900px) {
+    #mainContent {
+        display: grid;
+        grid-template-columns: 10% 90%;
+    }
+    #myBookingsTitle, #bookingsSectionContentDiv {
+        grid-column: 2;
+        grid-row: 1;
+    }
+    #navSectionDiv {
+        grid-column: 1;
+        grid-row: 1;
+        align-self: start;
+        height: 100%;
+        border-right: 1px solid rgb(177, 177, 177);
+    }
+    #navSectionDiv ul {
+        position: sticky;
+        top: 2rem;
+        padding-left: 0;
+    }
+    #navSectionDiv a {
+        padding-top: 5vh;
+    }
+}
+
+@media screen and (max-width: 899px) {
+    #navSectionDiv {
+        background-color: #f7f7f7;
+    }
+    #navSectionDiv ul {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        font-size: 1.5vw;
+    }
+    #upcomingBookingsNav {
+        grid-column: 1;
+    }
+    #pastBookingsNav {
+        grid-column: 2;
+    }
+}
+>>>>>>> main

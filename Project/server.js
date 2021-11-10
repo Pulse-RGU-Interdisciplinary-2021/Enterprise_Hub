@@ -74,10 +74,10 @@ app.get('/allBookings', function (req, res) {
     res.render('pages/allBookings');
 });
 
-app.get("/bookingRequests", function (req, res) {
+app.get("/pendingRequests", function (req, res) {
   //test if admin
   //res.redirect('/queries/getBookingRequests')
-  res.render("pages/bookingRequests");
+  res.render("pages/pendingRequests");
 });
 
 app.get('/myBookings', function (req, res) {
