@@ -6,10 +6,20 @@
     <div class="header-inner">
 </div>
 
-<div class="topnav">
-    <a href="/allbookings">All Bookings</a>
-    <a href="/pendingRequests">Pending Requests</a>
+
+<div class="topnav" style="height: 50px;">
+    <% if(session.loggedin) { %>
+    <% if(session.isAdmin) { %>
+        <a href="/allbookings">All Bookings</a>
+        <a href="/pendingRequests">Pending Requests</a>
+        <a href="javascript:void(0)">Dashboard</a>
+        <a href="javascript:void(0)">Calendar</a>
+    <% } %>
+    <% if (!session.isAdmin) { %>
     <a href="/mybookings">My Bookings</a>
+    <% } %>
     <a href="/type">Booking</a>
     <a href="/login">Home</a>
-</div> 
+    <% } %>
+</div>
+

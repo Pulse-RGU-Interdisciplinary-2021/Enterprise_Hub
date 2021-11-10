@@ -116,11 +116,16 @@
 
     <footer>
         <%- include ("../partials/footer") %>
-        <button class="show booknow-button">
-            <img src="./images/BookButton.png" id="BookButtonImg"/>
-        </button>
+        <% if(session.loggedin) { %>
+            <button class="navigate booknow-button">
+                <img src="./images/BookButton.png" id="BookButtonImg"/>
+            </button>
+         <% } else { %>
+            <button class="show booknow-button">
+                <img src="./images/BookButton.png" id="BookButtonImg"/>
+            </button>
+        <% } %>
     </footer>
-    
     <script src="./scripts/modal.js"></script>
 </body>
 
