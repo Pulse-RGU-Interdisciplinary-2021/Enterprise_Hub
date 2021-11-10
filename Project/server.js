@@ -146,7 +146,7 @@ app.post("/register", (request, response) => {
   var sql = require("mssql");
   var sqlRequest = new sql.Request();
   var query =
-    "insert into users values (1,null,'" +
+    "insert into users values (0,null,'" +
     name +
     "', '" +
     email +
@@ -157,7 +157,6 @@ app.post("/register", (request, response) => {
     "', 0)";
   sqlRequest.query(query, (err, results) => {
     if (err) throw err;
-    console.log("Number of records inserted: " + results.affectedRows);
     response.redirect("login");
   });
 });
