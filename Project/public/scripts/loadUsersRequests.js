@@ -1,6 +1,7 @@
 var allPendingUsers
 async function showUsers() {
     allPendingUsers = await getUsers("true")
+    $("#Accounts").append("<h1>Pending Accounts</h1>")
     if (allPendingUsers.length === 0){
         var noRequests = document.createElement("p");
         noRequests.innerHTML = "No pending account requests"  

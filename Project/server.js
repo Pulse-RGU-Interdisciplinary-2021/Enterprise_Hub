@@ -88,8 +88,16 @@ app.get("/calendar", function (req, res) {
   res.render("pages/calendar");
 });
 
+app.get("/calendarsPage", function (req, res) {
+  res.render("pages/calendarsPage");
+});
+
 app.get("/insights", function (req, res) {
   res.render("pages/insights");
+});
+
+app.get("/adminPage", function (req, res) {
+  res.render("pages/adminPage");
 });
 
 app.get("/login", (req, res) => {
