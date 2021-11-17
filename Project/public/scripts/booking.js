@@ -63,6 +63,7 @@ function populateTemplate() {
         $('#room1a').removeAttr('href');
     }
 
+
     $('#room2').css('background-color','#0072bc')
     $('#room2name').text('ONE TECH HUB')
     if (room2seats > 6) {
@@ -121,6 +122,27 @@ function populateTemplate() {
         $('#room4Status').text("Unavailable")
         $('#room4name').append('<span class="fas fa-ban"></span>')
         $('#room4a').removeAttr('href');
+    }
+
+    var dateTimeSelected = true
+    if ($('#date').val() == "" || $('#startHour').val() == null || $('#endHour').val() == null) {
+        dateTimeSelected = false
+    }
+
+    if (!dateTimeSelected) {
+        $('#room1a').removeAttr('href');
+        $('#room2a').removeAttr('href');
+        $('#room3a').removeAttr('href');
+        $('#room4a').removeAttr('href');
+    } else {
+        $('#room1a').removeAttr('class');
+        $('#room2a').removeAttr('class');
+        $('#room3a').removeAttr('class');
+        $('#room4a').removeAttr('class');
+        $("#tooltip1").remove()
+        $("#tooltip2").remove()
+        $("#tooltip3").remove()
+        $("#tooltip4").remove()
     }
 }
 

@@ -12,6 +12,19 @@ body {
   margin-top: 0px;
 }
 
+.spacer {
+  width: 100%;
+  height: 150px;
+  display: flex;
+}
+
+.searchbar {
+  width: 100%;
+  padding-top: 19px;
+  padding-bottom: 19px;
+  background-color: #d0eaf8;
+}
+
 .footer {
   position: fixed;
   left: 0;
@@ -136,6 +149,23 @@ body {
     border-collapse: collapse;
   }
 
+  .roomdetails-table td {
+    vertical-align: top;
+  }
+
+  .roomdetails-table input, textarea {
+    padding: 12px;
+    border: none;
+    resize: none;
+    width: 100%;
+  }
+
+  .roomdetails-table label {
+    font-family: Gordon;
+    padding-bottom: 2px;
+  }
+
+
   .booking-top-tr {
     text-align: left;
     width: 80%;
@@ -143,21 +173,31 @@ body {
   }
 
   .booking-input-text {
-      padding: 19px;
-      border-collapse: collapse;
-      border: 0px;
+      padding: 12px;
+      border: none;
       width: 100%;
       font-size: 1rem;
       color:black;
+      text-align: center;
+      font-family: monospace;
   }
 
   .booking-input-button {
-    padding: 18px;
+    padding: 10px;
     width: 100%;
-    background-color: white;
-    border-color: #712177;
-    border-width: 2px;
+    min-width: 150px;
+    color: white;
     font-size: 1rem;
+    background: linear-gradient(135deg,#712177 85%,transparent 85%);
+    border: none;
+    text-align: left;
+    font-family: Gordon;
+    font-size: 1.25rem;
+}
+
+.booking-input-button:hover {
+  background: linear-gradient(135deg,#006b99 85%,transparent 85%);
+  cursor: pointer;
 }
 
 .booking-room {
@@ -194,13 +234,23 @@ body {
 }
 
 .booking-table td {
-  background-color: white;
   margin: auto;
   padding: 0px;
 }
 
 .booking-sub-container {
   padding: 15px;
+  background: #d0eaf8;
+  height: 330px;
+}
+
+.booking-sub-container span {
+  font-family: Gordon;
+  font-size: 1.25rem;
+}
+
+.booking-img-wrapper {
+  overflow: hidden;
 }
 
 .booking-img {
@@ -209,25 +259,25 @@ body {
   background-image: url(/images/Innovation-Schoolhill-Interior.jpg); 
   background-size: cover; 
   background-position: center;
-  border-bottom: solid #006b99 5px;
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+  transform: scale(1.03);
 }
 
 .booking-img-text {
-  background: linear-gradient(135deg,white 80%,transparent 20%);
+  position: relative;
+  margin-top: -54px;
+  top: 54px;
+  background: linear-gradient(135deg,rgba(113,33,119,.8) 55%,transparent 55%);
+  color: white;
   width: 30%;
   font-size: xx-large; 
-  display: inline-block; 
-  padding: 10px
-}
-
-.booking-textarea {
-  resize: none;
-  width: 99%;
+  padding: 10px;
+  z-index: 1;
 }
 
 .room-details {
-  width: 80%;
-  background-color: #006b99;
+  width: 70%;
   padding: 5px;
   margin: 0 auto;
   margin-top: 10px;
@@ -236,14 +286,23 @@ body {
 
 .chair {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  max-width: 60px;
-  text-align: center;
+  justify-content: center;
   color: black;
-  border: solid #bae0f5 5px ;
-  margin: 5px;
   cursor: pointer;
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  font-family: Gordon;
+  -o-transition:.3s;
+  -ms-transition:.3s;
+  -moz-transition:.3s;
+  -webkit-transition:.3s;
+  transition:.3s;
+}
+
+.chair:hover {
+  background-color: #f1f1f1;
 }
 
 .chair img {
@@ -251,24 +310,27 @@ body {
   background: #77dd77;
 }
 
-.chair span {
-  background: #bae0f5;;
-  padding-top: 4px;
-  width: 100%;
+.chair-selected {
+  background: #006b99 ;
+  color: white;
+}
+
+.chair-selected:hover {
+  background: #005275 ;
 }
 
 .chair-unavailable {
-  border: solid slategrey 5px ;
+  background: slategrey;
   color: white;
   cursor: default;
 }
 
-.chair-unavailable img {
-  background: #ff6961;
+.chair-unavailable:hover {
+  background: slategrey;
 }
 
-.chair-unavailable span {
-  background: slategrey;
+.chair-unavailable img {
+  background: #ff6961;
 }
 
 .room-input {
@@ -280,24 +342,66 @@ body {
   padding-top: 10px;
 }
 
-.chair-selected {
-  border: solid #006b99 5px ;
-  color: white;
-}
-
 .chair-selected span {
   background: #006b99;;
 }
 
 .book-button {
-  padding: 15px;
-  background: linear-gradient(-45deg,#712177 70%,transparent 30%);
+  padding: 10px;
+  background: linear-gradient(-45deg,#712177 20%,transparent 20%);
   border: 0;
   cursor: pointer;
   font-weight: bold;
   color: #ffffff;
-  font-size: xx-large; 
+  font-size: 1.25rem; 
   font-family: Gordon;
   text-align: right;
   margin: 0;
+  margin-top: 5px;
+}
+
+.book-button:hover {
+  background: linear-gradient(-45deg,#005275 20%,transparent 20%);
+}
+
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  opacity:0;
+  transition:visibility 0.3s linear,opacity 0.3s linear;
+  background-color: red;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip .tooltiptext {
+  width: 100%;
+  bottom: 55%;
+  left: 0%;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility:visible;
+  opacity:1;
+  filter:none;
+}
+
+.tooltip:hover div {
+  filter: grayscale();
+  transition: -webkit-filter 0.3s linear;
+  -webkit-filter: grayscale(1);
+  -webkit-transition : -webkit-filter 0.3s linear;
 }

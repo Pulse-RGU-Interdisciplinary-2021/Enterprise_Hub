@@ -20,20 +20,20 @@ async function buildSeatsTable(bookingInput, roomInput) {
         bookedSeats.push(booking.seat_id);
     }
 
-    outputTable = "<table style='width: 100%; height: 100%;'> <tr>"
+    outputTable = "<table style='width: 100%;'> <tr>"
     for(let i = 0; i < roomInput[0].max_desks; i++) {
-        if ((i)%5 == 0) {
+        if ((i)%4 == 0) {
             outputTable += "</tr><tr>"
         }
         if (bookedSeats.includes(i+1)) {
-            outputDiv = "<div class='chair chair-unavailable'><img src='/images/unavailableChair.png' width='50'><span>Seat " + (i+1) +"</span></div>"
+            outputDiv = "<div class='chair chair-unavailable'>" + (i+1) +"</div>"
         } else {
-            outputDiv = "<div class='chair'><img src='/images/availableChair.png' width='50'><span>Seat " + (i+1) +"</span></div>"
+            outputDiv = "<div class='chair'>" + (i+1) +"</div>"
         }
 
         outputTable += "<td>" + outputDiv + "</td>"
     }
-    outputTable += "</tr> </table>"
+    outputTable += "</tr> </table><br><label>Full room booking</label><input type='checkbox'>"
 
     console.log(outputTable)
     $('#seats').append(outputTable)

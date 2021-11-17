@@ -51,12 +51,14 @@ function populateTemplate() {
         $('#room1Status').css('background-color','green')
         $('#room1Status').text("available")
         $('#room1name').append('<span class="fas fa-arrow-right"></span>')
+        $('#room1a').attr('onClick', 'navigate(this);');
     } else {
         $('#room1').css('background-color','slategray')
         $('#room1Status').css('background-color','red')
         $('#room1Status').text("Unavailable")
         $('#room1name').append('<span class="fas fa-ban"></span>')
         $('#room1a').removeAttr('href');
+        $('#room1a').removeAttr('onClick');
     }
 
     $('#room2').css('background-color','#0072bc')
@@ -65,12 +67,14 @@ function populateTemplate() {
         $('#room2Status').css('background-color','green')
         $('#room2Status').text("available")
         $('#room2name').append('<span class="fas fa-arrow-right"></span>')
+        $('#room2a').attr('onClick', 'navigate(this);');
     } else {
         $('#room2').css('background-color','slategray')
         $('#room2Status').css('background-color','red')
         $('#room2Status').text("Unavailable")
         $('#room2name').append('<span class="fas fa-ban"></span>')
         $('#room2a').removeAttr('href');
+        $('#room2a').removeAttr('onClick');
     }
 
     $('#room3').css('background-color','#0072bc')
@@ -79,12 +83,14 @@ function populateTemplate() {
         $('#room3Status').css('background-color','green')
         $('#room3Status').text("available")
         $('#room3name').append('<span class="fas fa-arrow-right"></span>')
+        $('#room3a').attr('onClick', 'navigate(this);');
     } else {
         $('#room3').css('background-color','slategray')
         $('#room3Status').css('background-color','red')
         $('#room3Status').text("Unavailable")
         $('#room3name').append('<span class="fas fa-ban"></span>')
         $('#room3a').removeAttr('href');
+        $('#room3a').removeAttr('onClick');
     }
 
     $('#room4').css('background-color','#0072bc')
@@ -93,12 +99,34 @@ function populateTemplate() {
         $('#room4Status').css('background-color','green')
         $('#room4Status').text("available")
         $('#room4name').append('<span class="fas fa-arrow-right"></span>')
+        $('#room4a').attr('onClick', 'navigate(this);');
     } else {
         $('#room4').css('background-color','slategray')
         $('#room4Status').css('background-color','red')
         $('#room4Status').text("Unavailable")
         $('#room4name').append('<span class="fas fa-ban"></span>')
-        $('#room4a').removeAttr('href');
+        $('#room4a').removeAttr('onClick');
+    }
+
+    var dateTimeSelected = true
+    if ($('#date').val() == "") {
+        dateTimeSelected = false
+    }
+
+    if (!dateTimeSelected) {
+        $('#room1a').removeAttr('onClick');
+        $('#room2a').removeAttr('onClick');
+        $('#room3a').removeAttr('onClick');
+        $('#room4a').removeAttr('onClick');
+    } else {
+        $('#room1a').removeAttr('class');
+        $('#room2a').removeAttr('class');
+        $('#room3a').removeAttr('class');
+        $('#room4a').removeAttr('class');
+        $("#tooltip1").remove()
+        $("#tooltip2").remove()
+        $("#tooltip3").remove()
+        $("#tooltip4").remove()
     }
 }
 

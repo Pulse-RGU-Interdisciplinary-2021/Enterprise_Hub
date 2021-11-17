@@ -1,33 +1,40 @@
+<div class="booking-img-text">RoomName</div>
+<div class="booking-img-wrapper">
+    <img class="booking-img">
+</div>
 <div class="room-details">
     <form action="" method="POST" style="margin: 0;">
-        <table class="booking-table" style="width: 100%;">
+        <table class="roomdetails-table" style="width: 100%;">
             <tr>
-                <td colspan="2">
-                    <div class="booking-img">
-                        <div class="booking-img-text">RoomName</div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 33%;" rowspan="2">
-                    <div id="seats" style="height: 100%;">
-                    </div>
-                </td>
                 <td>
                     <div class="booking-sub-container room-input">
-                        <label for="name" style="font-weight: bold;">Name</label>
+                        <span>Booking Information</span>
+                        <label for="name">Name</label>
                         <input type="text" name="name" placeholder="John Smith" required>
-                        <label for="number" style="font-weight: bold;">Contact number</label>
+                        <label for="number">Contact number</label>
                         <input type="text" name="number" placeholder="123456789" required>
-                        <label for="email" style="font-weight: bold;">Email</label>
+                        <label for="email">Email</label>
                         <input type="" name="email" placeholder="email@email.com" required>
-                        <label for="ta_reason" style="font-weight: bold;">Booking justification</label>
-                        <textarea class="booking-textarea" name="reason" id="ta_reason" rows="10" required style="font-size: 16px"></textarea>
+                        <label for="role">Role</label>
+                        <input type="" name="role" placeholder="Student / Staff / Other" required> 
+                    </div>
+                </td>
+                <td style="width: 220px;">
+                    <div class="booking-sub-container" id="seats">
+                        <span>Seat Selection</span><br>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td>
+                <td colspan="2">
+                    <div class="booking-sub-container" style="height: auto;">
+                        <label for="ta_reason">Booking justification</label>
+                        <textarea class="booking-textarea" name="reason" id="ta_reason" rows="5" required></textarea>   
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
                     <div style="text-align: right;" class="book-button">
                         BOOK
                         <span class="fas fa-arrow-right"></span>
