@@ -143,6 +143,11 @@ app.post("/register", (request, response) => {
   var password = request.body.password;
   var repeatPassword = request.body.repeatPassword;
   var phoneNumber = request.body.phoneNumber;
+  if(!functions.isValidEmail(email)){
+    response.send("Invalid email");
+    response.end();
+    return;
+  }
   var sql = require("mssql");
   var sqlRequest = new sql.Request();
   var query =
@@ -157,7 +162,7 @@ app.post("/register", (request, response) => {
     "', 0)";
   sqlRequest.query(query, (err, results) => {
     if (err) throw err;
-    response.redirect("login");
+    response.send("success");
   });
 });
 
