@@ -50,7 +50,7 @@ app.get("/", function (req, res) {
 
 app.get("/calendar", function (req, res) {
   if (req.session.isAdmin){
-    res.render("pages/calendar");
+    res.render("pages/calendar", { session: req.session });
   }
   else{
     res.render("pages/404");
@@ -96,7 +96,7 @@ app.get("/myBookings", function (req, res) {
 });
 
 app.get("/calendarsPage", function (req, res) {
-  res.render("pages/calendarsPage");
+  res.render("pages/calendarsPage", { session: req.session });
 });
 
 app.get("/insights", function (req, res) {
@@ -306,6 +306,7 @@ app.get("/eventBooking", (request, response) => {
             data: data,
             roomName: roomName,
             roomId: roomId,
+            session: req.session 
           });
         });
       });
@@ -342,7 +343,7 @@ app.post("/eventBooking", (request, response) => {
     sqlRequest.query(query, (err, res) => {
       if (err) throw err;
       console.log("success");
-      response.render("pages/insights", { rooId: roomId });
+      response.render("pages/insights", { rooId: roomId, session: req.session });
     });
   });
 });
@@ -356,7 +357,7 @@ app.use("/queries", queries);
 
 app.use(function (req, res) {
   res.status(404);
-  res.render("pages/404");
+  res.render("pages/404", {session: req.session});
 });
 
 app.listen(4000, () => console.log("My website is listening on port 4000!"));
