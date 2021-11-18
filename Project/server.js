@@ -62,15 +62,15 @@ app.get("/Type", function (req, res) {
 });
 
 app.get("/booking", function (req, res) {
-  res.render("pages/booking");
+  res.render("pages/booking", { session: req.session });
 });
 
 app.get("/eventRoom", function (req, res) {
-  res.render("pages/eventRoom");
+  res.render("pages/eventRoom", { session: req.session });
 });
 
 app.get("/room", function (req, res) {
-  res.render("pages/room");
+  res.render("pages/room", { session: req.session });
 });
 
 app.get("/allBookings", function (req, res) {
@@ -118,7 +118,7 @@ app.get("/adminHome", function (req, res) {
 });
 
 app.get("/adminPage", function (req, res) {
-  res.render("pages/adminPage");
+  res.render("pages/adminPage", { session: req.session });
 });
 
 app.get("/login", (req, res) => {
