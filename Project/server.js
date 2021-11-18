@@ -66,7 +66,7 @@ app.get('/eventRoom', function (req, res) {
 
 
 app.get('/room', function (req, res) {
-  res.render('pages/room');
+  res.render('pages/room', {roomId, startDateTime, endDateTime});
 });
 
 
@@ -250,6 +250,13 @@ app.post("/eventBooking", (request, response) => {
 
 app.post("/setRoomId/:roomId", (req, res) => {
   roomId = req.params.roomId;
+  res.send("success");
+}); 
+
+app.post("/setRoomIdDates/:roomId/:startDateTime/:endDateTime", (req, res) => {
+  roomId = req.params.roomId;
+  startDateTime = req.params.startDateTime;
+  endDateTime = req.params.endDateTime;
   res.send("success");
 }); 
 

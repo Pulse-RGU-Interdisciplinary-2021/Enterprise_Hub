@@ -1,7 +1,9 @@
 var roomData
 var bookingData
+var roomId
 
 $(document).ready(function(){
+    roomId = $('#roomId').text();
     getData()
 
     $('#seats').on('click','.chair', function() {
@@ -11,6 +13,9 @@ $(document).ready(function(){
             $(this).removeClass('chair-selected')
         }
       } );
+
+      startDateTime = startDateTime.toISOString().slice(0, 19).replace('T', ' ') + ".000"
+      endDateTime = endDateTime.toISOString().slice(0, 19).replace('T', ' ') + ".000"
 });
 
 async function buildSeatsTable(bookingInput, roomInput) {
@@ -37,11 +42,13 @@ async function buildSeatsTable(bookingInput, roomInput) {
 
     console.log(outputTable)
     $('#seats').append(outputTable)
+
+    $('#roomId').text(roomInput[0].room_name)
 }
 
 async function getData() {
-    roomData = await getRoomInfo(1)
-    bookingData = await getRoomBookings(1,'2021-10-30 10:00:00.000','2021-11-01 08:00:00.000')
+    roomData = await getRoomInfo(roomId)
+    bookingData = await getRoomBookings(roomId,startDateTime,endDateTime)
     buildSeatsTable(bookingData, roomData);
 }
 

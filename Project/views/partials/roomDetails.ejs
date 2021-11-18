@@ -1,7 +1,13 @@
-<div class="booking-img-text">RoomName</div>
+<div id="roomId" class="booking-img-text"><%= roomId %></div>
 <div class="booking-img-wrapper">
     <img class="booking-img">
 </div>
+
+<script>
+    var startDateTime = new Date("<%= startDateTime %>") 
+    var endDateTime = new Date("<%= startDateTime %>")
+</script>
+
 <div class="room-details">
     <form action="" method="POST" style="margin: 0;">
         <table class="roomdetails-table" style="width: 100%;">
