@@ -1,10 +1,7 @@
-/**window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', () => {
   
-})*/
-
-function pendingTabOpened(){
   document.getElementById("accountsTabButton").click();
-}
+})
 
 function tabChanged(evt, tabName) { //from https://www.w3schools.com/howto/howto_js_tabs.asp
   console.log("tab changed " + tabName)  
