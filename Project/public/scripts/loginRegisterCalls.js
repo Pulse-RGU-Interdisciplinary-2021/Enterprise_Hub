@@ -48,5 +48,13 @@ function register() {
         phoneNumber: phoneNumber
     }, (res) => {
         console.log(res);
+        if( res !== "success") {
+            $("#errMessage").text(res);
+        }else {
+            console.log(res);
+            $("#errMessage").text("");
+            window.location.href = "/";
+        }
+        
     });
 }
