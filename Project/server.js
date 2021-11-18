@@ -44,16 +44,21 @@ app.get("/", function (req, res) {
   res.redirect("/login");
 });
 
-app.get("/landing", function (req, res) {
+/**app.get("/landing", function (req, res) {
   res.render("pages/landing");
-});
+});*/
 
 app.get("/calendar", function (req, res) {
-  res.render("pages/calendar");
+  if (req.session.isAdmin){
+    res.render("pages/calendar");
+  }
+  else{
+    res.render("pages/404");
+  }
 });
 
 app.get("/Type", function (req, res) {
-  res.render("pages/type", {session: req.session});
+  res.render("pages/type", { session: req.session });
 });
 
 app.get("/booking", function (req, res) {
@@ -69,21 +74,25 @@ app.get("/room", function (req, res) {
 });
 
 app.get("/allBookings", function (req, res) {
-  res.render("pages/allBookings", {session: req.session});
+  if (req.session.isAdmin){
+    res.render("pages/allBookings", { session: req.session });
+  }
+  else{
+    res.render("pages/404");
+  }
 });
 
 app.get("/pendingRequests", function (req, res) {
-  //test if admin
-  //res.redirect('/queries/getBookingRequests')
-  res.render("pages/pendingRequests", {session: req.session});
+  if (req.session.isAdmin){
+    res.render("pages/pendingRequests", { session: req.session });
+  }
+  else{
+    res.render("pages/404");
+  }
 });
 
 app.get("/myBookings", function (req, res) {
-  res.render("pages/myBookings", {session: req.session});
-});
-
-app.get("/calendar", function (req, res) {
-  res.render("pages/calendar");
+  res.render("pages/myBookings", { session: req.session, username: req.session.username });
 });
 
 app.get("/calendarsPage", function (req, res) {
@@ -91,7 +100,21 @@ app.get("/calendarsPage", function (req, res) {
 });
 
 app.get("/insights", function (req, res) {
-  res.render("pages/insights");
+  if (req.session.isAdmin){
+    res.render("pages/insights", { session: req.session });
+  }
+  else{
+    res.render("pages/404");
+  }
+});
+
+app.get("/adminHome", function (req, res) {
+  if (req.session.isAdmin){
+    res.render("pages/adminHome", { session: req.session });
+  }
+  else{
+    res.render("pages/404");
+  }
 });
 
 app.get("/adminPage", function (req, res) {
@@ -101,6 +124,29 @@ app.get("/adminPage", function (req, res) {
 app.get("/login", (req, res) => {
   res.render("pages/landing", { session: req.session });
 });
+
+app.get("/sessionUserId", async function (req, res) {
+  console.log(req.session.loggedin + "  " + req.session.username)
+  var id = await setIdVar(req.session.loggedin, req.session.username)
+  
+  try {
+    res.send(id.toString());
+    console.log(id + "hi")
+  }
+  catch (error) {
+    console.log(error);
+  }
+});
+
+async function setIdVar(loggedIn, username){
+  var id = "null"
+  if (loggedIn) {
+    id = username
+    console.log(id + "uu")
+  }
+
+  return id
+}
 
 app.post("/login", function (request, response) {
   // Get post parameters
@@ -151,7 +197,7 @@ app.post("/register", (request, response) => {
   var password = request.body.password;
   var repeatPassword = request.body.repeatPassword;
   var phoneNumber = request.body.phoneNumber;
-  if(!functions.isValidEmail(email)){
+  if (!functions.isValidEmail(email)) {
     response.send("Invalid email");
     response.end();
     return;
