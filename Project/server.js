@@ -304,9 +304,8 @@ app.post("/eventBooking", (request, response) => {
       `' , 0,0,1, null, 1, null, null, null, null);
   `;
     sqlRequest.query(query, (err, res) => {
-      if (err) throw err;
-      console.log("success");
-      response.render("pages/insights", { rooId: roomId });
+      if (err) response.render("pages/failure", { session: request.session });
+      response.render("pages/success", { session: request.session });
     });
   });
 });
