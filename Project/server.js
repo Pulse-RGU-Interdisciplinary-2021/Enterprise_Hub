@@ -69,6 +69,14 @@ app.get('/room', function (req, res) {
   res.render('pages/room', {roomId, startDateTime, endDateTime});
 });
 
+app.get('/success', function (req, res) {
+  res.render('pages/success');
+});
+
+app.get('/failure', function (req, res) {
+  res.render('pages/failure');
+});
+
 
 app.get('/allBookings', function (req, res) {
     res.render('pages/allBookings');

@@ -10,43 +10,27 @@
 
 <div class="room-details">
     <form action="" method="POST" style="margin: 0;">
-        <table class="roomdetails-table" style="width: 100%;">
-            <tr>
-                <td>
-                    <div class="booking-sub-container room-input">
-                        <span>Booking Information</span>
-                        <label for="name">Name</label>
-                        <input type="text" name="name" placeholder="John Smith" required>
-                        <label for="number">Contact number</label>
-                        <input type="text" name="number" placeholder="123456789" required>
-                        <label for="email">Email</label>
-                        <input type="" name="email" placeholder="email@email.com" required>
-                        <label for="role">Role</label>
-                        <input type="" name="role" placeholder="Student / Staff / Other" required> 
-                    </div>
-                </td>
-                <td style="width: 220px;">
-                    <div class="booking-sub-container" id="seats">
-                        <span>Seat Selection</span><br>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <div class="booking-sub-container" style="height: auto;">
-                        <label for="ta_reason">Booking justification</label>
-                        <textarea class="booking-textarea" name="reason" id="ta_reason" rows="5" required></textarea>   
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <div style="text-align: right;" class="book-button">
-                        BOOK
-                        <span class="fas fa-arrow-right"></span>
-                    </div>
-                </td>
-            </tr>
-        </table>
+        <div class="flex-roomdetails">
+            <div class="booking-sub-container room-input" style="width: 100%;">
+                <span>Booking Information</span>
+                <label for="name">Name</label>
+                <input id="name" type="text" name="name" placeholder="John Smith" required>
+                <label for="number">Contact number</label>
+                <input id="number" type="text" name="number" placeholder="123456789" required>
+                <label for="email">Email</label>
+                <input id="email" type="" name="email" placeholder="email@email.com" required>
+                <label for="role">Role</label>
+                <input id="role" type="" name="role" placeholder="Student / Staff / Other" required> 
+                <label for="ta_reason">Booking justification</label>
+                <textarea id="reason" class="booking-textarea" name="reason" id="ta_reason" rows="5" required></textarea>   
+            </div>
+            <div class="booking-sub-container" id="seats" style="margin-left: 5px;">
+                <span>Seat Selection</span><br>
+            </div>
+        </div>
+        <div id="book" style="text-align: right;" class="book-button">
+            BOOK
+            <span class="fas fa-arrow-right"></span>
+        </div>
     </form>
 </div>

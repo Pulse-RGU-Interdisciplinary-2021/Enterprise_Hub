@@ -38,34 +38,24 @@
 
     <div class="room-details">
         <form action="" method="POST">
-            <table class="roomdetails-table" style="width: 100%;">
-                <tr>
-                    <td>
-                        <div class="booking-sub-container room-input" style="height: 300px;">
-                            <span>Event Booking Information</span>
-                            <label for="organization">Organization name</label>
-                            <input type="text" name="organization" placeholder="RGU" required>
-                            <label for="ta_reason">Event booking justification</label>
-                            <textarea class="booking-textarea" name="reason" id="ta_reason" rows="10" placeholder="Event name&#10;Event Description&#10;Organization details(phone number/email)" required></textarea>
-                        </div>
-                    </td>
-                    <td style="vertical-align: top; width: 220px;">
-                        <div class="booking-sub-container" style="height: 300px;">
-                            <label>Amenities:</label>
-                            <ul>
-                                <%for(var i = 0; i < data.length; i++){ %>
-                                    <li> <%= data[i].feature_desc %> </li>
-                                <% } %>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" style="text-align: right;">
-                        <input type="submit" class="book-button" value="Book">
-                    </td>
-                </tr>
-            </table>
+            <div class="flex-roomdetails">
+                <div class="booking-sub-container room-input" style="width: 100%;">
+                    <span>Event Booking Information</span>
+                    <label for="organization">Organization name</label>
+                    <input type="text" name="organization" placeholder="RGU" required>
+                    <label for="ta_reason">Event booking justification</label>
+                    <textarea class="booking-textarea" name="reason" id="ta_reason" rows="10" placeholder="Event name&#10;Event Description&#10;Organization details(phone number/email)" required></textarea>
+                </div>
+                <div class="booking-sub-container" style="margin-left: 5px;">
+                    <label>Amenities:</label>
+                    <ul>
+                        <%for(var i = 0; i < data.length; i++){ %>
+                            <li> <%= data[i].feature_desc %> </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+            <input type="submit" class="book-button" value="Book" style="width: 100%;">
         </form>
     </div>
 

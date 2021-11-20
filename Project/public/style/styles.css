@@ -149,18 +149,19 @@ body {
     border-collapse: collapse;
   }
 
-  .roomdetails-table td {
-    vertical-align: top;
-  }
+.flex-roomdetails{
+  display: flex;
+  justify-content: center;
+}
 
-  .roomdetails-table input, textarea {
+  .flex-roomdetails input, textarea {
     padding: 12px;
     border: none;
     resize: none;
     width: 100%;
   }
 
-  .roomdetails-table label {
+  .flex-roomdetails label {
     font-family: Gordon;
     padding-bottom: 2px;
   }
@@ -239,9 +240,9 @@ body {
 }
 
 .booking-sub-container {
+  max-width: 900px;
   padding: 15px;
   background: #d0eaf8;
-  height: 330px;
 }
 
 .booking-sub-container span {

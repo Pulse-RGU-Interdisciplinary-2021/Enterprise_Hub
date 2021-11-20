@@ -1,6 +1,7 @@
 var roomData
 var bookingData
 var roomId
+var selectedSeats = []
 
 $(document).ready(function(){
     roomId = $('#roomId').text();
@@ -9,13 +10,45 @@ $(document).ready(function(){
     $('#seats').on('click','.chair', function() {
         if(!$(this).hasClass('chair-unavailable') && !$(this).hasClass('chair-selected')) {
             $(this).addClass('chair-selected')
+            selectedSeats.push($(this).text())
         } else if ($(this).hasClass('chair-selected')) {
             $(this).removeClass('chair-selected')
+            selectedSeats = selectedSeats.filter(item => item !== $(this).text())
         }
       } );
 
       startDateTime = startDateTime.toISOString().slice(0, 19).replace('T', ' ') + ".000"
       endDateTime = endDateTime.toISOString().slice(0, 19).replace('T', ' ') + ".000"
+
+      $('#book').on('click', function() {
+        $.ajax({
+            type: "POST",
+            url: "/api/v1/bookings/",
+            data: { 
+                "room_id": roomId,
+                "user_id": 1,
+                "start_datetime": startDateTime,
+                "end_datetime": endDateTime,
+                "desks": 1,
+                "reason": $('#reason').val(),
+                "full_room_booking": $("#fullRoomBooking").prop('checked'),
+                "confirmed": 0,
+                "pending": 0 ,
+                "seat_id": selectedSeats[0],
+                "event_booking_yn": 0,
+                "user_name": $('#name').val(),
+                "user_email": $('#email').val(),
+                "user_number": $('#number').val(),
+                "user_role": $('#role').val()
+            },
+            success: function(msg){
+                window.location = "/success";
+            },
+            fail: function(){
+                window.location = "failure";
+            }
+        })
+    })
 });
 
 async function buildSeatsTable(bookingInput, roomInput) {
@@ -38,7 +71,7 @@ async function buildSeatsTable(bookingInput, roomInput) {
 
         outputTable += "<td>" + outputDiv + "</td>"
     }
-    outputTable += "</tr> </table><br><label>Full room booking</label><input type='checkbox'>"
+    outputTable += "</tr> </table><br><label for='fullRoom'>Full room booking<input id='fullRoomBooking' name='fullRoom' type='checkbox'></label>"
 
     console.log(outputTable)
     $('#seats').append(outputTable)
