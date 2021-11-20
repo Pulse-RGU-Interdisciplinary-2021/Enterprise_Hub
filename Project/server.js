@@ -52,7 +52,8 @@ app.get("/calendar", function (req, res) {
   res.render("pages/calendar");
 });
 
-app.get("/Type", function (req, res) {
+app.get("/type", function (req, res) {
+  console.log(req.session.isAdmin);
   res.render("pages/type", {session: req.session});
 });
 
@@ -61,7 +62,7 @@ app.get("/booking", function (req, res) {
 });
 
 app.get("/eventRoom", function (req, res) {
-  res.render("pages/eventRoom");
+  res.render("pages/eventRoom", {session: req.session});
 });
 
 app.get("/room", function (req, res) {
@@ -166,6 +167,13 @@ app.post("/register", (request, response) => {
   });
 });
 
+app.get("/sendEmail", (req, res) => {
+    let receiver = req.body.params.receiver;
+    functions.sendEmail();
+    res.send("success");
+    res.end;
+});
+
 app.get("/book/:roomId", (request, response) => {
   let roomId = request.params.roomId;
   let capacity = 0;
@@ -252,6 +260,7 @@ app.get("/eventBooking", (request, response) => {
             data: data,
             roomName: roomName,
             roomId: roomId,
+            session: request.session
           });
         });
       });
@@ -283,7 +292,7 @@ app.post("/eventBooking", (request, response) => {
       organization +
       ": " +
       reason +
-      `' , 0,0,1, null, 1);
+      `' , 0,0,1, null, 1, null, null, null, null);
   `;
     sqlRequest.query(query, (err, res) => {
       if (err) throw err;
@@ -295,6 +304,8 @@ app.post("/eventBooking", (request, response) => {
 
 app.post("/setRoomId/:roomId", (req, res) => {
   roomId = req.params.roomId;
+  console.log("hi there")
+  console.log(req.session);
   res.send("success");
 });
 
