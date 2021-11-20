@@ -22,14 +22,16 @@ $(document).ready(function(){
       endDateTime = endDateTime.toISOString().slice(0, 19).replace('T', ' ') + ".000"
 
       $('#book').on('click', function() {
-        
+
+        userInt = parseInt(userId)
+
         if(userId =! ""){
             $.ajax({
                 type: "POST",
                 url: "/api/v1/bookings/",
                 data: { 
                     "room_id": roomId,
-                    "user_id": userId,
+                    "user_id": userInt,
                     "start_datetime": startDateTime,
                     "end_datetime": endDateTime,
                     "desks": 1,
@@ -68,7 +70,6 @@ async function getData() {
 
 async function getRoomBookings(room_id, startDateTime, endDateTime) {
     var output
-    alert("/api/v1/bookings/ByIdAndDateRange/" + room_id + "/" + startDateTime + "/" + endDateTime)
     await $.get("/api/v1/bookings/ByIdAndDateRange/" + room_id + "/" + startDateTime + "/" + endDateTime, await function (data) {
         output = data
     });
