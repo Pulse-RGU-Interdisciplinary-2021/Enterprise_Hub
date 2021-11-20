@@ -43,8 +43,8 @@ exports.sendEmail = () => {
         from: '"Fred Foo 👻" <asdasdakljd@outlook.es>', // sender address
         to: "jonberoz2000@gmail.com", // list of receivers
         subject: "Hello ✔", // Subject line
-        text: "Hello world?", // plain text body
-        html: "<b>Hello world?</b>", // html body
+        //text: "Hello world?", // plain text body
+        html: "<b>Hello + " + i + "+ world?</b>", // html body
       };
       
       transporter.sendMail(mailOptions, function(error, info){
@@ -55,3 +55,9 @@ exports.sendEmail = () => {
         }
       });    
 }
+
+exports.isValidEmail = (email) => {
+	var emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+	return !!email && typeof email === 'string'
+		&& email.match(emailRegex)
+};

@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+.bookingDiv {
+    border-radius: 25px;
+    background: #f7f7f7;
+    padding: 20px;
+    width: 100%;
+    margin: 20px;
+    box-shadow: 10px 5px 5px grey;
+=======
 #allBookingsTitle {
     text-align: left;
     width: 80%;
@@ -228,4 +237,5 @@
         grid-column: 2;
     }
 
+>>>>>>> main
 }
