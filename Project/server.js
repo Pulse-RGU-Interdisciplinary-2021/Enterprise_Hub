@@ -58,7 +58,7 @@ app.get("/type", function (req, res) {
 });
 
 app.get("/booking", function (req, res) {
-  res.render("pages/booking");
+  res.render("pages/booking", {session: req.session});
 });
 
 app.get("/eventRoom", function (req, res) {
@@ -67,15 +67,15 @@ app.get("/eventRoom", function (req, res) {
 
 
 app.get('/room', function (req, res) {
-  res.render('pages/room', {roomId, startDateTime, endDateTime});
+  res.render('pages/room', {session: req.session, roomId, startDateTime, endDateTime});
 });
 
 app.get('/success', function (req, res) {
-  res.render('pages/success');
+  res.render('pages/success', {session: req.session});
 });
 
 app.get('/failure', function (req, res) {
-  res.render('pages/failure');
+  res.render('pages/failure', {session: req.session});
 });
 
 app.get("/allBookings", function (req, res) {
