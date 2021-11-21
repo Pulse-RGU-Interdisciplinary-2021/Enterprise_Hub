@@ -49,10 +49,10 @@ app.get("/", function (req, res) {
 });*/
 
 app.get("/calendar", function (req, res) {
-  if (req.session.isAdmin){
+  if (req.session.isAdmin) {
     res.render("pages/calendar", { session: req.session });
   }
-  else{
+  else {
     res.render("pages/404");
   }
 });
@@ -74,19 +74,19 @@ app.get("/room", function (req, res) {
 });
 
 app.get("/allBookings", function (req, res) {
-  if (req.session.isAdmin){
+  if (req.session.isAdmin) {
     res.render("pages/allBookings", { session: req.session });
   }
-  else{
+  else {
     res.render("pages/404");
   }
 });
 
 app.get("/pendingRequests", function (req, res) {
-  if (req.session.isAdmin){
+  if (req.session.isAdmin) {
     res.render("pages/pendingRequests", { session: req.session });
   }
-  else{
+  else {
     res.render("pages/404");
   }
 });
@@ -100,19 +100,19 @@ app.get("/calendarsPage", function (req, res) {
 });
 
 app.get("/insights", function (req, res) {
-  if (req.session.isAdmin){
+  if (req.session.isAdmin) {
     res.render("pages/insights", { session: req.session });
   }
-  else{
+  else {
     res.render("pages/404");
   }
 });
 
 app.get("/adminHome", function (req, res) {
-  if (req.session.isAdmin){
+  if (req.session.isAdmin) {
     res.render("pages/adminHome", { session: req.session });
   }
-  else{
+  else {
     res.render("pages/404");
   }
 });
@@ -128,7 +128,7 @@ app.get("/login", (req, res) => {
 app.get("/sessionUserId", async function (req, res) {
   console.log(req.session.loggedin + "  " + req.session.username)
   var id = await setIdVar(req.session.loggedin, req.session.username)
-  
+
   try {
     res.send(id.toString());
     console.log(id + "hi")
@@ -138,7 +138,7 @@ app.get("/sessionUserId", async function (req, res) {
   }
 });
 
-async function setIdVar(loggedIn, username){
+async function setIdVar(loggedIn, username) {
   var id = "null"
   if (loggedIn) {
     id = username
@@ -251,6 +251,7 @@ app.get("/book/:roomId", (request, response) => {
                 roomName: roomName,
                 desks: desks,
                 roomId: request.params.roomId,
+                session: request.session
               });
             }
           );
@@ -289,24 +290,27 @@ app.get("/eventBooking", (request, response) => {
   let desks = 0;
   let data = "";
   let roomName = "";
-  https
-    .get("http://localhost:4000/api/v1/rooms/Id/ " + roomId, (resp) => {
+  console.log(session)
+    https.get("http://localhost:4000/api/v1/rooms/Id/ " + roomId, (resp) => {
       // A chunk of data has been received.
       resp.on("data", (chunk) => {
         data += chunk;
       });
       // The whole response has been received. Print out the result.
       resp.on("end", () => {
+        functions.sendEmail("Event Request Received")
         data = JSON.parse(data);
         capacity = data[0].max_capacity;
         roomName = data[0].room_name;
+
         functions.getRoomFeatures(roomId, (result) => {
           data = result;
+          console.log(session)
           response.render("pages/eventBooking", {
             data: data,
             roomName: roomName,
             roomId: roomId,
-            session: req.session 
+            session: request.session,
           });
         });
       });
@@ -357,7 +361,7 @@ app.use("/queries", queries);
 
 app.use(function (req, res) {
   res.status(404);
-  res.render("pages/404", {session: req.session});
+  res.render("pages/404", { session: req.session });
 });
 
 app.listen(4000, () => console.log("My website is listening on port 4000!"));

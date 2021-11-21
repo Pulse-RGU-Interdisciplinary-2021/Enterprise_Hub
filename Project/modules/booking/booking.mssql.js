@@ -59,6 +59,22 @@ class BookingMSSql {
         return res.recordset;
     }
 
+    async getBookingsByEvent(boolean){
+        var bit
+        if (boolean.toLowerCase() == "true") {
+            bit = 1
+        }
+        else if (boolean.toLowerCase() == "false"){
+            bit = 0
+        }
+        else{
+            console.log("Invalid booking pending request")
+        }
+        const conn = await mssqlcon.getConnection();
+        const res = await conn.request().query('select * from bookings where ((pending = 0) and (event_booking_yn = ' + bit + ')) order by start_datetime');
+        return res.recordset;
+    }
+
     async getUpcomingEventsbyPending(boolean){
         var bit
         if (boolean.toLowerCase() == "true") {

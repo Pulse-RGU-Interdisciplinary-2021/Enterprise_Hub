@@ -88,6 +88,20 @@ class booking {
         }
     }
 
+    async getBookingsByEvent(req,res) {
+        const boolean = req.params.boolean;
+        try {
+            if (!boolean) {
+                console.log('no boolean passed');
+            }
+            const output = await bookingMssql.getBookingsByEvent(boolean);
+            res.send(output);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
     async getUpcomingEventsbyPending(req,res) {
         const boolean = req.params.boolean;
         try {
