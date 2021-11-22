@@ -216,17 +216,11 @@ async function confirmBookingRequest(i) {
   if (allPendingBookings[i].event_booking_yn == 1) {
     var bookingsType = "full room";
 
-    await $.ajax({
-      type: "POST",
-      url: "/eventApproved",
-      data: {
+    await $.post("/eventApproved",{
         date: date,
         roomName: roomName,
         bookingType: bookingsType,
-      },
-      dataType: "json",
-      success: function (response) {
-        console.log(response);
+      }, (response) => {
         $.ajax({
             type: "PUT",
             url: "/api/v1/bookings/",
@@ -247,21 +241,15 @@ async function confirmBookingRequest(i) {
             },
           });
       },
-    });
+    );
   } else {
-    var bookingsType = await formattedBookingType(i);
-    await $.ajax({
-      type: "POST",
-      url: "/bookingApproved",
-      data: {
+    var bookingsType = formattedBookingType(i);
+    var bookingsType = "full room";
+    await $.post("/bookingApproved",{
         date: date,
         roomName: roomName,
         bookingType: bookingsType,
-      },
-      dataType: "json",
-      success: function (response) {
-        console.log(response);
-
+      }, (response) => {
         allPendingBookings[i].pending = 0;
         allPendingBookings[i].confirmed = 1;
         $.ajax({
@@ -287,7 +275,6 @@ async function confirmBookingRequest(i) {
               console.log(response);
           }
         });
-      },
     });
   }
 }

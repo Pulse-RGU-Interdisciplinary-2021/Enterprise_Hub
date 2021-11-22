@@ -78,7 +78,7 @@ function getText(type, params){
 
   else if (type == 'Booking Rejected'){
     text = "Please note these emails are sent from an automated system, for support please contact (insert EIG email). "
-    text += "Your Booking placed on " + params[date] + " at " + params[roomName] + " for " + params[bookingType] + " has been unsuccessful. "
+    text += "Your Booking placed on " + params["date"] + " at " + params["roomName"] + " for " + params["bookingType"] + " has been unsuccessful. "
     text += "Please contact EIG Booking Hub for further information or book at another time slot. "
   }
 
@@ -94,16 +94,16 @@ function getText(type, params){
 
   else if (type == 'Event Request Approved'){
     text = 'Please note these emails are sent from an automated system, for support please contact (insert EIG email). '
-    text += 'Your booking application for ' +  params[roomName] + ' on ' + params[date] +'  has been successful, for further requests involving cancellation or alteration to your booking, please contact EIG Booking hub. '
+    text += 'Your booking application for ' +  params["roomName"] + ' on ' + params["date"] +'  has been successful, for further requests involving cancellation or alteration to your booking, please contact EIG Booking hub. '
   }
 
   else if (type == 'Event Request Rejected'){
     text = 'Please note these emails are sent from an automated system, for support please contact (insert EIG email). '
-    text += 'Your booking application for ' +  params[roomName] + ' on ' + params[date] +' has been unsuccessful, for further requests on this decision, please contact EIG Booking hub. '
+    text += 'Your booking application for ' +  params["roomName"] + ' on ' + params["date"] +' has been unsuccessful, for further requests on this decision, please contact EIG Booking hub. '
   }
 
   else if (type == 'Account Registration Request Received'){
-    text = 'User ' + params[userName] + ' has requested a booking account registration, to approve/deny this request, please access the admin tab/pending requests on the EIG Booking System. '
+    text = 'User ' + params["userName"] + ' has requested a booking account registration, to approve/deny this request, please access the admin tab/pending requests on the EIG Booking System. '
   }
 
   else if (type == 'Booking Request Received'){
