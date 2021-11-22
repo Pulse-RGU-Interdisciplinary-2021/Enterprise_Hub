@@ -185,6 +185,37 @@ function formatCurrentBooking(userName, date, roomName, bookingType, reason, isE
 }
 
 async function confirmBookingRequest(i) {
+    var date = await formatDateTime(allPendingBookings[i].start_datetime)
+    var roomName = await getRoomName(i)
+
+    if (allPendingBookings[i].event_booking_yn == 1) {
+        var bookingsType = "full room"
+
+        await $.ajax({
+            type: 'POST',
+            url: '/eventApproved',
+            data: {
+                date: date,
+                room: roomName,
+                bookingType: bookingsType,
+            },
+            dataType: 'json',
+        })
+    }
+    else {
+        var bookingsType = await formattedBookingType(i)
+        await $.ajax({
+            type: 'POST',
+            url: '/bookingApproved',
+            data: {
+                date: date,
+                room: roomName,
+                bookingType: bookingsType,
+            },
+            dataType: 'json',
+        })
+    }
+
     allPendingBookings[i].pending = 0;
     allPendingBookings[i].confirmed = 1;
     await $.ajax({
@@ -205,34 +236,6 @@ async function confirmBookingRequest(i) {
         success: async function (response) {
             alertOutcomeBookingApproved(i)
 
-            var date = await formatDateTime(allPendingBookings[i].start_datetime)
-            var roomName = await getRoomName(i)
-
-            if (allPendingBookings[i].event_booking_yn == 1) {
-                var bookingsType = "full room"
-
-                await $.ajax({
-                    type: 'POST',
-                    url: '/eventApproved',
-                    data: {
-                        date: date,
-                        room: roomName,
-                        bookingType: bookingsType,
-                    }
-                })
-            }
-            else {
-                var bookingsType = await formattedBookingType(i)
-                await $.ajax({
-                    type: 'POST',
-                    url: '/bookingApproved',
-                    data: {
-                        date: date,
-                        room: roomName,
-                        bookingType: bookingsType,
-                    }
-                })
-            }
         }
     });
 }

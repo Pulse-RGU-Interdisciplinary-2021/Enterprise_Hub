@@ -1,5 +1,6 @@
 var allPendingUsers
 async function showUsers() {
+    console.log("hi")
     allPendingUsers = await getUsers("true")
     $("#Accounts").append("<h1>Pending Accounts</h1>")
     if (allPendingUsers.length === 0){
@@ -120,17 +121,20 @@ async function confirmAccountRequest(i) {
                 password: allPendingUsers[i].password,
                 admin: allPendingUsers[i].admin,
         },
-        success: function(response){
-            alertOutcomeApproveAccount(i)
-
-            await $.ajax({
-                type: 'POST',
-                url: '/accountApproved',
-                data: {
-                }
-            })
+        success: async function(response){
+            await alertOutcomeApproveAccount(i)
+            await accountApprovedEmail()    
         }
     });
+}
+
+async function accountApprovedEmail(){
+    await $.ajax({
+        type: 'POST',
+        url: '/accountApproved',
+        data: {
+        }
+    })
 }
 
 async function alertOutcomeApproveAccount(i){
@@ -160,17 +164,20 @@ async function rejectAccountRequest(id) {
         url: '/api/v1/users/delete/' + id,
         data: { user_id: id,
         },
-        success: function(response){
+        success: async function(response){
             alertOutcomeRejectAccount(id)
-
-            await $.ajax({
-                type: 'POST',
-                url: '/accountRejected',
-                data: {
-                }
-            })
+            await accountRejectedEmail()
         }
     });
+}
+
+async function accountRejectedEmail(){
+    await $.ajax({
+        type: 'POST',
+        url: '/accountRejected',
+        data: {
+        }
+    })
 }
 
 async function alertOutcomeRejectAccount(id){

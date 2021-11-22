@@ -48,6 +48,9 @@ $(document).ready(function(){
                 },
                 success: function(msg){
                     window.location = "/success";
+
+                    
+
                 },
                 fail: function(){
                     window.location = "/failure";

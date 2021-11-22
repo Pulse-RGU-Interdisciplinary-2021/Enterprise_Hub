@@ -20,6 +20,13 @@ app.use(flash());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
+
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
+
 app.set("view engine", "ejs");
 
 var db = require("./public/scripts/database");
@@ -41,12 +48,18 @@ var db = require("./public/scripts/database");
 var queries = require("./public/scripts/dbQueries");
 
 app.get("/", function (req, res) {
+  console.log("hi")
   res.redirect("/login");
 });
 
 /**app.get("/landing", function (req, res) {
   res.render("pages/landing");
 });*/
+
+app.get("/login", (req, res) => {
+  console.log("hello")
+  res.render("pages/landing", { session: req.session });
+});
 
 app.get("/calendar", function (req, res) {
   if (req.session.isAdmin) {
@@ -59,28 +72,32 @@ app.get("/calendar", function (req, res) {
 
 app.get("/type", function (req, res) {
   console.log(req.session.isAdmin);
-  res.render("pages/type", {session: req.session});
+  res.render("pages/type", { session: req.session });
 });
 
 app.get("/booking", function (req, res) {
-  res.render("pages/booking", {session: req.session});
+  res.render("pages/booking", { session: req.session });
 });
 
 app.get("/eventRoom", function (req, res) {
-  res.render("pages/eventRoom", {session: req.session});
+  res.render("pages/eventRoom", { session: req.session });
 });
 
 
 app.get('/room', function (req, res) {
-  res.render('pages/room', {session: req.session, roomId, startDateTime, endDateTime});
+  res.render('pages/room', { session: req.session, roomId, startDateTime, endDateTime });
 });
 
 app.get('/success', function (req, res) {
-  res.render('pages/success', {session: req.session});
+  var obj = {
+  }
+  functions.sendEmail("Booking Request Received", obj)
+  res.render('pages/success', { session: req.session });
 });
 
 app.get('/failure', function (req, res) {
-  res.render('pages/failure', {session: req.session});
+  res.render('pages/failure', { session: req.session });
+})
 app.get("/Type", function (req, res) {
   res.render("pages/type", { session: req.session });
 });
@@ -143,10 +160,6 @@ app.get("/adminHome", function (req, res) {
 
 app.get("/adminPage", function (req, res) {
   res.render("pages/adminPage", { session: req.session });
-});
-
-app.get("/login", (req, res) => {
-  res.render("pages/landing", { session: req.session });
 });
 
 app.get("/sessionUserId", async function (req, res) {
@@ -250,10 +263,10 @@ app.post("/register", (request, response) => {
 });
 
 app.get("/sendEmail", (req, res) => {
-    let receiver = req.body.params.receiver;
-    functions.sendEmail();
-    res.send("success");
-    res.end;
+  let receiver = req.body.params.receiver;
+  functions.sendEmail();
+  res.send("success");
+  res.end;
 });
 
 app.get("/book/:roomId", (request, response) => {
@@ -319,8 +332,6 @@ app.post("/book/:roomId", (request, response) => {
     if (err) throw err;
     console.log(res);
   });
-
-  functions.sendEmail("Booking Request Received")
 });
 
 app.get("/eventBooking", (request, response) => {
@@ -348,10 +359,8 @@ app.get("/eventBooking", (request, response) => {
             session: request.session
           });
         });
-        functions.sendEmail("Event Request Received")
       });
-    });
-  })
+    })
     .on("error", (err) => {
       console.log("Error: " + err.message);
     });
@@ -457,7 +466,7 @@ app.post("/setRoomIdDates/:roomId/:startDateTime/:endDateTime", (req, res) => {
   startDateTime = req.params.startDateTime;
   endDateTime = req.params.endDateTime;
   res.send("success");
-}); 
+});
 
 app.use("/queries", queries);
 
