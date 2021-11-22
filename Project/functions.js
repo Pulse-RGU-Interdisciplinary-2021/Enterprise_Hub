@@ -43,8 +43,8 @@ exports.sendEmail = (type, params) => {
       var text = getText(type, params)
 
       var mailOptions = {
-        from: '"Fred Foo 👻" <asdasdakljd@outlook.es>', // sender address
-        to: "santoroally@gmail.com", // list of receivers
+        from: '"Fred Foo 👻" <EIGBooking@outlook.com>', // sender address
+        to: "allegrasantoro.cs@gmail.com", // list of receivers
         subject: type, // Subject line
         text: text, // plain text body
         //html: "<b>Hello world?</b>", // html body

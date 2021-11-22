@@ -4,10 +4,10 @@ async function showBookings(isEvents) {
     if (isEvents) {
         allPendingBookings = await getEvents(true);
         $("#Events").append("<h1>Pending Events</h1>");
-        console.log("888" + allPendingBookings[0])
     } else {
         allPendingBookings = await getBookingsNoEvents(true);
         $("#Bookings").append("<h1>Pending Bookings</h1>");
+        console.log("888" + allPendingBookings[0])
     }
     addBookings(allPendingBookings, isEvents);
 }
@@ -327,7 +327,7 @@ async function rejectBookingRequest(id, i) {
                 data: {
                     booking_id: id,
                 },
-                success: async function (response) {
+                success: function (response) {
                     alertOutcomeBookingRejected(id);
                 },
             });
