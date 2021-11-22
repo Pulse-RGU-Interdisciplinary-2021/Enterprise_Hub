@@ -160,6 +160,14 @@ class BookingMSSql {
         .input("desks",prod.desks)
         .input("reason",prod.reason)
         .input("full_room_booking",prod.full_room_booking)
+        .input("confirmed",prod.confirmed)
+        .input("pending",prod.pending)
+        .input("seat_id",prod.seat_id)
+        .input("event_booking_yn",prod.event_booking_yn)
+        .input("user_name",prod.user_name)
+        .input("user_email",prod.user_email)
+        .input("user_number",prod.user_number)
+        .input("user_role",prod.user_role)
         .execute("addBooking");
         return res;
     }
