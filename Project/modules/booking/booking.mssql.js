@@ -87,7 +87,8 @@ class BookingMSSql {
             console.log("Invalid booking pending request")
         }
         const conn = await mssqlcon.getConnection();
-        const res = await conn.request().query('select * from bookings where ((pending = ' + bit + ') and (start_datetime > sysdatetime()) and (event_booking_yn = \'1\')) order by start_datetime');
+        const res = await conn.request().query('select * from bookings where ((pending = ' + bit + ') and (event_booking_yn = \'1\')) order by start_datetime');
+        console.log(res.recordset)
         return res.recordset;
     }
 
@@ -103,7 +104,7 @@ class BookingMSSql {
             console.log("Invalid booking pending request")
         }
         const conn = await mssqlcon.getConnection();
-        const res = await conn.request().query('select * from bookings where ((pending = ' + bit + ') and (start_datetime > sysdatetime()) and (event_booking_yn IS NULL )) order by start_datetime');
+        const res = await conn.request().query('select * from bookings where ((pending = ' + bit + ') and (event_booking_yn IS NULL )) order by start_datetime');
         return res.recordset;
     }
 
