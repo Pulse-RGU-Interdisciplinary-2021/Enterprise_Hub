@@ -4,8 +4,15 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 async function showBookings() {
-    var userId = 1 //We would get this from the login later
-    var allBookingsByUser = await getBooking(userId)
+    var userId= await getSessionUserId();
+    console.log(userId + "aa")
+    //var userId = 1 //We would get this from the login later
+    if (userId== "null"){
+        var allBookingsByUser = []
+    }
+    else{
+        var allBookingsByUser = await getBooking(userId)
+    }
     iterateThroughBookings(allBookingsByUser)
 }
 
@@ -94,6 +101,13 @@ async function addNoBookingText(sectionDiv) {
     $(sectionDiv).append(message)
 }
 
+async function getSessionUserId(){
+    var output
+    await $.get("/sessionUserId", await function (data) {
+        output = data
+    });
+    return output
+}
 async function getBooking(userId) {
     var output
     await $.get("/api/v1/bookings/UserId/" + userId, await function (data) {

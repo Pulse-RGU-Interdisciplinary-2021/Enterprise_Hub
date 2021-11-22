@@ -1,4 +1,47 @@
 <!DOCTYPE html>
 <html>
-    <h1>Insights page</h1>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" type="text/css" href="./style/styles.css">
+        <link rel="stylesheet" type="text/css" href="./style/insights.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="./scripts/insights.js"></script>
+    </head>
+
+    <body>
+        <header>
+            <%- include ("../partials/header") %>
+        </header>
+
+        <div id="insightsTitle">
+            <h1>Insights</h1>
+            <p>Insights on the bookings and the users</p></div>
+
+        <div id="insightsDiv">
+            <div id="row1">
+                <div id ="userRole"></div>
+                <div id ="eventsDistribution"></div>
+            </div>
+            <div id ="roomAffluencyDiv">
+                <div id='selectMenu'>
+                    <select id = "roomOptionDiv" onchange="optionSelected()">
+                        <option selected>All</option>
+                    </select>
+                    <select id = "timerangeOptionDiv" onchange="optionSelected()">
+                        <option selected>Day</option>
+                        <option>Week</option>
+                        <option>Month</option>
+                </div>
+                </select>
+            </div>
+            <div id ="roomAffluency"></div>
+        </div>
+
+        <footer>
+            <%- include ("../partials/footer") %>
+        </footer>
+    </body>
 </html>

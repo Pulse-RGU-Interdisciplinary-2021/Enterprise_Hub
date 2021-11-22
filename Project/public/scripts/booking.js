@@ -49,19 +49,20 @@ function populateTemplate() {
         $('#room1Status').css('background-color','green')
         $('#room1Status').text(room1seats + " seat(s) available")
         $('#room1name').append('<span class="fas fa-arrow-right"></span>')
-        $('#room1a').attr('href','/room');
+        $('#room1a').attr('onClick', 'navigate(this);');
     } else if (room1seats <= 6 && room1seats > 0) {
         $('#room1Status').css('background-color','peru')
         $('#room1Status').text(room1seats + " seat(s) available")
         $('#room1name').append('<span class="fas fa-arrow-right"></span>')
-        $('#room1a').attr('href','/room');
+        $('#room1a').attr('onClick', 'navigate(this);');
     } else if (room1seats < 1) {
         $('#room1').css('background-color','slategray')
         $('#room1Status').css('background-color','red')
         $('#room1Status').text("Unavailable")
         $('#room1name').append('<span class="fas fa-ban"></span>')
-        $('#room1a').removeAttr('href');
+        $('#room1a').removeAttr('onClick');
     }
+
 
     $('#room2').css('background-color','#0072bc')
     $('#room2name').text('ONE TECH HUB')
@@ -69,18 +70,18 @@ function populateTemplate() {
         $('#room2Status').css('background-color','green')
         $('#room2Status').text(room2seats + " seat(s) available")
         $('#room2name').append('<span class="fas fa-arrow-right"></span>')
-        $('#room2a').attr('href','/room');
+        $('#room2a').attr('onClick', 'navigate(this);');
     } else if (room2seats <= 6 && room2seats > 0) {
         $('#room2Status').css('background-color','peru')
         $('#room2Status').text(room2seats + " seat(s) available")
         $('#room2name').append('<span class="fas fa-arrow-right"></span>')
-        $('#room2a').attr('href','/room');
+        $('#room2a').attr('onClick', 'navigate(this);');
     } else {
         $('#room2').css('background-color','slategray')
         $('#room2Status').css('background-color','red')
         $('#room2Status').text("Unavailable")
         $('#room2name').append('<span class="fas fa-ban"></span>')
-        $('#room2a').removeAttr('href');
+        $('#room2a').removeAttr('onClick');
     }
 
     $('#room3').css('background-color','#0072bc')
@@ -89,18 +90,18 @@ function populateTemplate() {
         $('#room3Status').css('background-color','green')
         $('#room3Status').text(room3seats + " seat(s) available")
         $('#room3name').append('<span class="fas fa-arrow-right"></span>')
-        $('#room3a').attr('href','/room');
+        $('#room3a').attr('onClick', 'navigate(this);');
     } else if (room3seats <= 6 && room3seats > 0) {
         $('#room3Status').css('background-color','peru')
         $('#room3Status').text(room3seats + " seat(s) available")
         $('#room3name').append('<span class="fas fa-arrow-right"></span>')
-        $('#room3a').attr('href','/room');
+        $('#room3a').attr('onClick', 'navigate(this);');
     } else if (room3seats < 1) {
         $('#room3').css('background-color','slategray')
         $('#room3Status').css('background-color','red')
         $('#room3Status').text("Unavailable")
         $('#room3name').append('<span class="fas fa-ban"></span>')
-        $('#room3a').removeAttr('href');
+        $('#room3a').removeAttr('onClick');
     }
 
     $('#room4').css('background-color','#0072bc')
@@ -109,18 +110,39 @@ function populateTemplate() {
         $('#room4Status').css('background-color','green')
         $('#room4Status').text(room4seats + " desk(s) available")
         $('#room4name').append('<span class="fas fa-arrow-right"></span>')
-        $('#room4a').attr('href','/room');
+        $('#room4a').attr('onClick', 'navigate(this);');
     } else if (room4seats <= 6 && room4seats > 0) {
         $('#room4Status').css('background-color','peru')
         $('#room4Status').text(room4seats + " desk(s) available")
         $('#room4name').append('<span class="fas fa-arrow-right"></span>')
-        $('#room4a').attr('href','/room');
+        $('#room4a').attr('onClick', 'navigate(this);');
     } else if (room4seats < 1) {
         $('#room4').css('background-color','slategray')
         $('#room4Status').css('background-color','red')
         $('#room4Status').text("Unavailable")
         $('#room4name').append('<span class="fas fa-ban"></span>')
-        $('#room4a').removeAttr('href');
+        $('#room4a').removeAttr('onClick');
+    }
+
+    var dateTimeSelected = true
+    if ($('#date').val() == "" || $('#startHour').val() == null || $('#endHour').val() == null) {
+        dateTimeSelected = false
+    }
+
+    if (!dateTimeSelected) {
+        $('#room1a').removeAttr('onClick');
+        $('#room2a').removeAttr('onClick');
+        $('#room3a').removeAttr('onClick');
+        $('#room4a').removeAttr('onClick');
+    } else {
+        $('#room1a').removeAttr('class');
+        $('#room2a').removeAttr('class');
+        $('#room3a').removeAttr('class');
+        $('#room4a').removeAttr('class');
+        $("#tooltip1").remove()
+        $("#tooltip2").remove()
+        $("#tooltip3").remove()
+        $("#tooltip4").remove()
     }
 }
 
@@ -144,4 +166,10 @@ async function getAllRooms() {
         output = data
     });
     return output
+}
+
+function navigate(item) {
+    $.post("/setRoomIdDates/"+ $(item).attr('id').charAt(4) + '/' + startDateTime + '/' + endDateTime, (res)=> {
+        window.location.href = "/room";
+    })
 }

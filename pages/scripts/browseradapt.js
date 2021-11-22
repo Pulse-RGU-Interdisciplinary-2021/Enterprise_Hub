@@ -3,7 +3,7 @@
 function redirectMobile(){
     if (typeof window.matchMedia !== "undefined" && window.matchMedia("(max-width: 999px)").matches)
     {
-        window.location = "mobindex.html";
+        //window.location = "mobindex.html";
     }
     }
     redirectMobile(window);

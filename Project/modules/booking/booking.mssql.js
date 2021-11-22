@@ -59,6 +59,22 @@ class BookingMSSql {
         return res.recordset;
     }
 
+    async getBookingsByEvent(boolean){
+        var bit
+        if (boolean.toLowerCase() == "true") {
+            bit = 1
+        }
+        else if (boolean.toLowerCase() == "false"){
+            bit = 0
+        }
+        else{
+            console.log("Invalid booking pending request")
+        }
+        const conn = await mssqlcon.getConnection();
+        const res = await conn.request().query('select * from bookings where ((pending = 0) and (event_booking_yn = ' + bit + ')) order by start_datetime');
+        return res.recordset;
+    }
+
     async getUpcomingEventsbyPending(boolean){
         var bit
         if (boolean.toLowerCase() == "true") {
@@ -71,7 +87,8 @@ class BookingMSSql {
             console.log("Invalid booking pending request")
         }
         const conn = await mssqlcon.getConnection();
-        const res = await conn.request().query('select * from bookings where ((pending = ' + bit + ') and (start_datetime > sysdatetime()) and (event_booking_yn = \'1\')) order by start_datetime');
+        const res = await conn.request().query('select * from bookings where ((pending = ' + bit + ') and (event_booking_yn = \'1\')) order by start_datetime');
+        console.log(res.recordset)
         return res.recordset;
     }
 
@@ -87,7 +104,7 @@ class BookingMSSql {
             console.log("Invalid booking pending request")
         }
         const conn = await mssqlcon.getConnection();
-        const res = await conn.request().query('select * from bookings where ((pending = ' + bit + ') and (start_datetime > sysdatetime()) and (event_booking_yn IS NULL )) order by start_datetime');
+        const res = await conn.request().query('select * from bookings where ((pending = ' + bit + ') and (event_booking_yn IS NULL )) order by start_datetime');
         return res.recordset;
     }
 
@@ -144,6 +161,14 @@ class BookingMSSql {
         .input("desks",prod.desks)
         .input("reason",prod.reason)
         .input("full_room_booking",prod.full_room_booking)
+        .input("confirmed",prod.confirmed)
+        .input("pending",prod.pending)
+        .input("seat_id",prod.seat_id)
+        .input("event_booking_yn",prod.event_booking_yn)
+        .input("user_name",prod.user_name)
+        .input("user_email",prod.user_email)
+        .input("user_number",prod.user_number)
+        .input("user_role",prod.user_role)
         .execute("addBooking");
         return res;
     }
