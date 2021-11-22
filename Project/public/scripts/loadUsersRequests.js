@@ -1,6 +1,7 @@
 var allPendingUsers
 async function showUsers() {
     allPendingUsers = await getUsers("true")
+    $("#Accounts").append("<h1>Pending Accounts</h1>")
     if (allPendingUsers.length === 0){
         var noRequests = document.createElement("p");
         noRequests.innerHTML = "No pending account requests"  
@@ -121,6 +122,13 @@ async function confirmAccountRequest(i) {
         },
         success: function(response){
             alertOutcomeApproveAccount(i)
+
+            await $.ajax({
+                type: 'POST',
+                url: '/accountApproved',
+                data: {
+                }
+            })
         }
     });
 }
@@ -154,6 +162,13 @@ async function rejectAccountRequest(id) {
         },
         success: function(response){
             alertOutcomeRejectAccount(id)
+
+            await $.ajax({
+                type: 'POST',
+                url: '/accountRejected',
+                data: {
+                }
+            })
         }
     });
 }

@@ -44,12 +44,17 @@ app.get("/", function (req, res) {
   res.redirect("/login");
 });
 
-app.get("/landing", function (req, res) {
+/**app.get("/landing", function (req, res) {
   res.render("pages/landing");
-});
+});*/
 
 app.get("/calendar", function (req, res) {
-  res.render("pages/calendar");
+  if (req.session.isAdmin) {
+    res.render("pages/calendar", { session: req.session });
+  }
+  else {
+    res.render("pages/404");
+  }
 });
 
 app.get("/type", function (req, res) {
@@ -76,33 +81,97 @@ app.get('/success', function (req, res) {
 
 app.get('/failure', function (req, res) {
   res.render('pages/failure', {session: req.session});
+=======
+app.get("/Type", function (req, res) {
+  res.render("pages/type", { session: req.session });
+});
+
+app.get("/booking", function (req, res) {
+  res.render("pages/booking", { session: req.session });
+});
+
+app.get("/eventRoom", function (req, res) {
+  res.render("pages/eventRoom", { session: req.session });
+});
+
+app.get("/room", function (req, res) {
+  res.render("pages/room", { session: req.session });
 });
 
 app.get("/allBookings", function (req, res) {
-  res.render("pages/allBookings", {session: req.session});
+  if (req.session.isAdmin) {
+    res.render("pages/allBookings", { session: req.session });
+  }
+  else {
+    res.render("pages/404");
+  }
 });
 
 app.get("/pendingRequests", function (req, res) {
-  //test if admin
-  //res.redirect('/queries/getBookingRequests')
-  res.render("pages/pendingRequests", {session: req.session});
+  if (req.session.isAdmin) {
+    res.render("pages/pendingRequests", { session: req.session });
+  }
+  else {
+    res.render("pages/404");
+  }
 });
 
 app.get("/myBookings", function (req, res) {
-  res.render("pages/myBookings", {session: req.session});
+  res.render("pages/myBookings", { session: req.session, username: req.session.username });
 });
 
-app.get("/calendar", function (req, res) {
-  res.render("pages/calendar");
+app.get("/calendarsPage", function (req, res) {
+  res.render("pages/calendarsPage", { session: req.session });
 });
 
 app.get("/insights", function (req, res) {
-  res.render("pages/insights");
+  if (req.session.isAdmin) {
+    res.render("pages/insights", { session: req.session });
+  }
+  else {
+    res.render("pages/404");
+  }
+});
+
+app.get("/adminHome", function (req, res) {
+  if (req.session.isAdmin) {
+    res.render("pages/adminHome", { session: req.session });
+  }
+  else {
+    res.render("pages/404");
+  }
+});
+
+app.get("/adminPage", function (req, res) {
+  res.render("pages/adminPage", { session: req.session });
 });
 
 app.get("/login", (req, res) => {
   res.render("pages/landing", { session: req.session });
 });
+
+app.get("/sessionUserId", async function (req, res) {
+  console.log(req.session.loggedin + "  " + req.session.username)
+  var id = await setIdVar(req.session.loggedin, req.session.username)
+
+  try {
+    res.send(id.toString());
+    console.log(id + "hi")
+  }
+  catch (error) {
+    console.log(error);
+  }
+});
+
+async function setIdVar(loggedIn, username) {
+  var id = "null"
+  if (loggedIn) {
+    id = username
+    console.log(id + "uu")
+  }
+
+  return id
+}
 
 app.post("/login", function (request, response) {
   // Get post parameters
@@ -153,7 +222,7 @@ app.post("/register", (request, response) => {
   var password = request.body.password;
   var repeatPassword = request.body.repeatPassword;
   var phoneNumber = request.body.phoneNumber;
-  if(!functions.isValidEmail(email)){
+  if (!functions.isValidEmail(email)) {
     response.send("Invalid email");
     response.end();
     return;
@@ -174,6 +243,11 @@ app.post("/register", (request, response) => {
     if (err) throw err;
     response.send("success");
   });
+
+  var obj = {
+    userName: name,
+  }
+  functions.sendEmail("Account Registration Request Received", obj)
 });
 
 app.get("/sendEmail", (req, res) => {
@@ -214,6 +288,7 @@ app.get("/book/:roomId", (request, response) => {
                 roomName: roomName,
                 desks: desks,
                 roomId: request.params.roomId,
+                session: request.session
               });
             }
           );
@@ -245,6 +320,8 @@ app.post("/book/:roomId", (request, response) => {
     if (err) throw err;
     console.log(res);
   });
+
+  functions.sendEmail("Booking Request Received")
 });
 
 app.get("/eventBooking", (request, response) => {
@@ -272,8 +349,10 @@ app.get("/eventBooking", (request, response) => {
             session: request.session
           });
         });
+        functions.sendEmail("Event Request Received")
       });
-    })
+    });
+  })
     .on("error", (err) => {
       console.log("Error: " + err.message);
     });
@@ -310,6 +389,63 @@ app.post("/eventBooking", (request, response) => {
   });
 });
 
+app.post("/bookingApproved", (req, res) => {
+  var data = req.body
+  var obj = {
+    date: data.date,
+    room: data.roomName,
+    bookingType: data.bookingsType,
+  }
+  functions.sendEmail("Booking Approval", obj)
+})
+
+app.post("/eventApproved", (req, res) => {
+  var data = req.body
+  var obj = {
+    date: data.date,
+    room: data.roomName,
+    bookingType: data.bookingsType,
+  }
+  functions.sendEmail("Event Request Approved", obj)
+})
+
+app.post("/bookingRejected", (req, res) => {
+  var data = req.body
+  var obj = {
+    date: data.date,
+    room: data.roomName,
+    bookingType: data.bookingsType,
+  }
+  functions.sendEmail("Booking Rejected", obj)
+})
+
+app.post("/eventRejected", (req, res) => {
+  var data = req.body
+  var obj = {
+    date: data.date,
+    room: data.roomName,
+    bookingType: data.bookingsType,
+  }
+  functions.sendEmail("Event Request Rejected", obj)
+})
+
+app.post("/accountApproved", (req, res) => {
+  var data = req.body
+  var obj = {
+  }
+  functions.sendEmail("Account Request Approved", obj)
+})
+
+app.post("/accountRejected", (req, res) => {
+  var data = req.body
+  var obj = {
+    date: data.date,
+    room: data.roomName,
+    bookingType: data.bookingsType,
+  }
+  functions.sendEmail("Account Request Rejected", obj)
+})
+
 app.post("/setRoomId/:roomId", (req, res) => {
   roomId = req.params.roomId;
   console.log("hi there")
@@ -328,7 +464,7 @@ app.use("/queries", queries);
 
 app.use(function (req, res) {
   res.status(404);
-  res.render("pages/404");
+  res.render("pages/404", { session: req.session });
 });
 
 app.listen(4000, () => console.log("My website is listening on port 4000!"));

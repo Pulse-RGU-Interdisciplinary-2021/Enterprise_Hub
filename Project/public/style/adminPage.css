@@ -1,0 +1,60 @@
+#adminPageTitle {
+    text-align: left;
+    width: 80%;
+    margin: auto;
+}
+
+.adminTab {
+    overflow: hidden;
+    background-color: #57D4FA;
+    height: 6vh;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
+
+.adminTab button {
+    background-color: inherit;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    color: rgba(255, 255, 255, 0.678);
+    font-family: Gordon;
+    src: url("../fonts/Gordon.ttf");
+    font-size: 2vh;
+    height: 100%;
+    border-bottom: 2px solid transparent;    
+    transition: all .5s ease-in;
+}
+
+.adminTab button:hover {
+    border-bottom: 2px solid white;
+    color: white;
+}
+
+.adminTab button.active {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.678);
+    color: white;
+    font-size: 2.5vh;
+}
+
+.adminTabcontent h1 {
+    text-align: left;
+    width: 60%;
+    margin: auto;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+}
+
+#Requests, #AdminBookings{
+    width: 100%;
+    text-align: center;
+}
+
+#RequestsDiv, #AdminBookingsDiv{
+    display: inline-block;
+    width: 80%;
+    background-color: white;
+}

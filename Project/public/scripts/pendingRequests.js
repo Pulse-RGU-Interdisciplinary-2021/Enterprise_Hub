@@ -1,8 +1,9 @@
 window.addEventListener('DOMContentLoaded', () => {
+  
   document.getElementById("accountsTabButton").click();
 })
 
-function tabChanged(evt, tabName) { //from https://www.w3schools.com/howto/howto_js_tabs.asp
+async function tabChanged(evt, tabName) { //from https://www.w3schools.com/howto/howto_js_tabs.asp
   console.log("tab changed " + tabName)  
   // Declare all variables
     var i, tabcontent, tablinks;
@@ -11,6 +12,7 @@ function tabChanged(evt, tabName) { //from https://www.w3schools.com/howto/howto
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = "none";
+      tabcontent[i].innerHTML = '';
     }
   
     // Get all elements with class="tablinks" and remove the class "active"
@@ -24,12 +26,16 @@ function tabChanged(evt, tabName) { //from https://www.w3schools.com/howto/howto
     evt.currentTarget.className += " active";
 
     if (tabName == "Bookings"){
-      showBookings(false)
+      await callShowBookings(false)
     }
     else if (tabName == "Accounts"){
-      showUsers()
+      await showUsers()
     }
     else if (tabName == "Events"){
-      showBookings(true)
+      await callShowBookings(true)
     }
+  }
+
+  async function callShowBookings(isEvents){
+    await showBookings(isEvents)
   }

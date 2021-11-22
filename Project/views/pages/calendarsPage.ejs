@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="./style/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./scripts/calendarsPage.js"></script>
+    <link rel="stylesheet" type="text/css" id="styleCSS" href="./style/calendarsPage.css">
+</head>
+
+<body>
+    <header>
+        <%- include ("../partials/header") %>
+    </header>
+
+    <div id="calendarsPageTitle">
+        <h1>Calendars</h1>
+        <p>Calendars containing all approved bookings</p>
+    </div>
+
+    <div class="tab">
+        <button class="tablinks" id="room1TabButton" onclick="tabChanged(event, 'Room1')">Room 1</button>
+        <button class="tablinks" id="room2TabButton" onclick="tabChanged(event, 'Room2')">Room 2</button>
+        <button class="tablinks" id="room3TabButton" onclick="tabChanged(event, 'Room3')">Room 3</button>
+    </div>
+
+    <div id="Room1" class="tabcontent">
+        <h1>Room 1 calendar</h1>
+    </div>
+
+    <div id="Room2" class="tabcontent">
+        <h1>Room 2 calendar</h1>
+    </div>
+
+    <div id="Room3" class="tabcontent">
+        <h1>Room 3 calendar</h1>
+    </div>
+
+    <footer>
+        <%- include ("../partials/footer") %>
+    </footer>
+</body>
+
+</html>

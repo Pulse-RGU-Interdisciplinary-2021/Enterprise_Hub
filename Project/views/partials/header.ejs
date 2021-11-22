@@ -12,14 +12,19 @@
     <% if(session.isAdmin) { %>
         <a href="/allbookings">All Bookings</a>
         <a href="/pendingRequests">Pending Requests</a>
-        <a href="javascript:void(0)">Dashboard</a>
-        <a href="javascript:void(0)">Calendar</a>
+        <a href="/insights">Insights</a>
+        <a href="/calendar">Calendar</a>
     <% } %>
     <% if (!session.isAdmin) { %>
     <a href="/mybookings">My Bookings</a>
     <% } %>
-    <a href="/type">Booking</a>
+    <a href="/type">Book Now!</a>
+    <% if(session.isAdmin) { %>
     <a href="/login">Home</a>
+    <% } %>
+    <% if(!session.isAdmin) {%>
+    <a href="/login">Home</a>
+    <% } %>  
     <% } %>
 </div>
 
