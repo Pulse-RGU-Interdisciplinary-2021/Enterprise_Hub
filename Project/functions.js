@@ -1,3 +1,4 @@
+var nodemailer = require("nodemailer");
 
 exports.getRemainingDesks = (startingHour, endingHour, roomId, callback) => {
     let remainingDeskQuery = `
@@ -43,7 +44,7 @@ exports.sendEmail = (type, params) => {
 
       var mailOptions = {
         from: '"Fred Foo 👻" <asdasdakljd@outlook.es>', // sender address
-        to: "jonberoz2000@gmail.com", // list of receivers
+        to: "santoroally@gmail.com", // list of receivers
         subject: type, // Subject line
         text: text, // plain text body
         //html: "<b>Hello world?</b>", // html body
@@ -67,13 +68,13 @@ exports.isValidEmail = (email) => {
 function getText(type, params){
   var text=''
 
-  if (type == "Booking Approval "){
+  if (type == "Booking Approval"){
     text = "Please note these emails are sent from an automated system, for support please contact (insert EIG email)."
     text += "Your Booking placed on" + params[date] + " at " + params[roomName] + " for " +  params[bookingType] + "has been successful."
     text += "Please enjoy the facilities and contact EIG Booking Hub for any requests involving cancellation or alteration to your booking."
   }
 
-  else if (type == 'Booking Rejected '){
+  else if (type == 'Booking Rejected'){
     text = "Please note these emails are sent from an automated system, for support please contact (insert EIG email). "
     text += "Your Booking placed on " + params[date] + " at " + params[roomName] + " for " + params[bookingType] + " has been unsuccessful. "
     text += "Please contact EIG Booking Hub for further information or book at another time slot. "
@@ -104,7 +105,7 @@ function getText(type, params){
   }
 
   else if (type == 'Booking Request Received'){
-    text = 'User (username, email address, role) has requested a booking (room or seat(s)), at (date), (time), (location); '
+    text = 'You received a booking request. '
     text += 'To approve/deny this request, please access the admin tab/pending requests on the EIG Booking System. '
   }
 
