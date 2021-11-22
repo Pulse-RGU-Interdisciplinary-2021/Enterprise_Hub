@@ -81,7 +81,6 @@ app.get('/success', function (req, res) {
 
 app.get('/failure', function (req, res) {
   res.render('pages/failure', {session: req.session});
-=======
 app.get("/Type", function (req, res) {
   res.render("pages/type", { session: req.session });
 });
