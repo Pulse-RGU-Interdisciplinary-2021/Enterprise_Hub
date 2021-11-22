@@ -1,11 +1,11 @@
 var allPendingBookings
 async function showBookings(isEvents) {
     //allPendingBookings = await getBookings("true")
-    if (isEvents){
+    if (isEvents) {
         allPendingBookings = await getEvents(true)
         $("#Events").append("<h1>Pending Events</h1>")
     }
-    else{
+    else {
         allPendingBookings = await getBookingsNoEvents(true)
         $("#Bookings").append("<h1>Pending Bookings</h1>")
     }
@@ -17,10 +17,10 @@ async function addBookings(allPendingBookings, isEvents) {
 
         var userName = document.createElement("p");
         userName.setAttribute("class", "userName")
-        if (!isEvents){
+        if (!isEvents) {
             userName.innerHTML = await getuserName(i)
         }
-        
+
         var date = document.createElement("p");
         date.innerHTML = formattedStartAndEndTimeToString(i, isEvents)
         date.setAttribute("class", "date");
@@ -29,15 +29,15 @@ async function addBookings(allPendingBookings, isEvents) {
         roomName.innerHTML = await getRoomName(i)
         roomName.setAttribute("class", "roomName")
 
-        if (!isEvents){
+        if (!isEvents) {
             var bookingType = document.createElement("p");
             bookingType.innerHTML = formattedBookingType(i)
             bookingType.setAttribute("class", "bookingType")
         }
 
         var reason = document.createElement("p")
-        reason.innerHTML = "Reason of booking: " 
-        if (isEvents){
+        reason.innerHTML = "Reason of booking: "
+        if (isEvents) {
             var reasonFull = allPendingBookings[i].reason
             var arr = reasonFull.split(':')
             reason.innerHTML += arr[1]
@@ -62,14 +62,14 @@ async function addBookings(allPendingBookings, isEvents) {
         //to change
         var reject = document.createElement("button")
         reject.innerHTML = "reject"
-        reject.setAttribute("onclick", "rejectBookingRequest(" + allPendingBookings[i].id+ ")")
+        reject.setAttribute("onclick", "rejectBookingRequest(" + allPendingBookings[i].id + ", " + i + ")")
         reject.setAttribute("class", "reject")
 
         var currentBookingResponse = document.createElement("div")
         currentBookingResponse.appendChild(confirm)
         currentBookingResponse.appendChild(reject)
         currentBookingResponse.setAttribute("class", "approveRejectButtonsDiv")
-        
+
         var currentBooking = document.createElement("div")
         currentBooking.appendChild(currentBookingInfo)
         currentBooking.appendChild(currentBookingResponse)
@@ -79,7 +79,7 @@ async function addBookings(allPendingBookings, isEvents) {
         if (isEvents) {
             $("#Events").append(currentBooking)
         }
-        else{
+        else {
             $("#Bookings").append(currentBooking)
         }
     }
@@ -101,7 +101,7 @@ async function getBookingsNoEvents(boolean) {
     return output
 }
 
-async function getuserName(i){
+async function getuserName(i) {
     var output = ""
     var userId = allPendingBookings[i].user_id
     await $.get("/api/v1/users/id/" + userId, await function (data) {
@@ -164,7 +164,7 @@ function formattedBookingType(i) {
         }
         else {
             output += allPendingBookings[i].desks + " desk"
-        }  
+        }
     }
     return output
 }
@@ -174,94 +174,157 @@ function formatCurrentBooking(userName, date, roomName, bookingType, reason, isE
     currentBooking.appendChild(userName)
     currentBooking.appendChild(date)
     currentBooking.appendChild(roomName)
-    if (!isEvents){
+    if (!isEvents) {
         currentBooking.appendChild(bookingType)
     }
-   
+
     currentBooking.appendChild(reason)
 
     return currentBooking
 
 }
 
-async function confirmBookingRequest(i){
+async function confirmBookingRequest(i) {
     allPendingBookings[i].pending = 0;
     allPendingBookings[i].confirmed = 1;
     await $.ajax({
         type: 'PUT',
         url: '/api/v1/bookings/',
-        data: { booking_id: allPendingBookings[i].id,
-                room_id: allPendingBookings[i].room_id,
-                user_id: allPendingBookings[i].user_id,
-                start_datetime: allPendingBookings[i].start_datetime,
-                end_datetime: allPendingBookings[i].end_datetime,
-                desks: allPendingBookings[i].desks,
-                reason: allPendingBookings[i].reason,
-                full_room_booking: allPendingBookings[i].full_room_booking,
-                confirmed: 1,
-                pending: 0,
+        data: {
+            booking_id: allPendingBookings[i].id,
+            room_id: allPendingBookings[i].room_id,
+            user_id: allPendingBookings[i].user_id,
+            start_datetime: allPendingBookings[i].start_datetime,
+            end_datetime: allPendingBookings[i].end_datetime,
+            desks: allPendingBookings[i].desks,
+            reason: allPendingBookings[i].reason,
+            full_room_booking: allPendingBookings[i].full_room_booking,
+            confirmed: 1,
+            pending: 0,
         },
-        success: function(response){
+        success: async function (response) {
             alertOutcomeBookingApproved(i)
+
+            var date = await formatDateTime(allPendingBookings[i].start_datetime)
+            var roomName = await getRoomName(i)
+
+            if (allPendingBookings[i].event_booking_yn == 1) {
+                var bookingsType = "full room"
+
+                await $.ajax({
+                    type: 'POST',
+                    url: '/eventApproved',
+                    data: {
+                        date: date,
+                        room: roomName,
+                        bookingType: bookingsType,
+                    }
+                })
+            }
+            else {
+                var bookingsType = await formattedBookingType(i)
+                await $.ajax({
+                    type: 'POST',
+                    url: '/bookingApproved',
+                    data: {
+                        date: date,
+                        room: roomName,
+                        bookingType: bookingsType,
+                    }
+                })
+            }
         }
     });
 }
 
-async function alertOutcomeBookingApproved(i){
+async function alertOutcomeBookingApproved(i) {
     var booking = await getBookingById(allPendingBookings[i].id)
-    if (booking[0].pending == 0 && booking[0].confirmed == 1){
-        alert ("Booking approved correctly")
-        var bookingDiv = document.getElementById(allPendingBookings[i].id) 
+    if (booking[0].pending == 0 && booking[0].confirmed == 1) {
+        alert("Booking approved correctly")
+        var bookingDiv = document.getElementById(allPendingBookings[i].id)
         bookingDiv.style.opacity = '0'
-        setTimeout(function(){
-            bookingDiv.style.height = $("#" + allPendingBookings[i].id).height()+ 'px';
+        setTimeout(function () {
+            bookingDiv.style.height = $("#" + allPendingBookings[i].id).height() + 'px';
             bookingDiv.classList.add('hide-me');
-            (function(el) {
-                setTimeout(function() {
-                el.remove();
+            (function (el) {
+                setTimeout(function () {
+                    el.remove();
                 }, 1500);
             })(bookingDiv);
         }, 1000);
     }
     else {
-        alert ("Error in booking approval")
+        alert("Error in booking approval")
     }
 }
 
-async function rejectBookingRequest(id){
+async function rejectBookingRequest(id, i) {
+    var date = await formatDateTime(allPendingBookings[i].start_datetime)
+    var roomName = await getRoomName(i)
+
+    if (allPendingBookings[i].event_booking_yn == 1) {
+        var bookingsType = "full room"
+
+        await $.ajax({
+            type: 'POST',
+            url: '/eventRejected',
+            data: {
+                date: date,
+                room: roomName,
+                bookingType: bookingsType,
+            }
+        })
+    }
+    else {
+        var bookingsType = await formattedBookingType(i)
+        await $.ajax({
+            type: 'POST',
+            url: '/bookingRejected',
+            data: {
+                date: date,
+                room: roomName,
+                bookingType: bookingsType,
+            }
+        })
+    }
+
+
     await $.ajax({
         type: 'DELETE',
         url: '/api/v1/bookings/delete/' + id,
-        data: { booking_id: id,
+        data: {
+            booking_id: id,
         },
-        success: function(response){
+        success: async function (response) {
             alertOutcomeBookingRejected(id)
+
         }
     });
 }
 
-async function alertOutcomeBookingRejected(id){
+async function alertOutcomeBookingRejected(id) {
     var booking = await getBookingById(id)
-    if (!booking[0]){
-        alert ("Booking rejected correctly")
-        var bookingDiv = document.getElementById(id) 
+    if (!booking[0]) {
+        alert("Booking rejected correctly")
+        var bookingDiv = document.getElementById(id)
         bookingDiv.style.opacity = '0'
-        setTimeout(function(){
-            bookingDiv.style.height = $("#" + id).height()+ 'px';
+        setTimeout(function () {
+            bookingDiv.style.height = $("#" + id).height() + 'px';
             bookingDiv.classList.add('hide-me');
-            (function(el) {
-                setTimeout(function() {
-                el.remove();
+            (function (el) {
+                setTimeout(function () {
+                    el.remove();
                 }, 1500);
             })(bookingDiv);
         }, 1000);
+
     }
     else {
-        alert ("Error in booking rejection")
+        alert("Error in booking rejection")
     }
 }
 
-async function getBookingById(id){
+async function getBookingById(id) {
     var output
     await $.get("/api/v1/bookings/Id/" + id, await function (data) {
         output = data

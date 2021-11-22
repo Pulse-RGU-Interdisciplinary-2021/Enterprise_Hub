@@ -122,6 +122,13 @@ async function confirmAccountRequest(i) {
         },
         success: function(response){
             alertOutcomeApproveAccount(i)
+
+            await $.ajax({
+                type: 'POST',
+                url: '/accountApproved',
+                data: {
+                }
+            })
         }
     });
 }
@@ -155,6 +162,13 @@ async function rejectAccountRequest(id) {
         },
         success: function(response){
             alertOutcomeRejectAccount(id)
+
+            await $.ajax({
+                type: 'POST',
+                url: '/accountRejected',
+                data: {
+                }
+            })
         }
     });
 }

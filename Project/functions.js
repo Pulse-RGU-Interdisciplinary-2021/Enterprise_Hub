@@ -30,7 +30,7 @@ exports.getRoomFeatures = (roomId, callback) => {
     });
 }
 
-exports.sendEmail = (type) => {
+exports.sendEmail = (type, params) => {
     var transporter = nodemailer.createTransport({
         service: 'hotmail',
         auth: {
@@ -39,7 +39,7 @@ exports.sendEmail = (type) => {
         }
       });
       
-      var text = getText(type)
+      var text = getText(type, params)
 
       var mailOptions = {
         from: '"Fred Foo 👻" <asdasdakljd@outlook.es>', // sender address
@@ -64,18 +64,18 @@ exports.isValidEmail = (email) => {
 		&& email.match(emailRegex)
 };
 
-function getText(type){
+function getText(type, params){
   var text=''
 
   if (type == "Booking Approval "){
     text = "Please note these emails are sent from an automated system, for support please contact (insert EIG email)."
-    text += "Your Booking placed on" + date + time + " at " + location + " for " +  bookingInfo + "has been successful."
+    text += "Your Booking placed on" + params[date] + " at " + params[roomName] + " for " +  params[bookingType] + "has been successful."
     text += "Please enjoy the facilities and contact EIG Booking Hub for any requests involving cancellation or alteration to your booking."
   }
 
   else if (type == 'Booking Rejected '){
     text = "Please note these emails are sent from an automated system, for support please contact (insert EIG email). "
-    text += "Your Booking placed on (date), (time), at (location) for (desks amount or room) has been unsuccessful. "
+    text += "Your Booking placed on " + params[date] + " at " + params[roomName] + " for " + params[bookingType] + " has been unsuccessful. "
     text += "Please contact EIG Booking Hub for further information or book at another time slot. "
   }
 
@@ -91,16 +91,16 @@ function getText(type){
 
   else if (type == 'Event Request Approved'){
     text = 'Please note these emails are sent from an automated system, for support please contact (insert EIG email). '
-    text += 'Your booking application for (event) on (date) at (location) has been successful, for further requests involving cancellation or alteration to your booking, please contact EIG Booking hub. '
+    text += 'Your booking application for ' +  params[roomName] + ' on ' + params[date] +'  has been successful, for further requests involving cancellation or alteration to your booking, please contact EIG Booking hub. '
   }
 
   else if (type == 'Event Request Rejected'){
     text = 'Please note these emails are sent from an automated system, for support please contact (insert EIG email). '
-    text += 'Your booking application for (event) on (date) at (location) has been unsuccessful, for further requests on this decision, please contact EIG Booking hub. '
+    text += 'Your booking application for ' +  params[roomName] + ' on ' + params[date] +' has been unsuccessful, for further requests on this decision, please contact EIG Booking hub. '
   }
 
   else if (type == 'Account Registration Request Received'){
-    text = 'User (username, email address, role) has requested a booking account registration, to approve/deny this request, please access the admin tab/pending requests on the EIG Booking System. '
+    text = 'User ' + params[userName] + ' has requested a booking account registration, to approve/deny this request, please access the admin tab/pending requests on the EIG Booking System. '
   }
 
   else if (type == 'Booking Request Received'){

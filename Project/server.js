@@ -218,6 +218,11 @@ app.post("/register", (request, response) => {
     if (err) throw err;
     response.send("success");
   });
+
+  var obj = {
+    userName: name,
+  }
+  functions.sendEmail("Account Registration Request Received", obj)
 });
 
 app.get("/book/:roomId", (request, response) => {
@@ -283,6 +288,8 @@ app.post("/book/:roomId", (request, response) => {
     if (err) throw err;
     console.log(res);
   });
+
+  functions.sendEmail("Booking Request Received")
 });
 
 app.get("/eventBooking", (request, response) => {
@@ -291,30 +298,30 @@ app.get("/eventBooking", (request, response) => {
   let data = "";
   let roomName = "";
   console.log(session)
-    https.get("http://localhost:4000/api/v1/rooms/Id/ " + roomId, (resp) => {
-      // A chunk of data has been received.
-      resp.on("data", (chunk) => {
-        data += chunk;
-      });
-      // The whole response has been received. Print out the result.
-      resp.on("end", () => {
-        functions.sendEmail("Event Request Received")
-        data = JSON.parse(data);
-        capacity = data[0].max_capacity;
-        roomName = data[0].room_name;
+  https.get("http://localhost:4000/api/v1/rooms/Id/ " + roomId, (resp) => {
+    // A chunk of data has been received.
+    resp.on("data", (chunk) => {
+      data += chunk;
+    });
+    // The whole response has been received. Print out the result.
+    resp.on("end", () => {
+      functions.sendEmail("Event Request Received")
+      data = JSON.parse(data);
+      capacity = data[0].max_capacity;
+      roomName = data[0].room_name;
 
-        functions.getRoomFeatures(roomId, (result) => {
-          data = result;
-          console.log(session)
-          response.render("pages/eventBooking", {
-            data: data,
-            roomName: roomName,
-            roomId: roomId,
-            session: request.session,
-          });
+      functions.getRoomFeatures(roomId, (result) => {
+        data = result;
+        console.log(session)
+        response.render("pages/eventBooking", {
+          data: data,
+          roomName: roomName,
+          roomId: roomId,
+          session: request.session,
         });
       });
-    })
+    });
+  })
     .on("error", (err) => {
       console.log("Error: " + err.message);
     });
@@ -351,6 +358,63 @@ app.post("/eventBooking", (request, response) => {
     });
   });
 });
+
+app.post("/bookingApproved", (req, res) => {
+  var data = req.body
+  var obj = {
+    date: data.date,
+    room: data.roomName,
+    bookingType: data.bookingsType,
+  }
+  functions.sendEmail("Booking Approval", obj)
+})
+
+app.post("/eventApproved", (req, res) => {
+  var data = req.body
+  var obj = {
+    date: data.date,
+    room: data.roomName,
+    bookingType: data.bookingsType,
+  }
+  functions.sendEmail("Event Request Approved", obj)
+})
+
+app.post("/bookingRejected", (req, res) => {
+  var data = req.body
+  var obj = {
+    date: data.date,
+    room: data.roomName,
+    bookingType: data.bookingsType,
+  }
+  functions.sendEmail("Booking Rejected", obj)
+})
+
+app.post("/eventRejected", (req, res) => {
+  var data = req.body
+  var obj = {
+    date: data.date,
+    room: data.roomName,
+    bookingType: data.bookingsType,
+  }
+  functions.sendEmail("Event Request Rejected", obj)
+})
+
+app.post("/accountApproved", (req, res) => {
+  var data = req.body
+  var obj = {
+  }
+  functions.sendEmail("Account Request Approved", obj)
+})
+
+app.post("/accountRejected", (req, res) => {
+  var data = req.body
+  var obj = {
+    date: data.date,
+    room: data.roomName,
+    bookingType: data.bookingsType,
+  }
+  functions.sendEmail("Account Request Rejected", obj)
+})
 
 app.post("/setRoomId/:roomId", (req, res) => {
   roomId = req.params.roomId;
