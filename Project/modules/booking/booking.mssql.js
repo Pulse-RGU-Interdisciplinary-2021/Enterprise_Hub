@@ -88,6 +88,8 @@ class BookingMSSql {
         }
         const conn = await mssqlcon.getConnection();
         const res = await conn.request().query('select * from bookings where ((pending = ' + bit + ') and (start_datetime > sysdatetime()) and (event_booking_yn = \'1\')) order by start_datetime');
+        console.log('select * from bookings where ((pending = ' + bit + ') and (start_datetime > sysdatetime()) and (event_booking_yn = \'1\')) order by start_datetime');
+        console.log(res.recordset);
         return res.recordset;
     }
 

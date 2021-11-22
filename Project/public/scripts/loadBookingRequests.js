@@ -95,6 +95,7 @@ async function getEvents(boolean) {
   await $.get(
     "/api/v1/bookings/UpcomingPendingEvents/" + boolean,
     await function (data) {
+    console.log(data);
       output = data;
     }
   );
