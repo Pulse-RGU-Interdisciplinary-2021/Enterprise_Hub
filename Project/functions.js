@@ -67,10 +67,12 @@ exports.isValidEmail = (email) => {
 
 function getText(type, params){
   var text=''
-
+  console.log(params);
+  console.log(params["date"]);
+  console.log(params.date);
   if (type == "Booking Approval"){
     text = "Please note these emails are sent from an automated system, for support please contact (insert EIG email)."
-    text += "Your Booking placed on" + params[date] + " at " + params[roomName] + " for " +  params[bookingType] + "has been successful."
+    text += "Your Booking placed on" + params["date"] + " at " + params["roomName"] + " for " +  params["bookingType"] + "has been successful."
     text += "Please enjoy the facilities and contact EIG Booking Hub for any requests involving cancellation or alteration to your booking."
   }
 

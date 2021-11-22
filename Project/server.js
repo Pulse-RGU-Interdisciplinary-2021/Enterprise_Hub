@@ -402,9 +402,10 @@ app.post("/bookingApproved", (req, res) => {
   var obj = {
     date: data.date,
     room: data.roomName,
-    bookingType: data.bookingsType,
+    bookingType: data.bookingType,
   }
-  functions.sendEmail("Booking Approval", obj)
+  functions.sendEmail("Booking Approval", obj);
+  res.send("success");
 })
 
 app.post("/eventApproved", (req, res) => {
@@ -412,9 +413,10 @@ app.post("/eventApproved", (req, res) => {
   var obj = {
     date: data.date,
     room: data.roomName,
-    bookingType: data.bookingsType,
+    bookingType: data.bookingType,
   }
-  functions.sendEmail("Event Request Approved", obj)
+  functions.sendEmail("Event Request Approved", obj);
+  res.send("success");
 })
 
 app.post("/bookingRejected", (req, res) => {
