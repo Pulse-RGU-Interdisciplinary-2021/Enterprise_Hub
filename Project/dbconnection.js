@@ -5,7 +5,7 @@ class DBConnection {
             return await mssql.connect({
                 user: 'sa',
                 password: 'P@55w0rd',
-                server: '84.71.18.166',
+                server: 'localhost',
                 database: 'EIGBooking',
                 options: {
                     trustServerCertificate: true
