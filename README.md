@@ -43,3 +43,5 @@ There will also be an addition page for administrators where they can check ever
 This application has been developed with [EJS](https://ejs.co/) and [node js](https://nodejs.org/es/) with its respective modules as well as using some [jquery](https://jquery.com/) for the website aspect.
 
 For the database we opted for a local sql database as this was a prototype application. So if you wanted to try the application you would need to created a local db and change some code in order to make it work.
+
+Database image uploaded to docker hub at https://hub.docker.com/repository/docker/graybang/enterprise_hub
